@@ -7,6 +7,7 @@ describe('Recipe', () => {
   let recipe;
   beforeEach(function() {
     recipe = new Recipe(recipeData[0],ingredientsData);
+    recipe.getIngredientDetail();
   })
   it('Should be a function', () => {
     expect(Recipe).to.be.a('function');
@@ -21,7 +22,29 @@ describe('Recipe', () => {
     expect(recipe.tag).to.equal(recipeData[0].tag);
   });
 
-  it('should return ingredients names', () => {
-    expect(recipe.getIngredientName()).to.deep.equal([ 'wheat flour', 'bicarbonate of soda' ])
+  it('should return ingredients details', () => {
+    expect(recipe.getIngredientDetail()).to.deep.equal([
+      {
+      "cost": 142,
+      "id": 20081,
+      "name": "wheat flour",
+      "quantity": 1.5,
+      "unit": "c"
+      },
+      {
+      "cost": 582,
+      "id": 18372,
+      "name": "bicarbonate of soda",
+      "quantity": 0.5,
+      "unit": "tsp"
+      }
+    ])}
+  );
+
+  it('should return ingredients name', () => { 
+
+    expect(recipe.getIngredientName()).to.deep.equal(['wheat flour', 'bicarbonate of soda'])
   })
+
+  
 })
