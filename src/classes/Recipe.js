@@ -7,13 +7,14 @@ class Recipe {
     this.name = recipeData.name;
     this.tag = recipeData.tag;
     this.ingredientsData = ingredientsData;
-    this.ingredientInfo = [];
+    this.ingredientInfo = this.getIngredientDetail();
   }
   getIngredientDetail() {
+    let allIngredientInfo =[]
     this.ingredients.forEach(ingredient =>{
       this.ingredientsData.forEach(item => {
         if( ingredient.id === item.id){
-          this.ingredientInfo.push({
+          allIngredientInfo.push({
             id: ingredient.id,
             name: item.name,
             quantity: ingredient.quantity.amount,
@@ -23,23 +24,28 @@ class Recipe {
         };
       });
     });
-    return this.ingredientInfo;
+    return allIngredientInfo;
   };
   getIngredientName() {
-    // this.getIngredientDetail()
     let ingredientNames = this.ingredientInfo.map(ingredient => {
       return ingredient.name
     })
     return ingredientNames
   }
   getCostOfIngredients() {
-    this.getIngredientDetail()
-    
-    
-
+    let total = this.ingredientInfo.reduce((acc, currentItem) => {
+      acc += (currentItem.quantity * currentItem.cost)/100;
+      return acc
+    },0);
+    return Number(total.toFixed(2));
   };
   getInstructions(){
-    return this.instructions;
+    let instructionDeets = this.instructions.reduce((acc, currentInstruction) =>{
+      acc.push(`<li>${currentInstruction.number}. ${currentInstruction.instruction}<br>`)
+      return acc
+    },[])
+    console.log(instructionDeets)
+    return instructionDeets;
   }
 
 }
