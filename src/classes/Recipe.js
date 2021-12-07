@@ -7,24 +7,40 @@ class Recipe {
     this.name = recipeData.name;
     this.tag = recipeData.tag;
     this.ingredientsData = ingredientsData;
-    this.ingredientsName = [];
+    this.ingredientInfo = [];
   }
-   getIngredientName() {
-     this.ingredients.forEach(ingredient =>{
-       this.ingredientsData.forEach(item => {
-         if( ingredient.id === item.id){
-           this.ingredientsName.push(item.name)
-         };
-       });
-     });
-     return this.ingredientsName;
-   };
-   getCostOfIngredients() {
+  getIngredientDetail() {
+    this.ingredients.forEach(ingredient =>{
+      this.ingredientsData.forEach(item => {
+        if( ingredient.id === item.id){
+          this.ingredientInfo.push({
+            id: ingredient.id,
+            name: item.name,
+            quantity: ingredient.quantity.amount,
+            unit: ingredient.quantity.unit,
+            cost: item.estimatedCostInCents
+          })
+        };
+      });
+    });
+    return this.ingredientInfo;
+  };
+  getIngredientName() {
+    // this.getIngredientDetail()
+    let ingredientNames = this.ingredientInfo.map(ingredient => {
+      return ingredient.name
+    })
+    return ingredientNames
+  }
+  getCostOfIngredients() {
+    this.getIngredientDetail()
+    
+    
 
-   };
-   getInstructions(){
-     return this.instructions;
-   }
+  };
+  getInstructions(){
+    return this.instructions;
+  }
 
 }
 export default Recipe;
