@@ -6,7 +6,7 @@ import Recipe from '../src/classes/Recipe';
 describe('Recipe', () => {
   let recipe;
   beforeEach(function() {
-    recipe = new Recipe(recipeData[0]);
+    recipe = new Recipe(recipeData[0],ingredientsData);
   })
   it('Should be a function', () => {
     expect(Recipe).to.be.a('function');
@@ -19,6 +19,9 @@ describe('Recipe', () => {
     expect(recipe.instructions).to.equal(recipeData[0].instructions);
     expect(recipe.name).to.equal(recipeData[0].name);
     expect(recipe.tag).to.equal(recipeData[0].tag);
+  });
 
+  it('should return ingredients names', () => {
+    expect(recipe.getIngredientName()).to.deep.equal([ 'wheat flour', 'bicarbonate of soda' ])
   })
 })
