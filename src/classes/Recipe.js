@@ -44,7 +44,6 @@ class Recipe {
       acc.push(`<li>${currentInstruction.number}. ${currentInstruction.instruction}<br>`)
       return acc
     },[])
-    console.log(instructionDeets)
     return instructionDeets;
   }
 
