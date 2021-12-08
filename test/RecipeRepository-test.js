@@ -14,7 +14,7 @@ describe('RecipeRepository', () => {
     expect(RecipeRepository).to.be.a('function');
   });
   it('should hold recipe data', () => {
-    
+
     expect(recipeRepository.recipeData).to.equal(recipeData);
   })
   it('should have a method to filter by recipe name', () => {

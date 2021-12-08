@@ -11,7 +11,7 @@ class Recipe {
   }
   getIngredientDetail() {
     let allIngredientInfo = []
-    this.ingredients.forEach(ingredient =>{
+    this.ingredients.forEach(ingredient => {
       this.ingredientsData.forEach(item => {
         if ( ingredient.id === item.id) {
           allIngredientInfo.push({
