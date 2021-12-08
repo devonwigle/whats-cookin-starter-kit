@@ -5,8 +5,11 @@ class RecipeRepository {
     this.recipeData = recipeData;
     this.ingredientsData = ingredientsData;
   }
-  filterByTags(userInput) {
-    // const recipeBit = Recipe.filter(ingredient => )
+  filterByTag(userInput) {
+    let filterTag = this.recipeData.filter((recipe) => {
+      return recipe.tags.includes(userInput)
+    })
+    return filterTag
   }
   filterByRecipeName(userInput) {
     let filterRecipe = this.recipeData.filter((recipe) => {
