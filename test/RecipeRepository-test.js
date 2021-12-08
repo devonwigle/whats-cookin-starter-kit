@@ -26,4 +26,9 @@ describe('RecipeRepository', () => {
     let userInput = 'wheat flour';
     expect(recipeRepository.filterByIngredient(userInput)).to.deep.equal([recipeData[0]]);
   })
+
+  it('should have a method to filter by tag', () => {
+    let userInput = 'snack';
+    expect(recipeRepository.filterByTag(userInput)).to.deep.equal([recipeData[0]]);
+  })
 })
