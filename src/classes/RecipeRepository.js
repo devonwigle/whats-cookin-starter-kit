@@ -1,4 +1,3 @@
-import Recipe from './RecipeRepository'
 
 class RecipeRepository {
   constructor(recipeData, ingredientsData) {
@@ -25,7 +24,7 @@ class RecipeRepository {
 
     let checkedRecipe = this.recipeData.forEach((recipe) => {
       recipe.ingredients.forEach((ing) => {
-        if(ing.id === filteredIngredient[0].id){
+        if (ing.id === filteredIngredient[0].id) {
           filtered.push(recipe)
         }
       })
