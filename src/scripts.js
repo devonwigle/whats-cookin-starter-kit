@@ -1,18 +1,44 @@
-import './styles.css';
-import apiCalls from './apiCalls';
+// import './styles.css';
+// import apiCalls from './apiCalls';
+// import RecipeRepository from './classes/RecipeRepository.js'
 
 // variables
-let searchBar = document.querySelector('input');
+const searchBar = document.querySelector('input');
+
 // pages
-let landingPage = document.querySelector('.landing-page');
-let selectedRecipePage = document.querySelector('.selected-recipe-page');
-let searchResultsPage = document.querySelector('.search-results-page')
+const landingPage = document.querySelector('.landing-page');
+const selectedRecipePage = document.querySelector('.selected-recipe-page');
+const searchResultsPage = document.querySelector('.search-results-page');
+const favoritesPage = document.querySelector('.favorites-page');
+
 // buttons
-let storedFavoritesButton = document.querySelector('.favorite-box');
-let searchButton = document.querySelector('button');
-let breakfastButton = document.querySelector('.breakfast');
-let snacksButton = document.querySelector('.snacks');
-let dinnerButton = document.querySelector('.dinner');
+const storedFavoritesButton = document.querySelector('.favorite-box');
+const searchButton = document.querySelector('button');
+const breakfastButton = document.querySelector('.breakfast');
+const snacksButton = document.querySelector('.snacks');
+const dinnerButton = document.querySelector('.dinner');
 
 //event listeners
+storedFavoritesButton.addEventListener('click', showFavPage);
 
+// functions
+function showFavPage() {
+  showHide([favoritesPage], [searchResultsPage, selectedRecipePage, landingPage]);
+}
+
+function showHide(toShow, toHide) {
+  show(toShow);
+  hide(toHide);
+}
+
+function show(shows) { 
+  shows.forEach(function(show) {
+    show.classList.remove('hidden')
+  })
+}
+
+function hide(hides) {
+  hides.forEach(function(hide) {
+    hide.classList.add('hidden');
+  })
+}
