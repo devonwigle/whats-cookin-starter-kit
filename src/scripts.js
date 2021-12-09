@@ -1,6 +1,6 @@
-// import './styles.css';
-// import apiCalls from './apiCalls';
-// import RecipeRepository from './classes/RecipeRepository.js'
+import './styles.css';
+import apiCalls from './apiCalls';
+import RecipeRepository from './classes/RecipeRepository.js'
 
 // variables
 const searchBar = document.querySelector('input');
