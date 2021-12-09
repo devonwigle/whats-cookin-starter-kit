@@ -1,6 +1,9 @@
 import './styles.css';
 import apiCalls from './apiCalls';
 import RecipeRepository from './classes/RecipeRepository.js'
+import recipesData from './data/recipes.js'
+import ingredientsData from './data/ingredients.js'
+import usersData from './data/users.js'
 
 // variables
 const searchBar = document.querySelector('input');
@@ -20,8 +23,16 @@ const dinnerButton = document.querySelector('.dinner');
 
 //event listeners
 storedFavoritesButton.addEventListener('click', showFavPage);
+window.addEventListener('load', whateveriwant)
 
 // functions
+function whateveriwant() {
+  const recipesInfo = recipesData;
+  const ingredientsInfo = ingredientsData;
+  const cookBook = new RecipeRepository(recipesInfo,  ingredientsInfo)
+  console.log(cookBook.recipeData);
+}
+
 function showFavPage() {
   showHide([favoritesPage], [searchResultsPage, selectedRecipePage, landingPage]);
 }
