@@ -8,17 +8,84 @@
 
   <body>
     <nav class="navigation">
-      <section class="logo-box">"Logo"</section>
+      <section class="logo-box">Logo</section>
       <input type="input" name="Seach Bar" placeholder="Search">
       <div class=""></div>
       <button>Click Me</button>
       <section class="search"> </section>
-      <div>
-        <section class="favorite-box">"Favorites</section>
-        <section class="add-recipe-box">"Add Recipes</section>
-        <section class="user-box">"Welcome Bob"</section>
+      <div class="nav-boxes">
+        <section class="favorite-box">Favorites</section>
+        <section class="add-recipe-box">Add Recipes</section>
+        <section class="user-box">Welcome Bob</section>
       </div>
     </nav>
+    <div>
+      <section class="landing-page">
+        <div class="center-image">
+          <img class="main-image" src="https://spoonacular.com/recipeImages/595736-556x370.jpg" alt="close up of four stacked chocolate chip cookies">
+        </div>
+        <div class="previews">
+          <section class="breakfast">
+            <img class="food-preview" src="https://spoonacular.com/recipeImages/741603-556x370.jpeg" alt="pancake sandwich with peanut butter and sliced bananas inside">
+            <h2>Breakfast</h2>
+          </section>
+          <section class="snacks">
+            <img class="food-preview" src="https://spoonacular.com/recipeImages/541288-556x370.jpg" alt="Six seasame cookies cooling on a wire rack">
+            <h2>Snacks</h2>
+          </section>
+          <section class="dinner">
+            <img class="food-preview" src="https://spoonacular.com/recipeImages/988243-556x370.jpg" alt="Brown Butter Garlic Shrimp in a bowl">
+            <h2>Dinner</h2>
+          </section>
+        </div>
+      </section>
+    </div>
+    <div>
+      <section class="selected-recipe-page hidden">
+        <h1 class="recipe-title">Selected Recipe Title</h1>
+        <div class="center-image">
+          <img src="https://spoonacular.com/recipeImages/595736-556x370.jpg" alt="close up of four stacked chocolate chip cookies">
+          <button>favorite</button>
+        </div>
+        <div class="recipe-text">
+          <article class="text">Ingredients List
+            <div>
+              <li>ingredients and measurements</li>
+            </div>
+          </article>
+          <article class="text">Directions
+            <div>
+              <li>direction 1</li>
+            </div>
+          </article>
+        </div>
+      </section>
+      <section class="search-results-page hidden">
+        <h1>Search Results</h1>
+        <section>Filters
+          <h3>By Recipe Name</h3>
+          <h3>By Ingredient</h3>
+          <h3>By Tag</h3>
+        </section>
+        <section>
+          <div class="populated-results">
+            <img class="filtered-image" src="https://spoonacular.com/recipeImages/595736-556x370.jpg" alt="close up of four stacked chocolate chip cookies">
+            <h4>Recipe Name</h4>
+            <img class="filtered-image" src="https://spoonacular.com/recipeImages/595736-556x370.jpg" alt="close up of four stacked chocolate chip cookies">
+            <h4>Recipe Name</h4>
+            <img class="filtered-image" src="https://spoonacular.com/recipeImages/595736-556x370.jpg" alt="close up of four stacked chocolate chip cookies">
+            <h4>Recipe Name</h4>
+            <img class="filtered-image" src="https://spoonacular.com/recipeImages/595736-556x370.jpg" alt="close up of four stacked chocolate chip cookies">
+            <h4>Recipe Name</h4>
+            <img class="filtered-image" src="https://spoonacular.com/recipeImages/595736-556x370.jpg" alt="close up of four stacked chocolate chip cookies">
+            <h4>Recipe Name</h4>
+            <img class="filtered-image" src="https://spoonacular.com/recipeImages/595736-556x370.jpg" alt="close up of four stacked chocolate chip cookies">
+            <h4>Recipe Name</h4>
+          </div>
+        </section>
+      </section>
+    </div>
+  </body>
 
 
     <script type="text/javascript" src="./classes/Recipe.js"></script>
