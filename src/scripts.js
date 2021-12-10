@@ -50,9 +50,11 @@ function multipleButtons() {
         // console.log(tags)
       }
     })
+    tags.sort()
   })
   tags.forEach(tag => {
-    radioContainer.innerHTML += `<input type="radio" id="${tag}" value="${tag}"> ${tag}`
+    radioContainer.innerHTML += `<option value="${tag}">${tag}</option>`
+    // radioContainer.innerHTML += `<input type="radio" id="${tag}" value="${tag}"> ${tag}`
   })
 }
 // helper functions 
