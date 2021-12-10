@@ -27,11 +27,15 @@ nav {
 
 .previews {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: stretch;
+  align-items: center;
 }
 
 .food-preview {
-  height: 220px;
+  height: 50px;
   width: auto;
 }
 

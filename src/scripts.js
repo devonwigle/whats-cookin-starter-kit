@@ -7,7 +7,8 @@ import usersData from './data/users.js'
 
 // variables
 const searchBar = document.querySelector('input');
-let radioContainer = document.querySelector('#container');
+const radioContainer = document.querySelector('#container');
+let recipeCard = document.querySelector('.previews');
 
 let cookBook
 // pages
@@ -35,6 +36,16 @@ function whateveriwant() {
    cookBook = new RecipeRepository(recipesInfo,  ingredientsInfo)
   // console.log(cookBook.recipeData);
   multipleButtons();
+  makeRecipeCard();
+}
+
+function makeRecipeCard() {
+  cookBook.recipeData.forEach(recipe => {
+    recipeCard.innerHTML += 
+    `<img class="food-preview" src=${recipe.image}>
+      <h2>${recipe.name}</h2>`
+    // console.log(recipe.image)
+  })
 }
 
 function showFavPage() {
