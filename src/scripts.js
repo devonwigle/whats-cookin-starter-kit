@@ -1,7 +1,7 @@
 import './styles.css';
 import apiCalls from './apiCalls';
 import RecipeRepository from './classes/RecipeRepository.js'
-import recipesData from './data/recipes.js'
+import recipeData from './data/recipes.js'
 import ingredientsData from './data/ingredients.js'
 import usersData from './data/users.js'
 
@@ -9,6 +9,10 @@ import usersData from './data/users.js'
 const searchBar = document.querySelector('input');
 const radioContainer = document.querySelector('#container');
 let recipeCard = document.querySelector('.previews');
+let selectedRecipeTitle = document.querySelector('.recipe-title');
+let selectedRecipeIngredientAmount = document.querySelector('.ingredients-amount');
+let selectedRecipeDirections = document.querySelector('.recipe-directions')
+
 
 let cookBook
 // pages
@@ -26,15 +30,17 @@ const dinnerButton = document.querySelector('.dinner');
 
 //event listeners
 storedFavoritesButton.addEventListener('click', showFavPage);
+recipeCard.addEventListener('click', function(event) {
+  showSelectedRecipePage(event)
+})
 window.addEventListener('load', whateveriwant)
 
 
 // functions
 function whateveriwant() {
-  const recipesInfo = recipesData;
+  const recipesInfo = recipeData;
   const ingredientsInfo = ingredientsData;
-   cookBook = new RecipeRepository(recipesInfo,  ingredientsInfo)
-  // console.log(cookBook.recipeData);
+  cookBook = new RecipeRepository(recipesInfo,  ingredientsInfo)
   multipleButtons();
   makeRecipeCard();
 }
@@ -42,10 +48,19 @@ function whateveriwant() {
 function makeRecipeCard() {
   cookBook.recipeData.forEach(recipe => {
     recipeCard.innerHTML += 
-    `<img class="food-preview" src=${recipe.image}>
-      <h2>${recipe.name}</h2>`
-    // console.log(recipe.image)
+      `<article id="${recipe.id}">
+      <img class="food-preview" src=${recipe.image}>
+      <h2>${recipe.name}</h2>
+      </article>`
+    //console.log(recipe.id)
   })
+}
+
+function showSelectedRecipePage(event) {
+  console.log(event.target.parentNode)
+  //recipeData.
+  //selectedRecipeTitle.innerText = ()
+  showHide([selectedRecipePage], [searchResultsPage, favoritesPage, landingPage])
 }
 
 function showFavPage() {
@@ -85,3 +100,5 @@ function hide(hides) {
     hide.classList.add('hidden');
   })
 }
+
+/* event bubbling  */
