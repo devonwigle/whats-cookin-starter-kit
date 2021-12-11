@@ -19,7 +19,9 @@ class RecipeRepository {
   filterByIngredient(userInput) {
     let filtered = [];
     let filteredIngredient =  this.ingredientsData.filter((ingredient) => {
-      return ingredient.name.toLowerCase().includes(userInput.toLowerCase())
+      if (ingredient.name === userInput.toLowerCase()) {
+        return ingredient
+      }
     });
 
     let checkedRecipe = this.recipeData.forEach((recipe) => {
