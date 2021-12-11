@@ -12,6 +12,7 @@ class User {
       this.favorite.push(recipeData)
     };
   };
+
   removeFromFavorite(recipeData) {
     this.favorite.forEach(recipe => {
       if(recipeData.id === recipe.id) {
@@ -19,6 +20,20 @@ class User {
       };
     });
   };
+
+  addToRecipesToCook(recipeData) {
+    if(!this.recipesToCook.includes(recipeData)){
+      this.recipesToCook.push(recipeData)
+    };
+  };
+
+  removeFromRecipesToCook(recipeData) {
+    this.recipesToCook.forEach(recipe => {
+      if(recipeData.id === recipe.id) {
+        this.recipesToCook.splice(this.recipesToCook.indexOf(recipeData),1)
+      };
+    });
+  }
 
 }
 export default User;

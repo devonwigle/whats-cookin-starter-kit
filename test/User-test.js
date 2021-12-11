@@ -34,4 +34,18 @@ describe('User', () => {
     currentUser.removeFromFavorite(recipeData[0]);
     expect(currentUser.favorite).to.deep.equal([recipeData[1]]);
   });
+
+  it('Should be able to add to recipes to cook', () => {
+    currentUser.addToRecipesToCook(recipeData[0]);
+    expect(currentUser.recipesToCook).to.deep.equal([recipeData[0]]);
+    currentUser.addToRecipesToCook(recipeData[1]);
+    expect(currentUser.recipesToCook).to.deep.equal([recipeData[0],recipeData[1]]);
+  });
+
+  it('Should be able to remove from recipes to cook', () => {
+    currentUser.addToRecipesToCook(recipeData[0]);
+    currentUser.addToRecipesToCook(recipeData[1]);
+    currentUser.removeFromRecipesToCook(recipeData[0]);
+    expect(currentUser.recipesToCook).to.deep.equal([recipeData[1]]);
+  });
 })
