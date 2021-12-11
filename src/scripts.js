@@ -6,7 +6,7 @@ import Recipe from './classes/Recipe';
 import ingredientsData from './data/ingredients.js'
 import usersData from './data/users.js'
 
-// variables
+// querySelectors
 const searchBar = document.querySelector('input');
 const radioContainer = document.querySelector('#container');
 let recipeCard = document.querySelector('.previews');
@@ -14,6 +14,7 @@ let selectedRecipeTitle = document.querySelector('.recipe-title');
 let selectedRecipeIngredientAmount = document.querySelector('.ingredients-amounts');
 let selectedRecipeDirections = document.querySelector('.recipe-directions');
 let selectedRecipeImage = document.querySelector('.recipe-image');
+let selectedCosts = document.querySelector('.selected-cost');
 
 // global variables
 let cookBook
@@ -53,9 +54,8 @@ function whateveriwant() {
     newRecipe = new Recipe(recipe, ingredientsInfo);
     return newRecipe
   })
-  cookBook.forEach(recipe => {
-    // console.log(recipe)
-  })
+  
+  // console.log('COOK BOOK', cookBook)
   repository = new RecipeRepository(cookBook, ingredientsInfo);
   multipleButtons();
   makeRecipeCard();
@@ -83,10 +83,11 @@ function selectedRecipePopulation(event) {
 
   });
   console.log('HELLO WORLD', foundRecipe.ingredientInfo)
-  console.log('INstructions', foundRecipe.instructions)
-  console.log('ingredients but not with info', foundRecipe.ingredients)
+  console.log('Found Costs', foundRecipe)
   selectedRecipeImage.src = `${foundRecipe.image}`
   selectedRecipeTitle.innerText = `${foundRecipe.name}`;
+  selectedCosts.innerText = `Estimated Cost: ${foundRecipe.getCostOfIngredients()}`
+
   foundRecipe.ingredientInfo.forEach(datum => {
     selectedRecipeIngredientAmount.innerHTML += `<div>
         <li>${datum.quantity} ${datum.unit} ${datum.name} </li>
