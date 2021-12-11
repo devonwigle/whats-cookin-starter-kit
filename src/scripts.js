@@ -18,15 +18,17 @@ let selectedRecipeDirections = document.querySelector('.recipe-directions');
 let selectedRecipeImage = document.querySelector('.recipe-image');
 let selectedCosts = document.querySelector('.selected-cost');
 let selectedText = document.querySelector('.recipe-text');
-let searchInput = document.querySelector('#searchInput')
-let populatedResults = document.querySelector('.populated-results')
+let searchInput = document.querySelector('#searchInput');
+let populatedResults = document.querySelector('.populated-results');
+let radio = document.querySelector('input[type=radio][name=language]:checked');
+let errorMessage = document.querySelector('.error-message');
 
 // global variables
 let cookBook
 let ingredientsInfo
 let recipesInfo
 let repository
-let foundRecip
+let foundRecipe
 let recipeTagsArray
 
 // pages
@@ -40,17 +42,17 @@ const storedFavoritesButton = document.querySelector('.favorite-box');
 const searchButton = document.querySelector('.search-button');
 const nameSearch = document.querySelector('#nameSearch');
 const ingredientSearch = document.querySelector('#ingredientSearch')
-const breakfastButton = document.querySelector('.breakfast');
-const snacksButton = document.querySelector('.snacks');
-const dinnerButton = document.querySelector('.dinner');
-
 
 //event listeners
 storedFavoritesButton.addEventListener('click', showFavPage);
 recipeCard.addEventListener('click', function(event) {
   showSelectedRecipePage(event)
 })
-searchButton.addEventListener('click', showSearchResultsPage);
+searchButton.addEventListener('click', function() {
+  showSearchResultsPage();
+  clearSearchBar();
+
+})
 
 radioContainer.addEventListener('change', function(event) {
   searchByTag(event)
@@ -60,6 +62,11 @@ window.addEventListener('load', whateveriwant);
 
 
 // functions
+function clearSearchBar() {
+  searchInput.value = '';
+  nameSearch.checked = false;
+  ingredientSearch.checked = false;
+}
 
 function searchByTag(event) {
   let dropDownTag = radioContainer.value
@@ -88,17 +95,14 @@ function whateveriwant() {
   recipesInfo = recipesData;
   ingredientsInfo = ingredientsData;
   let newRecipe = []
-
-  // needs a diffrent name
   cookBook = recipesData.map(recipe => {
     newRecipe = new Recipe(recipe, ingredientsInfo);
     return newRecipe
   })
-  
-  // console.log('COOK BOOK', cookBook)
   repository = new RecipeRepository(cookBook, ingredientsInfo);
   multipleButtons();
   makeRecipeCard();
+  clearSearchBar();
 }
 
 function makeRecipeCard() {
@@ -113,18 +117,26 @@ function makeRecipeCard() {
 function  showSearchResultsPage() {
   showHide([searchResultsPage], [selectedRecipePage, selectedText,favoritesPage, landingPage]);
   sortSearch()
-  populateByTag()
 }
 
 function sortSearch() {
-  if (nameSearch.checked) {
+  if (!searchInput.value && ingredientSearch.checked) {
+    errorMessage.innerText = 'Error: Must enter an ingredient'
+    console.log('SAD');
+    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
+  } else if (nameSearch.checked) {
     searchByName()
   } else if (ingredientSearch.checked) {
     searchByIngredient()
+  } else {
+    populateByTag()
   }
 }
 
 function searchByIngredient() {
+  // if (!searchInput.value) {
+  //   console.log('SAD')
+  // }
   let searched = repository.filterByIngredient(searchInput.value)
   searched.forEach(recipe => {
     populatedResults.innerHTML += 
