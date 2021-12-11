@@ -8,7 +8,9 @@ import usersData from './data/users.js'
 
 // querySelectors
 const searchBar = document.querySelector('input');
+//
 const radioContainer = document.querySelector('#container');
+//
 let recipeCard = document.querySelector('.previews');
 let selectedRecipeTitle = document.querySelector('.recipe-title');
 let selectedRecipeIngredientAmount = document.querySelector('.ingredients-amounts');
@@ -16,12 +18,14 @@ let selectedRecipeDirections = document.querySelector('.recipe-directions');
 let selectedRecipeImage = document.querySelector('.recipe-image');
 let selectedCosts = document.querySelector('.selected-cost');
 let selectedText = document.querySelector('.recipe-text');
-
+let populatedResults = document.querySelector('.populated-results');
 // global variables
 let cookBook
 let ingredientsInfo
 let recipesInfo
 let repository
+let foundRecip
+let recipeTagsArray
 
 // pages
 const landingPage = document.querySelector('.landing-page');
@@ -41,11 +45,40 @@ storedFavoritesButton.addEventListener('click', showFavPage);
 recipeCard.addEventListener('click', function(event) {
   showSelectedRecipePage(event)
 })
-searchButton.addEventListener('click', showSearchResultsPage)
-window.addEventListener('load', whateveriwant)
+searchButton.addEventListener('click', showSearchResultsPage);
+
+radioContainer.addEventListener('change', function(event) {
+  searchByTag(event)
+})
+window.addEventListener('load', whateveriwant);
+
 
 
 // functions
+
+function searchByTag(event) {
+  let dropDownTag = radioContainer.value
+  let eventTargets = event.target.value
+  console.log('event', eventTargets)
+  recipeTagsArray = []
+  repository.recipeData.filter(recipe => {
+    if (recipe.tags.includes(eventTargets)) {
+      recipeTagsArray.push(recipe)
+      console.log(recipeTagsArray)
+    }
+  })
+}
+
+function populateByTag() {
+  console.log('populate by tag', recipeTagsArray)
+  recipeTagsArray.forEach(recipe => {
+    populatedResults.innerHTML +=
+    `<article id="${recipe.id}">
+      <img class="food-preview" src=${recipe.image}>
+      <h2>${recipe.name}</h2>
+      </article>`
+  })
+}
 function whateveriwant() {
   recipesInfo = recipesData;
   ingredientsInfo = ingredientsData;
@@ -73,7 +106,8 @@ function makeRecipeCard() {
   })
 }
 function  showSearchResultsPage() {
-  showHide([searchResultsPage], [selectedRecipePage, selectedText,favoritesPage, landingPage])
+  showHide([searchResultsPage], [selectedRecipePage, selectedText, favoritesPage, landingPage])
+  populateByTag()
 }
 
 function showSelectedRecipePage(event) {
@@ -83,7 +117,7 @@ function showSelectedRecipePage(event) {
 
 function selectedRecipePopulation(event) {
   let id = event.target.parentNode.id; 
-  let foundRecipe = repository.recipeData.find(recipe =>{
+   foundRecipe = repository.recipeData.find(recipe =>{
     return recipe.id === parseInt(id)
 
   });
@@ -113,7 +147,7 @@ function showFavPage() {
 
 function multipleButtons() {
   let tags = [];
-  console.log('REPOSITORY REIPE DATA', repository.recipeData)
+  // console.log('REPOSITORY REIPE DATA', repository.recipeData)
   repository.recipeData.forEach(recipe => {
     recipe.tags.forEach(tag => {
       if (!tags.includes(tag)) {
