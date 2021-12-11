@@ -16,6 +16,8 @@ let selectedRecipeDirections = document.querySelector('.recipe-directions');
 let selectedRecipeImage = document.querySelector('.recipe-image');
 let selectedCosts = document.querySelector('.selected-cost');
 let selectedText = document.querySelector('.recipe-text');
+let searchInput = document.querySelector('#searchInput')
+let populatedResults = document.querySelector('.populated-results')
 
 // global variables
 let cookBook
@@ -32,9 +34,12 @@ const favoritesPage = document.querySelector('.favorites-page');
 // buttons
 const storedFavoritesButton = document.querySelector('.favorite-box');
 const searchButton = document.querySelector('.search-button');
+const nameSearch = document.querySelector('#nameSearch');
+const ingredientSearch = document.querySelector('#ingredientSearch')
 const breakfastButton = document.querySelector('.breakfast');
 const snacksButton = document.querySelector('.snacks');
 const dinnerButton = document.querySelector('.dinner');
+
 
 //event listeners
 storedFavoritesButton.addEventListener('click', showFavPage);
@@ -73,7 +78,39 @@ function makeRecipeCard() {
   })
 }
 function  showSearchResultsPage() {
-  showHide([searchResultsPage], [selectedRecipePage, selectedText,favoritesPage, landingPage])
+  showHide([searchResultsPage], [selectedRecipePage, selectedText,favoritesPage, landingPage]);
+  sortSearch()
+}
+
+function sortSearch() {
+  if (nameSearch.checked) {
+    searchByName()
+  } else if (ingredientSearch.checked) {
+    searchByIngredient()
+  }
+}
+
+function searchByIngredient() {
+  let searched = repository.filterByIngredient(searchInput.value)
+  searched.forEach(recipe => {
+    populatedResults.innerHTML += 
+      ` <article id = "${recipe.id}">
+        <img class="food-preview" src=${recipe.image}>
+          <h2>${recipe.name}</h2>
+        </article>`
+  })
+}
+
+function searchByName() {
+  let searched = repository.filterByRecipeName(searchInput.value)
+  console.log(searchInput.value)
+  searched.forEach(recipe => {
+    populatedResults.innerHTML +=
+      ` <article id = "${recipe.id}">
+      <img class="food-preview" src=${recipe.image}>
+        <h2>${recipe.name}</h2>
+      </article>`
+    })
 }
 
 function showSelectedRecipePage(event) {
