@@ -2,6 +2,7 @@ import './styles.css';
 import apiCalls from './apiCalls';
 import RecipeRepository from './classes/RecipeRepository.js'
 import recipesData from './data/recipes.js'
+import Recipe from './classes/Recipe';
 import ingredientsData from './data/ingredients.js'
 import usersData from './data/users.js'
 
@@ -10,7 +11,11 @@ const searchBar = document.querySelector('input');
 const radioContainer = document.querySelector('#container');
 let recipeCard = document.querySelector('.previews');
 
+// global variables
 let cookBook
+let ingredientsInfo
+let recipesInfo 
+
 // pages
 const landingPage = document.querySelector('.landing-page');
 const selectedRecipePage = document.querySelector('.selected-recipe-page');
@@ -31,10 +36,15 @@ window.addEventListener('load', whateveriwant)
 
 // functions
 function whateveriwant() {
-  const recipesInfo = recipesData;
-  const ingredientsInfo = ingredientsData;
-   cookBook = new RecipeRepository(recipesInfo,  ingredientsInfo)
-  // console.log(cookBook.recipeData);
+  recipesInfo = recipesData;
+  ingredientsInfo = ingredientsData;
+  let newRecipe = []
+  cookBook = recipesData.map(recipe => {
+    newRecipe = new Recipe(recipe, ingredientsInfo);
+    return newRecipe
+  })
+  console.log(cookBook)
+  cookBook = new RecipeRepository(recipesInfo,  ingredientsInfo);
   multipleButtons();
   makeRecipeCard();
 }
@@ -58,14 +68,12 @@ function multipleButtons() {
     recipe.tags.forEach(tag => {
       if (!tags.includes(tag)) {
         tags.push(tag);
-        // console.log(tags)
       }
     })
     tags.sort()
   })
   tags.forEach(tag => {
     radioContainer.innerHTML += `<option value="${tag}">${tag}</option>`
-    // radioContainer.innerHTML += `<input type="radio" id="${tag}" value="${tag}"> ${tag}`
   })
 }
 // helper functions 
