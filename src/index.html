@@ -10,8 +10,9 @@
       <section class="logo-box">Logo</section>
       <div class="search">
         <input id="searchInput" type="text" name="Seach Bar" placeholder="Search">
-        <input id="nameSearch" type="radio" name="search-selection" value="recipeName">recipe name
-        <input id="ingredientSearch" type="radio" name="search-selection" value="ingredientName">ingredients name
+        <p class='error-message'>Error:</p>
+        <input id="nameSearch" type="radio" name="search-selection" value="recipeName" checked="checked" >recipe name
+        <input id="ingredientSearch" type="radio" name="search-selection" value="ingredientName" checked="checked">ingredients name
       </div>
       <div>
         <h2>tags</h2>
@@ -48,10 +49,6 @@
       </section>
       <section class="search-results-page hidden">
         <h1>Search Results</h1>
-        <section>Filters
-          <h3>By Recipe Name</h3>
-          <h3>By Ingredient</h3>
-          <h3>By Tag</h3>
         </section>
         <section>
           <div class="populated-results">       
