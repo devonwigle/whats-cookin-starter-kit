@@ -15,6 +15,7 @@ let selectedRecipeIngredientAmount = document.querySelector('.ingredients-amount
 let selectedRecipeDirections = document.querySelector('.recipe-directions');
 let selectedRecipeImage = document.querySelector('.recipe-image');
 let selectedCosts = document.querySelector('.selected-cost');
+let selectedText = document.querySelector('.recipe-text');
 
 // global variables
 let cookBook
@@ -30,7 +31,7 @@ const favoritesPage = document.querySelector('.favorites-page');
 
 // buttons
 const storedFavoritesButton = document.querySelector('.favorite-box');
-const searchButton = document.querySelector('button');
+const searchButton = document.querySelector('.search-button');
 const breakfastButton = document.querySelector('.breakfast');
 const snacksButton = document.querySelector('.snacks');
 const dinnerButton = document.querySelector('.dinner');
@@ -40,6 +41,7 @@ storedFavoritesButton.addEventListener('click', showFavPage);
 recipeCard.addEventListener('click', function(event) {
   showSelectedRecipePage(event)
 })
+searchButton.addEventListener('click', showSearchResultsPage)
 window.addEventListener('load', whateveriwant)
 
 
@@ -69,6 +71,9 @@ function makeRecipeCard() {
       <h2>${recipe.name}</h2>
       </article>`
   })
+}
+function  showSearchResultsPage() {
+  showHide([searchResultsPage], [selectedRecipePage, selectedText,favoritesPage, landingPage])
 }
 
 function showSelectedRecipePage(event) {
@@ -103,7 +108,7 @@ function selectedRecipePopulation(event) {
 
 
 function showFavPage() {
-  showHide([favoritesPage], [searchResultsPage, selectedRecipePage, landingPage]);
+  showHide([favoritesPage], [searchResultsPage, selectedText, selectedRecipePage, landingPage]);
 }
 
 function multipleButtons() {
