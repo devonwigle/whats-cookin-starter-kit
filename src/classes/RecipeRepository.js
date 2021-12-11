@@ -29,7 +29,6 @@ class RecipeRepository {
         }
       })
     })
-    console.log(filtered)
     return filtered
   }
 }
