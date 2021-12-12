@@ -2,30 +2,31 @@
 import './styles.css';
 import apiCalls from './apiCalls';
 import RecipeRepository from './classes/RecipeRepository.js'
-import recipesData from './data/recipes.js'
 import Recipe from './classes/Recipe';
+import User from './classes/User';
+import recipesData from './data/recipes.js'
 import ingredientsData from './data/ingredients.js'
 import usersData from './data/users.js'
 
 // querySelectors
 const searchBar = document.querySelector('input');
 const radioContainer = document.querySelector('#container');
-let recipeCard = document.querySelector('.previews');
-let searchedRecipeCard = document.querySelector('.food-preview')
-let selectedRecipeTitle = document.querySelector('.recipe-title');
-let selectedRecipeIngredientAmount = document.querySelector('.ingredients-amounts');
-let selectedRecipeDirections = document.querySelector('.recipe-directions');
-let selectedRecipeImage = document.querySelector('.recipe-image');
-let selectedCosts = document.querySelector('.selected-cost');
-let selectedText = document.querySelector('.recipe-text');
-let searchInput = document.querySelector('#searchInput');
-let populatedResults = document.querySelector('.populated-results');
-let errorMessage = document.querySelector('.error-message');
-
-let tagSearchButton = document.querySelector('.tag-search-button');
-let tagBox = document.querySelector('.tag-box');
-let searchInputField = document.querySelector('.search');
-let searchInputButton = document.querySelector('.show-search-input-button');
+const recipeCard = document.querySelector('.previews');
+const searchedRecipeCard = document.querySelector('.food-preview')
+const selectedRecipeTitle = document.querySelector('.recipe-title');
+const selectedRecipeIngredientAmount = document.querySelector('.ingredients-amounts');
+const selectedRecipeDirections = document.querySelector('.recipe-directions');
+const selectedRecipeImage = document.querySelector('.recipe-image');
+const selectedCosts = document.querySelector('.selected-cost');
+const selectedText = document.querySelector('.recipe-text');
+const searchInput = document.querySelector('#searchInput');
+const populatedResults = document.querySelector('.populated-results');
+const errorMessage = document.querySelector('.error-message');
+const userBox = document.querySelector('.user-box');
+const tagSearchButton = document.querySelector('.tag-search-button');
+const tagBox = document.querySelector('.tag-box');
+const searchInputField = document.querySelector('.search');
+const searchInputButton = document.querySelector('.show-search-input-button');
 
 // global variables
 let cookBook
@@ -33,7 +34,10 @@ let ingredientsInfo
 let recipesInfo
 let repository
 let foundRecipe
+let usersInfo
+let currentUser
 let recipeTagsArray = [];
+
 
 // pages
 const landingPage = document.querySelector('.landing-page');
@@ -84,6 +88,10 @@ function tagSearch() {
 function whateveriwant() {
   recipesInfo = recipesData;
   ingredientsInfo = ingredientsData;
+  usersInfo = usersData;
+  currentUser = new User( usersInfo[chooseRandomUser(usersInfo)],ingredientsInfo);
+  console.log(currentUser);
+  userBox.innerText =  `Welcome ${currentUser.name}`;
   let newRecipe = []
   cookBook = recipesData.map(recipe => {
     newRecipe = new Recipe(recipe, ingredientsInfo);
@@ -94,6 +102,11 @@ function whateveriwant() {
   makeRecipeCard();
   clearSearchBar();
 }
+
+function chooseRandomUser(usersInfo) {
+  return Math.floor(Math.random() * usersInfo.length);
+}
+
 
 function multipleButtons() {
   let tags = [];
@@ -124,7 +137,7 @@ function clearSearchBar() {
   searchInput.value = '';
   nameSearch.checked = false;
   ingredientSearch.checked = false;
-  
+
 }
 
 function searchByTag(event) {
@@ -140,14 +153,12 @@ function searchByTag(event) {
 function  showSearchResultsPage() {
   showHide([searchResultsPage], [selectedText, selectedRecipePage, favoritesPage, landingPage]);
   hide([errorMessage])
-  
+
   sortSearch();
 }
 
 function sortSearch() {
   if (!searchInput.value && !nameSearch.checked && !ingredientSearch.checked && recipeTagsArray.length === 0) {
-    console.log('I saw this')
-    console.log(recipeTagsArray.length)
     showHide([landingPage, errorMessage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
   } else if (searchInput.value && !nameSearch.checked && !ingredientSearch.checked) {
     showHide([landingPage, errorMessage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
@@ -166,12 +177,10 @@ function sortSearch() {
   } else {
     populateByTag()
     showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage])
-    console.log('location(sortSearch): hereIAm')
   }
 }
 function searchByName() {
   let searched = repository.filterByRecipeName(searchInput.value)
-  
   populatedResults.innerHTML = ''
   searched.forEach(recipe => {
     populatedResults.innerHTML +=
@@ -180,17 +189,17 @@ function searchByName() {
     <h2>${recipe.name}</h2>
     </article>`
   })
-  searched.length === 0 ? populatedResults.innerHTML = '<h3>Aint nothing you want here! Go AWAY</h3>' : null 
+  searched.length === 0 ? populatedResults.innerHTML = '<h3>Aint nothing you want here! Go AWAY</h3>' : null
 }
 
 function searchByIngredient() {
-  
+
   let rawDataSearched = repository.filterByIngredient(searchInput.value)
   let searched = [...new Set(rawDataSearched)]
   populatedResults.innerHTML = ''
 
   searched.forEach(recipe => {
-    populatedResults.innerHTML += 
+    populatedResults.innerHTML +=
     ` <article id = "${recipe.id}">
     <img class="food-preview" src=${recipe.image}>
     <h2>${recipe.name}</h2>
@@ -217,7 +226,7 @@ function showSelectedRecipePage(event) {
 }
 
 function populateSelectedRecipe(event) {
-  let id = event.target.parentNode.id; 
+  let id = event.target.parentNode.id;
 
   foundRecipe = repository.recipeData.find(recipe =>{
     return recipe.id === parseInt(id)
@@ -248,13 +257,13 @@ function showFavPage() {
 }
 
 
-// helper functions 
+// helper functions
 function showHide(toShow, toHide) {
   show(toShow);
   hide(toHide);
 }
 
-function show(shows) { 
+function show(shows) {
   shows.forEach(function(show) {
     show.classList.remove('hidden')
   })
@@ -265,4 +274,3 @@ function hide(hides) {
     hide.classList.add('hidden');
   })
 }
-
