@@ -113,7 +113,7 @@ function multipleButtons() {
 function makeRecipeCard() {
   repository.recipeData.forEach(recipe => {
     recipeCard.innerHTML += 
-      `<article id="${recipe.id}">
+      `<article class="all-recipes" id="${recipe.id}">
       <img class="food-preview" src=${recipe.image}>
       <h2>${recipe.name}</h2>
       </article>`
