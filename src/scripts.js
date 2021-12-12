@@ -12,8 +12,6 @@ import usersData from './data/users.js'
 const searchBar = document.querySelector('input');
 const radioContainer = document.querySelector('#container');
 const recipeCard = document.querySelector('.previews');
-const addToFavoriteBtn = document.querySelector('.add-to-favorite-btn');
-const recipesToCookBtn = document.querySelector('.recipes-to-cook-btn');
 const searchedRecipeCard = document.querySelector('.food-preview')
 const selectedRecipeTitle = document.querySelector('.recipe-title');
 const selectedRecipeIngredientAmount = document.querySelector('.ingredients-amounts');
@@ -25,10 +23,8 @@ const searchInput = document.querySelector('#searchInput');
 const populatedResults = document.querySelector('.populated-results');
 const errorMessage = document.querySelector('.error-message');
 const userBox = document.querySelector('.user-box');
-const tagSearchButton = document.querySelector('.tag-search-button');
 const tagBox = document.querySelector('.tag-box');
 const searchInputField = document.querySelector('.search');
-const searchInputButton = document.querySelector('.show-search-input-button');
 
 // global variables
 let cookBook
@@ -40,7 +36,6 @@ let usersInfo
 let currentUser
 let recipeTagsArray = [];
 
-
 // pages
 const landingPage = document.querySelector('.landing-page');
 const selectedRecipePage = document.querySelector('.selected-recipe-page');
@@ -48,6 +43,10 @@ const searchResultsPage = document.querySelector('.search-results-page');
 const favoritesPage = document.querySelector('.favorites-page');
 
 // buttons
+const tagSearchButton = document.querySelector('.tag-search-button');
+const searchInputButton = document.querySelector('.show-search-input-button');
+const addToFavoriteButton = document.querySelector('.add-to-favorite-btn');
+const recipesToCookButton = document.querySelector('.recipes-to-cook-btn');
 const storedFavoritesButton = document.querySelector('.favorite-box');
 const searchButton = document.querySelector('.search-button');
 const nameSearch = document.querySelector('#nameSearch');
