@@ -133,7 +133,6 @@ function searchByTag(event) {
 function  showSearchResultsPage() {
   showHide([searchResultsPage], [selectedRecipePage, favoritesPage, landingPage]);
   sortSearch()
-
 }
 
 function sortSearch() {
@@ -172,13 +171,14 @@ function searchByName() {
 
 function searchByIngredient() {
   populatedResults.innerHTML = ''
-  let searched = repository.filterByIngredient(searchInput.value)
+  let rawDataSearched = repository.filterByIngredient(searchInput.value)
+  let searched = [...new Set(rawDataSearched)]
   searched.forEach(recipe => {
     populatedResults.innerHTML += 
-        ` <article id = "${recipe.id}">
-          <img class="food-preview" src=${recipe.image}>
-            <h2>${recipe.name}</h2>
-          </article>`
+    ` <article id = "${recipe.id}">
+    <img class="food-preview" src=${recipe.image}>
+    <h2>${recipe.name}</h2>
+    </article>`
   })
 }
 
