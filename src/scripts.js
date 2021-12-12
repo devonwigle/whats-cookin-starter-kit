@@ -9,9 +9,7 @@ import usersData from './data/users.js'
 
 // querySelectors
 const searchBar = document.querySelector('input');
-//
 const radioContainer = document.querySelector('#container');
-//
 let recipeCard = document.querySelector('.previews');
 let searchedRecipeCard = document.querySelector('.food-preview')
 let selectedRecipeTitle = document.querySelector('.recipe-title');
@@ -22,8 +20,12 @@ let selectedCosts = document.querySelector('.selected-cost');
 let selectedText = document.querySelector('.recipe-text');
 let searchInput = document.querySelector('#searchInput');
 let populatedResults = document.querySelector('.populated-results');
-let radio = document.querySelector('input[type=radio][name=language]:checked');
 let errorMessage = document.querySelector('.error-message');
+
+let tagSearchButton = document.querySelector('.tag-search-button');
+let tagBox = document.querySelector('.tag-box');
+let searchInputField = document.querySelector('.search');
+let searchInputButton = document.querySelector('.show-search-input-button');
 
 // global variables
 let cookBook
@@ -31,7 +33,7 @@ let ingredientsInfo
 let recipesInfo
 let repository
 let foundRecipe
-let recipeTagsArray
+let recipeTagsArray = [];
 
 // pages
 const landingPage = document.querySelector('.landing-page');
@@ -67,11 +69,18 @@ populatedResults.addEventListener('click', function(event) {
 
 storedFavoritesButton.addEventListener('click', showFavPage);
 
+tagSearchButton.addEventListener('click', tagSearch)
+searchInputButton.addEventListener('click', searchField)
 
 
 
 // functions
-
+function searchField() {
+  showHide([tagSearchButton, searchInputField], [tagBox, searchInputButton])
+}
+function tagSearch() {
+  showHide([tagBox, searchInputButton],[tagSearchButton, searchInputField])
+}
 function whateveriwant() {
   recipesInfo = recipesData;
   ingredientsInfo = ingredientsData;
@@ -115,13 +124,11 @@ function clearSearchBar() {
   searchInput.value = '';
   nameSearch.checked = false;
   ingredientSearch.checked = false;
-  //errorMessage.innerText = ''
+  
 }
 
 function searchByTag(event) {
   let eventTargets = event.target.value
-  console.log('event', eventTargets)
-  recipeTagsArray = []
   repository.recipeData.filter(recipe => {
     if (recipe.tags.includes(eventTargets)) {
       recipeTagsArray.push(recipe)
@@ -132,18 +139,24 @@ function searchByTag(event) {
 
 function  showSearchResultsPage() {
   showHide([searchResultsPage], [selectedRecipePage, favoritesPage, landingPage]);
-  sortSearch()
+  hide([errorMessage])
+  
+  sortSearch();
 }
 
 function sortSearch() {
-  if (!searchInput.value && ingredientSearch.checked) {
-    errorMessage.innerText = 'Error: Must enter an ingredient';
-    // helper functions at the bottom
-    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
+  if (!searchInput.value && !nameSearch.checked && !ingredientSearch.checked && recipeTagsArray.length === 0) {
+    console.log('I saw this')
+    console.log(recipeTagsArray.length)
+    showHide([landingPage, errorMessage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
+  } else if (searchInput.value && !nameSearch.checked && !ingredientSearch.checked) {
+    showHide([landingPage, errorMessage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
+  } else if (searchInput.value && !nameSearch.checked && !ingredientSearch.checked) {
+    showHide([landingPage, errorMessage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
+  } else if (!searchInput.value && ingredientSearch.checked) {
+    showHide([landingPage, errorMessage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
   } else if (!searchInput.value && nameSearch.checked) {
-    errorMessage.innerText = 'Error: Must enter a recipe name';
-    // helper functions at the bottom
-    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
+    showHide([landingPage, errorMessage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
   } else if (nameSearch.checked) {
     showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage])
     searchByName()
@@ -153,7 +166,7 @@ function sortSearch() {
   } else {
     populateByTag()
     showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage])
-    console.log('hereIAm')
+    console.log('location(sortSearch): hereIAm')
   }
 }
 function searchByName() {
@@ -188,7 +201,6 @@ function searchByIngredient() {
 
 function populateByTag() {
   populatedResults.innerHTML = ''
-  console.log('populate by tag', recipeTagsArray)
   recipeTagsArray.forEach(recipe => {
     populatedResults.innerHTML +=
       `<article id="${recipe.id}">
