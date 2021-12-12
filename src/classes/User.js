@@ -5,6 +5,7 @@ class User {
     this.pantry = userData.pantry;
     this.favorite = [];
     this.recipesToCook = [];
+    this.ingredientsData = ingredientsData
   };
 
   addToFavorite(recipeData) {
@@ -12,6 +13,7 @@ class User {
       this.favorite.push(recipeData)
     };
   };
+
   removeFromFavorite(recipeData) {
     this.favorite.forEach(recipe => {
       if(recipeData.id === recipe.id) {
@@ -19,6 +21,47 @@ class User {
       };
     });
   };
+
+  addToRecipesToCook(recipeData) {
+    if(!this.recipesToCook.includes(recipeData)){
+      this.recipesToCook.push(recipeData)
+    };
+  };
+
+  removeFromRecipesToCook(recipeData) {
+    this.recipesToCook.forEach(recipe => {
+      if(recipeData.id === recipe.id) {
+        this.recipesToCook.splice(this.recipesToCook.indexOf(recipeData),1)
+      };
+    });
+  };
+
+  filterFavoriteByTag(userInput) {
+    let filterTag = this.favorite.filter((recipe) => {
+      return recipe.tags.includes(userInput)
+    })
+    return filterTag
+  }
+  filterFavoriteByRecipeName(userInput) {
+    let filterRecipe = this.favorite.filter((recipe) => {
+      return recipe.name.toLowerCase().includes(userInput.toLowerCase())
+    })
+    return filterRecipe
+  }
+  filterFavoriteByIngredient(userInput) {
+    let filtered = [];
+    let filteredIngredient =  this.ingredientsData.filter((ingredient) => {
+      return ingredient.name.toLowerCase().includes(userInput.toLowerCase())
+    });
+    let checkedRecipe = this.favorite.forEach((recipe) => {
+      recipe.ingredients.forEach((ing) => {
+        if (ing.id === filteredIngredient[0].id) {
+          filtered.push(recipe)
+        }
+      })
+    })
+    return filtered
+  }
 
 }
 export default User;

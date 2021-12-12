@@ -34,4 +34,40 @@ describe('User', () => {
     currentUser.removeFromFavorite(recipeData[0]);
     expect(currentUser.favorite).to.deep.equal([recipeData[1]]);
   });
+
+  it('Should be able to add to recipes to cook', () => {
+    currentUser.addToRecipesToCook(recipeData[0]);
+    expect(currentUser.recipesToCook).to.deep.equal([recipeData[0]]);
+    currentUser.addToRecipesToCook(recipeData[1]);
+    expect(currentUser.recipesToCook).to.deep.equal([recipeData[0],recipeData[1]]);
+  });
+
+  it('Should be able to remove from recipes to cook', () => {
+    currentUser.addToRecipesToCook(recipeData[0]);
+    currentUser.addToRecipesToCook(recipeData[1]);
+    currentUser.removeFromRecipesToCook(recipeData[0]);
+    expect(currentUser.recipesToCook).to.deep.equal([recipeData[1]]);
+  });
+
+  it('Should have a method to filter favorite by recipe name', () => {
+    currentUser.addToFavorite(recipeData[0]);
+    currentUser.addToFavorite(recipeData[1]);
+    let userInput = 'cookie'
+    expect(currentUser.filterFavoriteByRecipeName(userInput)).to.deep.equal([recipeData[0]]);
+  });
+
+  it('should have a method to filter by ingredients', () => {
+    currentUser.addToFavorite(recipeData[0]);
+    currentUser.addToFavorite(recipeData[1]);
+    let userInput = 'wheat flour';
+    expect(currentUser.filterFavoriteByIngredient(userInput)).to.deep.equal([recipeData[0]]);
+  })
+
+  it('should have a method to filter by tag', () => {
+    currentUser.addToFavorite(recipeData[0]);
+    currentUser.addToFavorite(recipeData[1]);
+    let userInput = 'snack';
+    expect(currentUser.filterFavoriteByTag(userInput)).to.deep.equal([recipeData[0]]);
+  });
+
 })
