@@ -66,6 +66,7 @@ function clearSearchBar() {
   searchInput.value = '';
   nameSearch.checked = false;
   ingredientSearch.checked = false;
+  //errorMessage.innerText = ''
 }
 
 function searchByTag(event) {
@@ -121,8 +122,10 @@ function  showSearchResultsPage() {
 
 function sortSearch() {
   if (!searchInput.value && ingredientSearch.checked) {
-    errorMessage.innerText = 'Error: Must enter an ingredient'
-    console.log('SAD');
+    errorMessage.innerText = 'Error: Must enter an ingredient';
+    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
+  } else if (!searchInput.value && nameSearch.checked) {
+    errorMessage.innerText = 'Error: Must enter a recipe name';
     showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
   } else if (nameSearch.checked) {
     searchByName()
@@ -134,9 +137,6 @@ function sortSearch() {
 }
 
 function searchByIngredient() {
-  // if (!searchInput.value) {
-  //   console.log('SAD')
-  // }
   let searched = repository.filterByIngredient(searchInput.value)
   searched.forEach(recipe => {
     populatedResults.innerHTML += 
