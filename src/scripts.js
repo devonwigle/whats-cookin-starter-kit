@@ -11,7 +11,7 @@ import usersData from './data/users.js'
 const searchBar = document.querySelector('input');
 const radioContainer = document.querySelector('#container');
 let recipeCard = document.querySelector('.previews');
-let searchedRecipeCard = document.querySelector('.food-preview')
+let searchedRecipeCard = document.querySelector('.food-preview');
 let selectedRecipeTitle = document.querySelector('.recipe-title');
 let selectedRecipeIngredientAmount = document.querySelector('.ingredients-amounts');
 let selectedRecipeDirections = document.querySelector('.recipe-directions');
