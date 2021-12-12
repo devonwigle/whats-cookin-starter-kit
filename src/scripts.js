@@ -157,22 +157,25 @@ function sortSearch() {
   }
 }
 function searchByName() {
-  populatedResults.innerHTML = ''
   let searched = repository.filterByRecipeName(searchInput.value)
-  console.log(searchInput.value)
+  
+  populatedResults.innerHTML = ''
   searched.forEach(recipe => {
     populatedResults.innerHTML +=
-        ` <article id = "${recipe.id}">
-        <img class="food-preview" src=${recipe.image}>
-          <h2>${recipe.name}</h2>
-        </article>`
+    ` <article id = "${recipe.id}">
+    <img class="food-preview" src=${recipe.image}>
+    <h2>${recipe.name}</h2>
+    </article>`
   })
+  searched.length === 0 ? populatedResults.innerHTML = '<h3>Aint nothing you want here! Go AWAY</h3>' : null 
 }
 
 function searchByIngredient() {
-  populatedResults.innerHTML = ''
+  
   let rawDataSearched = repository.filterByIngredient(searchInput.value)
   let searched = [...new Set(rawDataSearched)]
+  populatedResults.innerHTML = ''
+
   searched.forEach(recipe => {
     populatedResults.innerHTML += 
     ` <article id = "${recipe.id}">
@@ -180,6 +183,7 @@ function searchByIngredient() {
     <h2>${recipe.name}</h2>
     </article>`
   })
+  searched.length === 0 ? populatedResults.innerHTML = '<h3>Aint nothing you want here! Go AWAY</h3>' : null
 }
 
 function populateByTag() {
