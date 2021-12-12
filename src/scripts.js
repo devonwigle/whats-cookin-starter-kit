@@ -12,6 +12,7 @@ const searchBar = document.querySelector('input');
 const radioContainer = document.querySelector('#container');
 //
 let recipeCard = document.querySelector('.previews');
+let searchedRecipeCard = document.querySelector('.food-preview')
 let selectedRecipeTitle = document.querySelector('.recipe-title');
 let selectedRecipeIngredientAmount = document.querySelector('.ingredients-amounts');
 let selectedRecipeDirections = document.querySelector('.recipe-directions');
@@ -51,15 +52,17 @@ radioContainer.addEventListener('change', function(event) {
 });
 
 searchButton.addEventListener('click', function() {
-  clearSearchBar();
   showSearchResultsPage();
+  clearSearchBar();
 });
 
 recipeCard.addEventListener('click', function(event) {
   showSelectedRecipePage(event)
 });
-//
 
+populatedResults.addEventListener('click', function(event) {
+  showSelectedRecipePage(event)
+});
 
 storedFavoritesButton.addEventListener('click', showFavPage);
 
@@ -127,8 +130,9 @@ function searchByTag(event) {
 }
 
 function  showSearchResultsPage() {
-  showHide([searchResultsPage], [selectedRecipePage, selectedText, favoritesPage, landingPage]);
+  showHide([searchResultsPage], [selectedRecipePage, favoritesPage, landingPage]);
   sortSearch()
+
 }
 
 function sortSearch() {
@@ -141,11 +145,15 @@ function sortSearch() {
     // helper functions at the bottom
     showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
   } else if (nameSearch.checked) {
+    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage])
     searchByName()
   } else if (ingredientSearch.checked) {
+    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage])
     searchByIngredient()
   } else {
     populateByTag()
+    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage])
+    console.log('hereIAm')
   }
 }
 function searchByName() {
@@ -183,8 +191,9 @@ function populateByTag() {
 }
 
 function showSelectedRecipePage(event) {
-  showHide([selectedRecipePage], [searchResultsPage, favoritesPage, landingPage])
-  populateSelectedRecipe(event)
+  showHide([selectedRecipePage, selectedText], [searchResultsPage, favoritesPage, landingPage]);
+  populateSelectedRecipe(event);
+  populatedResults.innerHTML = ``;
 }
 
 function populateSelectedRecipe(event) {
