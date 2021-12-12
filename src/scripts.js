@@ -125,8 +125,8 @@ function multipleButtons() {
 
 function makeRecipeCard() {
   repository.recipeData.forEach(recipe => {
-    recipeCard.innerHTML +=
-      `<article id="${recipe.id}">
+    recipeCard.innerHTML += 
+      `<article class="all-recipes" id="${recipe.id}">
       <img class="food-preview" src=${recipe.image}>
       <h2>${recipe.name}</h2>
       </article>`
@@ -151,7 +151,7 @@ function searchByTag(event) {
 }
 
 function  showSearchResultsPage() {
-  showHide([searchResultsPage], [selectedRecipePage, favoritesPage, landingPage]);
+  showHide([searchResultsPage], [selectedText, selectedRecipePage, favoritesPage, landingPage]);
   hide([errorMessage])
 
   sortSearch();
@@ -184,7 +184,7 @@ function searchByName() {
   populatedResults.innerHTML = ''
   searched.forEach(recipe => {
     populatedResults.innerHTML +=
-    ` <article id = "${recipe.id}">
+    ` <article class="all-recipes" id = "${recipe.id}">
     <img class="food-preview" src=${recipe.image}>
     <h2>${recipe.name}</h2>
     </article>`
