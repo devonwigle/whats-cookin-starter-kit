@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import './styles.css';
 import apiCalls from './apiCalls';
 import RecipeRepository from './classes/RecipeRepository.js'
@@ -157,6 +158,7 @@ function sortSearch() {
   }
 }
 function searchByName() {
+  populatedResults.innerHTML = ''
   let searched = repository.filterByRecipeName(searchInput.value)
   console.log(searchInput.value)
   searched.forEach(recipe => {
@@ -169,6 +171,7 @@ function searchByName() {
 }
 
 function searchByIngredient() {
+  populatedResults.innerHTML = ''
   let searched = repository.filterByIngredient(searchInput.value)
   searched.forEach(recipe => {
     populatedResults.innerHTML += 
@@ -180,6 +183,7 @@ function searchByIngredient() {
 }
 
 function populateByTag() {
+  populatedResults.innerHTML = ''
   console.log('populate by tag', recipeTagsArray)
   recipeTagsArray.forEach(recipe => {
     populatedResults.innerHTML +=
