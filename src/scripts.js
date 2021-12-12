@@ -44,54 +44,30 @@ const nameSearch = document.querySelector('#nameSearch');
 const ingredientSearch = document.querySelector('#ingredientSearch')
 
 //event listeners
-storedFavoritesButton.addEventListener('click', showFavPage);
-recipeCard.addEventListener('click', function(event) {
-  showSelectedRecipePage(event)
-})
-searchButton.addEventListener('click', function() {
-  showSearchResultsPage();
-  clearSearchBar();
-
-})
+window.addEventListener('load', whateveriwant);
 
 radioContainer.addEventListener('change', function(event) {
   searchByTag(event)
-})
-window.addEventListener('load', whateveriwant);
+});
+
+searchButton.addEventListener('click', function() {
+  clearSearchBar();
+  showSearchResultsPage();
+});
+
+recipeCard.addEventListener('click', function(event) {
+  showSelectedRecipePage(event)
+});
+//
+
+
+storedFavoritesButton.addEventListener('click', showFavPage);
+
 
 
 
 // functions
-function clearSearchBar() {
-  searchInput.value = '';
-  nameSearch.checked = false;
-  ingredientSearch.checked = false;
-  //errorMessage.innerText = ''
-}
 
-function searchByTag(event) {
-  let dropDownTag = radioContainer.value
-  let eventTargets = event.target.value
-  console.log('event', eventTargets)
-  recipeTagsArray = []
-  repository.recipeData.filter(recipe => {
-    if (recipe.tags.includes(eventTargets)) {
-      recipeTagsArray.push(recipe)
-      console.log(recipeTagsArray)
-    }
-  })
-}
-
-function populateByTag() {
-  console.log('populate by tag', recipeTagsArray)
-  recipeTagsArray.forEach(recipe => {
-    populatedResults.innerHTML +=
-    `<article id="${recipe.id}">
-      <img class="food-preview" src=${recipe.image}>
-      <h2>${recipe.name}</h2>
-      </article>`
-  })
-}
 function whateveriwant() {
   recipesInfo = recipesData;
   ingredientsInfo = ingredientsData;
@@ -106,98 +82,8 @@ function whateveriwant() {
   clearSearchBar();
 }
 
-function makeRecipeCard() {
-  repository.recipeData.forEach(recipe => {
-    recipeCard.innerHTML += 
-      `<article id="${recipe.id}">
-      <img class="food-preview" src=${recipe.image}>
-      <h2>${recipe.name}</h2>
-      </article>`
-  })
-}
-function  showSearchResultsPage() {
-  showHide([searchResultsPage], [selectedRecipePage, selectedText,favoritesPage, landingPage]);
-  sortSearch()
-}
-
-function sortSearch() {
-  if (!searchInput.value && ingredientSearch.checked) {
-    errorMessage.innerText = 'Error: Must enter an ingredient';
-    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
-  } else if (!searchInput.value && nameSearch.checked) {
-    errorMessage.innerText = 'Error: Must enter a recipe name';
-    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
-  } else if (nameSearch.checked) {
-    searchByName()
-  } else if (ingredientSearch.checked) {
-    searchByIngredient()
-  } else {
-    populateByTag()
-  }
-}
-
-function searchByIngredient() {
-  let searched = repository.filterByIngredient(searchInput.value)
-  searched.forEach(recipe => {
-    populatedResults.innerHTML += 
-      ` <article id = "${recipe.id}">
-        <img class="food-preview" src=${recipe.image}>
-          <h2>${recipe.name}</h2>
-        </article>`
-  })
-}
-
-function searchByName() {
-  let searched = repository.filterByRecipeName(searchInput.value)
-  console.log(searchInput.value)
-  searched.forEach(recipe => {
-    populatedResults.innerHTML +=
-      ` <article id = "${recipe.id}">
-      <img class="food-preview" src=${recipe.image}>
-        <h2>${recipe.name}</h2>
-      </article>`
-    })
-
-}
-
-function showSelectedRecipePage(event) {
-  showHide([selectedRecipePage], [searchResultsPage, favoritesPage, landingPage])
-  selectedRecipePopulation(event)
-}
-
-function selectedRecipePopulation(event) {
-  let id = event.target.parentNode.id; 
-   foundRecipe = repository.recipeData.find(recipe =>{
-    return recipe.id === parseInt(id)
-
-  });
-  console.log('HELLO WORLD', foundRecipe.ingredientInfo)
-  console.log('Found Costs', foundRecipe)
-  selectedRecipeImage.src = `${foundRecipe.image}`
-  selectedRecipeTitle.innerText = `${foundRecipe.name}`;
-  selectedCosts.innerText = `Estimated Cost: ${foundRecipe.getCostOfIngredients()}`
-
-  foundRecipe.ingredientInfo.forEach(datum => {
-    selectedRecipeIngredientAmount.innerHTML += `<div>
-        <li>${datum.quantity} ${datum.unit} ${datum.name} </li>
-      </div>`
-  })
-  foundRecipe.instructions.forEach(instruction => {
-    selectedRecipeDirections.innerHTML += `<div>
-        <ul>${instruction.number}.     ${instruction.instruction}</ul>
-      </div>`
-  })
-  
-}
-
-
-function showFavPage() {
-  showHide([favoritesPage], [searchResultsPage, selectedText, selectedRecipePage, landingPage]);
-}
-
 function multipleButtons() {
   let tags = [];
-  // console.log('REPOSITORY REIPE DATA', repository.recipeData)
   repository.recipeData.forEach(recipe => {
     recipe.tags.forEach(tag => {
       if (!tags.includes(tag)) {
@@ -210,6 +96,129 @@ function multipleButtons() {
     radioContainer.innerHTML += `<option value="${tag}">${tag}</option>`
   })
 }
+
+function makeRecipeCard() {
+  repository.recipeData.forEach(recipe => {
+    recipeCard.innerHTML += 
+      `<article id="${recipe.id}">
+      <img class="food-preview" src=${recipe.image}>
+      <h2>${recipe.name}</h2>
+      </article>`
+  })
+}
+
+function clearSearchBar() {
+  searchInput.value = '';
+  nameSearch.checked = false;
+  ingredientSearch.checked = false;
+  //errorMessage.innerText = ''
+}
+
+function searchByTag(event) {
+  let eventTargets = event.target.value
+  console.log('event', eventTargets)
+  recipeTagsArray = []
+  repository.recipeData.filter(recipe => {
+    if (recipe.tags.includes(eventTargets)) {
+      recipeTagsArray.push(recipe)
+      console.log(recipeTagsArray)
+    }
+  })
+}
+
+function  showSearchResultsPage() {
+  showHide([searchResultsPage], [selectedRecipePage, selectedText, favoritesPage, landingPage]);
+  sortSearch()
+}
+
+function sortSearch() {
+  if (!searchInput.value && ingredientSearch.checked) {
+    errorMessage.innerText = 'Error: Must enter an ingredient';
+    // helper functions at the bottom
+    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
+  } else if (!searchInput.value && nameSearch.checked) {
+    errorMessage.innerText = 'Error: Must enter a recipe name';
+    // helper functions at the bottom
+    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
+  } else if (nameSearch.checked) {
+    searchByName()
+  } else if (ingredientSearch.checked) {
+    searchByIngredient()
+  } else {
+    populateByTag()
+  }
+}
+function searchByName() {
+  let searched = repository.filterByRecipeName(searchInput.value)
+  console.log(searchInput.value)
+  searched.forEach(recipe => {
+    populatedResults.innerHTML +=
+        ` <article id = "${recipe.id}">
+        <img class="food-preview" src=${recipe.image}>
+          <h2>${recipe.name}</h2>
+        </article>`
+  })
+}
+
+function searchByIngredient() {
+  let searched = repository.filterByIngredient(searchInput.value)
+  searched.forEach(recipe => {
+    populatedResults.innerHTML += 
+        ` <article id = "${recipe.id}">
+          <img class="food-preview" src=${recipe.image}>
+            <h2>${recipe.name}</h2>
+          </article>`
+  })
+}
+
+function populateByTag() {
+  console.log('populate by tag', recipeTagsArray)
+  recipeTagsArray.forEach(recipe => {
+    populatedResults.innerHTML +=
+      `<article id="${recipe.id}">
+        <img class="food-preview" src=${recipe.image}>
+        <h2>${recipe.name}</h2>
+        </article>`
+  })
+}
+
+function showSelectedRecipePage(event) {
+  showHide([selectedRecipePage], [searchResultsPage, favoritesPage, landingPage])
+  populateSelectedRecipe(event)
+}
+
+function populateSelectedRecipe(event) {
+  let id = event.target.parentNode.id; 
+
+  foundRecipe = repository.recipeData.find(recipe =>{
+    return recipe.id === parseInt(id)
+  });
+
+  let costOfIngredients = foundRecipe.getCostOfIngredients();
+
+  selectedRecipeImage.src = `${foundRecipe.image}`;
+  selectedRecipeTitle.innerText = `${foundRecipe.name}`;
+  selectedCosts.innerText = `Estimated Cost: ${costOfIngredients}`
+
+  foundRecipe.ingredientInfo.forEach(datum => {
+    selectedRecipeIngredientAmount.innerHTML += `<div>
+        <li>${datum.quantity} ${datum.unit} ${datum.name} </li>
+      </div>`
+  })
+
+  foundRecipe.instructions.forEach(instruction => {
+    selectedRecipeDirections.innerHTML += `<div>
+        <ul>${instruction.number}.     ${instruction.instruction}</ul>
+      </div>`
+  })
+}
+
+// doesnt do anything yet
+function showFavPage() {
+  showHide([favoritesPage], [searchResultsPage, selectedText, selectedRecipePage, landingPage]);
+}
+
+
 // helper functions 
 function showHide(toShow, toHide) {
   show(toShow);
@@ -228,4 +237,3 @@ function hide(hides) {
   })
 }
 
-/* event bubbling  */
