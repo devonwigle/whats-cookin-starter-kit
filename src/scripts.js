@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import './styles.css';
 import apiCalls from './apiCalls';
 import RecipeRepository from './classes/RecipeRepository.js'
@@ -132,7 +133,6 @@ function searchByTag(event) {
 function  showSearchResultsPage() {
   showHide([searchResultsPage], [selectedRecipePage, favoritesPage, landingPage]);
   sortSearch()
-
 }
 
 function sortSearch() {
@@ -158,28 +158,36 @@ function sortSearch() {
 }
 function searchByName() {
   let searched = repository.filterByRecipeName(searchInput.value)
-  console.log(searchInput.value)
+  
+  populatedResults.innerHTML = ''
   searched.forEach(recipe => {
     populatedResults.innerHTML +=
-        ` <article id = "${recipe.id}">
-        <img class="food-preview" src=${recipe.image}>
-          <h2>${recipe.name}</h2>
-        </article>`
+    ` <article id = "${recipe.id}">
+    <img class="food-preview" src=${recipe.image}>
+    <h2>${recipe.name}</h2>
+    </article>`
   })
+  searched.length === 0 ? populatedResults.innerHTML = '<h3>Aint nothing you want here! Go AWAY</h3>' : null 
 }
 
 function searchByIngredient() {
-  let searched = repository.filterByIngredient(searchInput.value)
+  
+  let rawDataSearched = repository.filterByIngredient(searchInput.value)
+  let searched = [...new Set(rawDataSearched)]
+  populatedResults.innerHTML = ''
+
   searched.forEach(recipe => {
     populatedResults.innerHTML += 
-        ` <article id = "${recipe.id}">
-          <img class="food-preview" src=${recipe.image}>
-            <h2>${recipe.name}</h2>
-          </article>`
+    ` <article id = "${recipe.id}">
+    <img class="food-preview" src=${recipe.image}>
+    <h2>${recipe.name}</h2>
+    </article>`
   })
+  searched.length === 0 ? populatedResults.innerHTML = '<h3>Aint nothing you want here! Go AWAY</h3>' : null
 }
 
 function populateByTag() {
+  populatedResults.innerHTML = ''
   console.log('populate by tag', recipeTagsArray)
   recipeTagsArray.forEach(recipe => {
     populatedResults.innerHTML +=
