@@ -30,14 +30,26 @@ h2 {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  flex-direction: column;
+  flex-direction: row;
   align-content: stretch;
   align-items: center;
+  margin-top: 60px;
 }
 
 .food-preview {
-  height: 50px;
+  height: 150px;
   width: auto;
+}
+
+.all-recipes {
+  display: flex;
+  background: red;
+  height: 300px;
+  width: 300px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin: 30px;
 }
 
 .selected-recipe-page {
