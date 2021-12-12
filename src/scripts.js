@@ -12,6 +12,8 @@ import usersData from './data/users.js'
 const searchBar = document.querySelector('input');
 const radioContainer = document.querySelector('#container');
 const recipeCard = document.querySelector('.previews');
+const addToFavoriteBtn = document.querySelector('.add-to-favorite-btn');
+const recipesToCookBtn = document.querySelector('.recipes-to-cook-btn');
 const searchedRecipeCard = document.querySelector('.food-preview')
 const selectedRecipeTitle = document.querySelector('.recipe-title');
 const selectedRecipeIngredientAmount = document.querySelector('.ingredients-amounts');
@@ -125,10 +127,12 @@ function multipleButtons() {
 
 function makeRecipeCard() {
   repository.recipeData.forEach(recipe => {
-    recipeCard.innerHTML += 
+    recipeCard.innerHTML +=
       `<article class="all-recipes" id="${recipe.id}">
       <img class="food-preview" src=${recipe.image}>
       <h2>${recipe.name}</h2>
+      <button class="add-to-favorite-btn">Add to Favorites</button>
+      <button class="recipes-to-cook-btn">Recipes to Cook</button>
       </article>`
   })
 }
@@ -187,6 +191,8 @@ function searchByName() {
     ` <article class="all-recipes" id = "${recipe.id}">
     <img class="food-preview" src=${recipe.image}>
     <h2>${recipe.name}</h2>
+    <button class="add-to-favorite-btn">Add to Favorites</button>
+    <button class="recipes-to-cook-btn">Recipes to Cook</button>
     </article>`
   })
   searched.length === 0 ? populatedResults.innerHTML = '<h3>Aint nothing you want here! Go AWAY</h3>' : null
@@ -203,6 +209,8 @@ function searchByIngredient() {
     ` <article id = "${recipe.id}">
     <img class="food-preview" src=${recipe.image}>
     <h2>${recipe.name}</h2>
+    <button class="add-to-favorite-btn">Add to Favorites</button>
+    <button class="recipes-to-cook-btn">Recipes to Cook</button>
     </article>`
   })
   searched.length === 0 ? populatedResults.innerHTML = '<h3>Aint nothing you want here! Go AWAY</h3>' : null
@@ -215,6 +223,8 @@ function populateByTag() {
       `<article id="${recipe.id}">
         <img class="food-preview" src=${recipe.image}>
         <h2>${recipe.name}</h2>
+        <button class="add-to-favorite-btn">Add to Favorites</button>
+        <button class="recipes-to-cook-btn">Recipes to Cook</button>
         </article>`
   })
 }
@@ -227,23 +237,27 @@ function showSelectedRecipePage(event) {
 
 function populateSelectedRecipe(event) {
   let id = event.target.parentNode.id;
-
   foundRecipe = repository.recipeData.find(recipe =>{
     return recipe.id === parseInt(id)
   });
-
   let costOfIngredients = foundRecipe.getCostOfIngredients();
-
-  selectedRecipeImage.src = `${foundRecipe.image}`;
-  selectedRecipeTitle.innerText = `${foundRecipe.name}`;
-  selectedCosts.innerText = `Estimated Cost: ${costOfIngredients}`
-
+  selectedRecipePage.innerHTML = ``
+  selectedRecipePage.innerHTML +=
+  `<h1 class="recipe-title">${foundRecipe.name}</h1>
+  <img class="recipe-image" src=${foundRecipe.image}>
+  <div class="selected-cost">Estimated Cost:$${costOfIngredients}</div>
+  </div>
+  <div class="recipe-text hidden">
+    <article class="selected-text ingredients-amounts"><h3>Ingredients List</h3>
+    </article>
+    <article class="selected-text recipe-directions"><h3>Directions</h3>
+    </article>
+  </div>`
   foundRecipe.ingredientInfo.forEach(datum => {
     selectedRecipeIngredientAmount.innerHTML += `<div>
         <li>${datum.quantity} ${datum.unit} ${datum.name} </li>
       </div>`
   })
-
   foundRecipe.instructions.forEach(instruction => {
     selectedRecipeDirections.innerHTML += `<div>
         <ul>${instruction.number}.     ${instruction.instruction}</ul>
