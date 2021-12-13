@@ -246,7 +246,8 @@ function showSelectedRecipePage(event) {
 }
 
 function populateSelectedRecipe(event) {
-  let id = event.target.parentNode.id;
+  // console.log('closest?', event.target.closest('article').id )
+  let id = event.target.closest('article').id;
   foundRecipe = repository.recipeData.find(recipe =>{
     return recipe.id === parseInt(id)
   });
@@ -263,8 +264,8 @@ function populateSelectedRecipe(event) {
     <article class="selected-text recipe-directions"><h3>Directions</h3>
     </article>
   </div>`
-  selectedRecipeDirections.innerHTML = ``;
-  selectedRecipeIngredientAmount.innerHTML = ``;
+  selectedRecipeDirections.innerHTML = `<h3>Directions</h3>`;
+  selectedRecipeIngredientAmount.innerHTML = `<h3>Ingredients</h3>`;
   foundRecipe.ingredientInfo.forEach(datum => {
     selectedRecipeIngredientAmount.innerHTML += `<div>
         <li>${datum.quantity} ${datum.unit} ${datum.name} </li>
