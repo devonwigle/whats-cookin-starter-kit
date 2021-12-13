@@ -90,14 +90,14 @@ searchInputButton.addEventListener('click', searchField)
 
 // functions
 function goHome() {
-  showHide([landingPage], [selectedText, selectedRecipePage, favoritesPage, searchResultsPage]);
+  showHide([landingPage], [selectedText, selectedRecipePage, favoritesPage, searchResultsPage], 'hidden');
 }
 
 function searchField() {
-  showHide([tagSearchButton, searchInputField], [tagBox, searchInputButton])
+  showHide([tagSearchButton, searchInputField], [tagBox, searchInputButton], 'hidden')
 }
 function tagSearch() {
-  showHide([tagBox, searchInputButton],[tagSearchButton, searchInputField])
+  showHide([tagBox, searchInputButton],[tagSearchButton, searchInputField], 'hidden')
 }
 function whateveriwant() {
   recipesInfo = recipesData;
@@ -166,32 +166,37 @@ function searchByTag(event) {
 }
 
 function  showSearchResultsPage() {
-  showHide([searchResultsPage], [selectedText, selectedRecipePage, favoritesPage, landingPage]);
-  hide([errorMessage])
+  showHide([searchResultsPage], [selectedText, selectedRecipePage, favoritesPage, landingPage], 'hidden');
+  hide([errorMessage], 'invisible')
 
   sortSearch();
 }
 
 function sortSearch() {
   if (!searchInput.value && !nameSearch.checked && !ingredientSearch.checked && recipeTagsArray.length === 0) {
-    showHide([landingPage, errorMessage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
+    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage], 'hidden')
+    show([errorMessage], 'invisible')
   } else if (searchInput.value && !nameSearch.checked && !ingredientSearch.checked) {
-    showHide([landingPage, errorMessage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
+    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage], 'hidden')
+    show([errorMessage], 'invisible')
   } else if (searchInput.value && !nameSearch.checked && !ingredientSearch.checked) {
-    showHide([landingPage, errorMessage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
+    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage], 'hidden')
+    show([errorMessage], 'invisible')
   } else if (!searchInput.value && ingredientSearch.checked) {
-    showHide([landingPage, errorMessage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
+    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage], 'hidden')
+    show([errorMessage], 'invisible')
   } else if (!searchInput.value && nameSearch.checked) {
-    showHide([landingPage, errorMessage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
+    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage], 'hidden')
+    show([errorMessage], 'invisible')
   } else if (nameSearch.checked) {
-    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage])
+    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage], 'hidden')
     searchByName()
   } else if (ingredientSearch.checked) {
-    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage])
+    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage], 'hidden')
     searchByIngredient()
   } else {
     populateByTag()
-    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage])
+    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage], 'hidden')
   }
 }
 function searchByName() {
@@ -235,7 +240,7 @@ function populateByTag() {
 }
 
 function showSelectedRecipePage(event) {
-  showHide([selectedRecipePage, selectedText], [searchResultsPage, favoritesPage, landingPage]);
+  showHide([selectedRecipePage, selectedText], [searchResultsPage, favoritesPage, landingPage], 'hidden');
   populateSelectedRecipe(event);
   populatedResults.innerHTML = ``;
 }
@@ -282,7 +287,7 @@ function showFavPage() {
         <h2>${recipe.name}</h2>
         </article>`
   })
-  showHide([favoritesPage], [searchResultsPage, selectedText, selectedRecipePage, landingPage]);
+  showHide([favoritesPage], [searchResultsPage, selectedText, selectedRecipePage, landingPage], 'hidden');
 }
 
 function addToFavs() {
@@ -299,19 +304,19 @@ function removeFromFavs() {
 }
 
 // helper functions
-function showHide(toShow, toHide) {
-  show(toShow);
-  hide(toHide);
+function showHide(toShow, toHide, css) {
+  show(toShow, css);
+  hide(toHide, css);
 }
 
-function show(shows) {
+function show(shows, css) {
   shows.forEach(function(show) {
-    show.classList.remove('hidden')
+    show.classList.remove(css)
   })
 }
 
-function hide(hides) {
+function hide(hides, css) {
   hides.forEach(function(hide) {
-    hide.classList.add('hidden');
+    hide.classList.add(css);
   })
 }
