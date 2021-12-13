@@ -1,22 +1,41 @@
 # What's Cookin'? Starter Kit 
 
-The details of this project are outlined in the <a href="https://frontend.turing.edu/projects/What%27sCookin-PartOne.html" target="\__blank">project spec</a>.
+## Abstract
+To create a cooking website where you can pick from several recipies,
+favorite and unfavorite recipies, and seach for recipies by either their tag or their  ingredients. 
 
-## Set Up 
+More details of this project can be found in the <a href="https://frontend.turing.edu/projects/What%27sCookin-PartOne.html" target="\__blank">project spec</a>.
 
-1. Within your group, decide on one person to have the project repository on their Github account. This person will *fork* this repository - on the top right corner of the page, click the fork button. 
-2. All group members should then clone down the forked repository (make sure that everyone is added as a collaborator as well). Since you don't want your project to be named "whats-cookin-starter-kit", add an optional argument after the repo url when cloning. The command should look like this: `git clone [remote-address] [what you want to name the repo]`.
-3. Once you have cloned the repo, change into the directory and install the project dependencies. Run `npm install` or `npm i` to install project dependencies.
-4. Run `npm start` and visit `localhost:8080`
-5. Make sure both members of your team are collaborators on the forked repo.
+Happy cooking!
 
-## Testing 
+![good burger](https://media0.giphy.com/media/LRrHCZYvcKukTi3ayH/giphy.gif?cid=ecf05e47n5cue0m61kdc0ditgr1gcfc83gt3ln2xjhoeh549&rid=giphy.gif&ct=g)
 
-Mocha and chai are already set up, with a boilerplate test for you. 
+## Project Overview
+![project gif](https://media0.giphy.com/media/qUX6BJLgVthYSpDgQL/giphy.gif?cid=790b761136e45c4625adede4b51afec1b9b24f16787eef4c&rid=giphy.gif&ct=g)
 
-## Linting Your Code 
+## Landing Page
+<img width="1899" alt="whats cooking home page" src="https://user-images.githubusercontent.com/29051996/145898372-fc7589c1-1f42-42b2-9c0a-f70c7cfb39c7.png">
 
-Run the command in your terminal `npm run lint` to run the linter on your JavaScript code. There will be errors and warnings right from the start in this starter kit, but that's ok - the linter is still running successfully.
+## Clicking on a recipe
+<img width="965" alt="clicking on a recipe" src="https://user-images.githubusercontent.com/29051996/145898782-0b1d26bd-e236-4e33-9583-02240d1b7a54.png">
 
-Your linter will look only at the JavaScript files you have within the src and the test directories.
+## Favoriting a recipe 
+<img width="1917" alt="favoriting a recipe" src="https://user-images.githubusercontent.com/29051996/145904693-80221105-6850-4d51-ae68-63b625723da0.png">
 
+## Contributers
+-------
+
+![contributers](https://media3.giphy.com/media/VHHxxFAeLaYzS/giphy.gif?cid=ecf05e47our7jn7plkf028amwm2gd5tpxe0ck87kcr9kgtca&rid=giphy.gif&ct=g)
+- <a href="https://github.com/devonwigle" target="\_blank">Devon Wigle</a> 
+- <a href="https://github.com/tommi-t-nguyen" target="\_blank">Thomas Nguyen</a>
+- <a href="https://github.com/RosaTheDev" target="\_blank">Richard Rosa-Serrano</a>
+
+## Tech Stack
+-------
+![tech stack](https://media1.giphy.com/media/JWuBH9rCO2uZuHBFpm/giphy.gif?cid=ecf05e47vu9wdw7htzc71f0m0791owb6lppnk720cnlqgy0w&rid=giphy.gif&ct=g)
+- HTML
+- CSS
+- JavaScript
+- Node
+- Fetch API 
+- Webpack 
