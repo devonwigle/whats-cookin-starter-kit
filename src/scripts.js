@@ -1,12 +1,10 @@
 /* eslint-disable max-len */
 import './styles.css';
-import apiCalls from './apiCalls';
+import { fetchData } from './apiCalls';
 import RecipeRepository from './classes/RecipeRepository.js'
 import Recipe from './classes/Recipe';
 import User from './classes/User';
-import recipesData from './data/recipes.js'
-import ingredientsData from './data/ingredients.js'
-import usersData from './data/users.js'
+
 
 // querySelectors
 const searchBar = document.querySelector('input');
@@ -56,7 +54,7 @@ const nameSearch = document.querySelector('#nameSearch');
 const ingredientSearch = document.querySelector('#ingredientSearch')
 
 //event listeners
-window.addEventListener('load', whateveriwant);
+window.addEventListener('load', onStart);
 
 radioContainer.addEventListener('change', function(event) {
   searchByTag(event)
@@ -89,25 +87,19 @@ searchInputButton.addEventListener('click', searchField)
 
 
 // functions
-function goHome() {
-  showHide([landingPage], [selectedText, selectedRecipePage, favoritesPage, searchResultsPage], 'hidden');
+function onStart() {
+  return Promise.all([fetchData('users'),fetchData('ingredients'),fetchData('recipes')])
+  .then(data => loadPage(data))
 }
 
-function searchField() {
-  showHide([tagSearchButton, searchInputField], [tagBox, searchInputButton], 'hidden')
-}
-function tagSearch() {
-  showHide([tagBox, searchInputButton],[tagSearchButton, searchInputField], 'hidden')
-}
-function whateveriwant() {
-  recipesInfo = recipesData;
-  ingredientsInfo = ingredientsData;
-  usersInfo = usersData;
+function loadPage(data) {
+  usersInfo = data[0].usersData;
+  ingredientsInfo = data[1].ingredientsData;
+  recipesInfo = data[2].recipeData;
   currentUser = new User( usersInfo[chooseRandomUser(usersInfo)],ingredientsInfo);
-  console.log(currentUser);
   userBox.innerText =  `Welcome ${currentUser.name}`;
   let newRecipe = []
-  cookBook = recipesData.map(recipe => {
+  cookBook = recipesInfo.map(recipe => {
     newRecipe = new Recipe(recipe, ingredientsInfo);
     return newRecipe
   })
@@ -121,6 +113,16 @@ function chooseRandomUser(usersInfo) {
   return Math.floor(Math.random() * usersInfo.length);
 }
 
+function goHome() {
+  showHide([landingPage], [selectedText, selectedRecipePage, favoritesPage, searchResultsPage], 'hidden');
+}
+
+function searchField() {
+  showHide([tagSearchButton, searchInputField], [tagBox, searchInputButton], 'hidden')
+}
+function tagSearch() {
+  showHide([tagBox, searchInputButton],[tagSearchButton, searchInputField], 'hidden')
+}
 
 function multipleButtons() {
   let tags = [];
@@ -246,7 +248,6 @@ function showSelectedRecipePage(event) {
 }
 
 function populateSelectedRecipe(event) {
-  // console.log('closest?', event.target.closest('article').id )
   let id = event.target.closest('article').id;
   foundRecipe = repository.recipeData.find(recipe =>{
     return recipe.id === parseInt(id)
