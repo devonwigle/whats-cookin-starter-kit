@@ -74,6 +74,7 @@ populatedResults.addEventListener('click', function(event) {
   showSelectedRecipePage(event)
 });
 
+recipesToCookButton.addEventListener('click', addRecipesToCook)
 addToFavoriteButton.addEventListener('click', addToFavs);
 removeFromFavoritesButton.addEventListener('click', removeFromFavs)
 
@@ -148,6 +149,7 @@ function clearSearchBar() {
 }
 
 function searchByTag(event) {
+  recipeTagsArray = []
   let eventTargets = event.target.value
   repository.recipeData.filter(recipe => {
     if (recipe.tags.includes(eventTargets)) {
@@ -191,7 +193,7 @@ function searchByName() {
   populatedResults.innerHTML = ''
   searched.forEach(recipe => {
     populatedResults.innerHTML +=
-    ` <article class="all-recipes" id = "${recipe.id}">
+    ` <article class="all-recipes" id="${recipe.id}">
     <img class="food-preview" src=${recipe.image}>
     <h2>${recipe.name}</h2>
     </article>`
@@ -207,7 +209,7 @@ function searchByIngredient() {
 
   searched.forEach(recipe => {
     populatedResults.innerHTML +=
-    ` <article id = "${recipe.id}">
+    `<article class="all-recipes" id="${recipe.id}">
     <img class="food-preview" src=${recipe.image}>
     <h2>${recipe.name}</h2>
     </article>`
@@ -219,7 +221,7 @@ function populateByTag() {
   populatedResults.innerHTML = ''
   recipeTagsArray.forEach(recipe => {
     populatedResults.innerHTML +=
-      `<article id="${recipe.id}">
+      `<article class="all-recipes" id="${recipe.id}">
         <img class="food-preview" src=${recipe.image}>
         <h2>${recipe.name}</h2>
         </article>`
@@ -277,6 +279,11 @@ function showFavPage() {
 
 function addToFavs() {
   currentUser.addToFavorite(foundRecipe);
+}
+
+function addRecipesToCook() {
+  currentUser.addToRecipesToCook(foundRecipe);
+  console.log('Add to cook', currentUser.recipesToCook)
 }
 
 function removeFromFavs() {
