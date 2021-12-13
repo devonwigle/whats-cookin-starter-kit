@@ -47,6 +47,7 @@ const favoritesPage = document.querySelector('.favorites-page');
 const tagSearchButton = document.querySelector('.tag-search-button');
 const searchInputButton = document.querySelector('.show-search-input-button');
 const addToFavoriteButton = document.querySelector('.add-to-favorite-btn');
+const removeFromFavoritesButton = document.querySelector('.remove-from-favorite-btn')
 const recipesToCookButton = document.querySelector('.recipes-to-cook-btn');
 const storedFavoritesButton = document.querySelector('.favorite-box');
 const searchButton = document.querySelector('.search-button');
@@ -74,6 +75,7 @@ populatedResults.addEventListener('click', function(event) {
 });
 
 addToFavoriteButton.addEventListener('click', addToFavs);
+removeFromFavoritesButton.addEventListener('click', removeFromFavs)
 
 storedFavoritesButton.addEventListener('click', showFavPage);
 
@@ -134,8 +136,6 @@ function makeRecipeCard() {
       `<article class="all-recipes" id="${recipe.id}">
       <img class="food-preview" src=${recipe.image}>
       <h2>${recipe.name}</h2>
-      <button class="add-tofavorite-btn">Add to Favorites</button>
-      <button class="recipes-tocook-btn">Recipes to Cook</button>
       </article>`
   })
 }
@@ -194,8 +194,6 @@ function searchByName() {
     ` <article class="all-recipes" id = "${recipe.id}">
     <img class="food-preview" src=${recipe.image}>
     <h2>${recipe.name}</h2>
-    <button class="add-tofavorite-btn">Add to Favorites</button>
-    <button class="recipesto-cook-btn">Recipes to Cook</button>
     </article>`
   })
   searched.length === 0 ? populatedResults.innerHTML = '<h3>Aint nothing you want here! Go AWAY</h3>' : null
@@ -212,8 +210,6 @@ function searchByIngredient() {
     ` <article id = "${recipe.id}">
     <img class="food-preview" src=${recipe.image}>
     <h2>${recipe.name}</h2>
-    <button class="add-tofavorite-btn">Add to Favorites</button>
-    <button class="recipes-o-cook-btn">Recipes to Cook</button>
     </article>`
   })
   searched.length === 0 ? populatedResults.innerHTML = '<h3>Aint nothing you want here! Go AWAY</h3>' : null
@@ -226,8 +222,6 @@ function populateByTag() {
       `<article id="${recipe.id}">
         <img class="food-preview" src=${recipe.image}>
         <h2>${recipe.name}</h2>
-        <button class="add-tofavorite-btn">Add to Favorites</button>
-        <button class="recipes-o-cook-btn">Recipes to Cook</button>
         </article>`
   })
 }
@@ -270,11 +264,23 @@ function populateSelectedRecipe(event) {
 
 // doesnt do anything yet
 function showFavPage() {
+  populatedResults.innerHTML = ''
+  currentUser.favorite.forEach(recipe => {
+    populatedResults.innerHTML +=
+      `<article class="all-recipes" id="${recipe.id}">
+        <img class="food-preview" src=${recipe.image}>
+        <h2>${recipe.name}</h2>
+        </article>`
+  })
   showHide([favoritesPage], [searchResultsPage, selectedText, selectedRecipePage, landingPage]);
 }
 
-function addToFavs(event) {
+function addToFavs() {
   currentUser.addToFavorite(foundRecipe);
+}
+
+function removeFromFavs() {
+  currentUser.removeFromFavorite(foundRecipe)
 }
 
 // helper functions
