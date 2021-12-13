@@ -24,6 +24,25 @@
       </div>
       <button class="search-button">Search NOW!</button>
       <section class="search"> </section>
+
+      <div class="search-favorites hidden">
+        <input id="searchInputFavorites" type="text" name="Seach Bar" placeholder="Search">
+        <p class="error-message-favorites invisible">Error: Check your search bar and buttons</p>
+        <input class="search-by-name-favorites " id="nameFavoriteSearch" type="radio" name="search-selection" value="recipeName">recipe name
+        <input class="search-by-name-favorites" id="ingredientFavoriteSearch" type="radio" name="search-selection"
+          value="ingredientName">ingredients name
+      </div>
+      <button class="show-search-favorites-input-button hidden">Search by name</button>
+      <button class="tag-search-favorites-button hidden">Search By Tag</button>
+      <div class="tag-box-favorites hidden">
+        <h2>tags</h2>
+        <select id="containerFavorites hidden" name="tag">
+          <option value="none">Select Tag</option>
+        </select>
+      </div>
+      <button class="search-favorites-button hidden">Search NOW!</button>
+      <section class="search-favorites hidden"> </section>
+
       <div class="nav-boxes">
         <button class="favorite-box">Favorites</button>
         <article class="user-box"></article>
@@ -64,6 +83,12 @@
         <div class="selected-cost">Estimated Cost:</div>
         </div>
         <div class="recipe-text hidden">
+          <article class="selected-text ingredients-amounts">
+            <h3>Ingredients List</h3>
+          </article>
+          <article class="selected-text recipe-directions">
+            <h3>Directions</h3>
+          </article>
         </div>
       </section>
       <section class="favorite-search-results-page hidden">
