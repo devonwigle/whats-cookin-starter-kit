@@ -42,6 +42,16 @@ const selectedRecipePage = document.querySelector('.selected-recipe-page');
 const searchResultsPage = document.querySelector('.search-results-page');
 const favoritesPage = document.querySelector('.favorites-page');
 
+const searchInputFavorites = document.querySelector('#searchInputFavorites');
+const errorMessageFavorites = document.querySelector('.error-message-favorites');
+const searchByNameFavorites = document.querySelector('.search-by-name-favorites');
+const showSearchFavoritesInputButton = document.querySelector('.show-search-favorites-input-button');
+const tagSearchFavoritesButton = document.querySelector('.tag-search-favorites-button');
+const tagBoxFavorites = document.querySelector('.tag-box-favorites');
+const radioContainerFavorites = document.querySelector('#containerFavorites');
+const searchFavoritesButton = document.querySelector('.search-favorites-button');
+const searchFavorites = document.querySelector('.search-favorites');
+
 // buttons
 const tagSearchButton = document.querySelector('.tag-search-button');
 const searchInputButton = document.querySelector('.show-search-input-button');
@@ -52,6 +62,8 @@ const storedFavoritesButton = document.querySelector('.favorite-box');
 const searchButton = document.querySelector('.search-button');
 const nameSearch = document.querySelector('#nameSearch');
 const ingredientSearch = document.querySelector('#ingredientSearch')
+const nameFavoriteSearch = document.querySelector('#nameFavoriteSearch')
+const ingredientFavoriteSearch = document.querySelector('#ingredientFavoriteSearch')
 
 //event listeners
 window.addEventListener('load', onStart);
@@ -60,7 +72,18 @@ radioContainer.addEventListener('change', function(event) {
   searchByTag(event)
 });
 
+if (radioContainerFavorites) {
+  radioContainerFavorites.addEventListener('change', function (event) {
+    searchByFavoritesTag(event)
+  });
+}
+
 searchButton.addEventListener('click', function() {
+  showSearchResultsPage();
+  clearSearchBar();
+});
+
+searchFavoritesButton.addEventListener('click', function () {
   showSearchResultsPage();
   clearSearchBar();
 });
@@ -82,8 +105,9 @@ removeFromFavoritesButton.addEventListener('click', removeFromFavs)
 storedFavoritesButton.addEventListener('click', showFavPage);
 
 tagSearchButton.addEventListener('click', tagSearch)
+tagSearchFavoritesButton.addEventListener('click', tagSearch)
 searchInputButton.addEventListener('click', searchField)
-
+showSearchFavoritesInputButton.addEventListener('click', searchFavoriteField)
 
 
 // functions
@@ -96,7 +120,7 @@ function loadPage(data) {
   usersInfo = data[0].usersData;
   ingredientsInfo = data[1].ingredientsData;
   recipesInfo = data[2].recipeData;
-  currentUser = new User( usersInfo[chooseRandomUser(usersInfo)],ingredientsInfo);
+   currentUser = new User( usersInfo[chooseRandomUser(usersInfo)],ingredientsInfo);
   userBox.innerText =  `Welcome ${currentUser.name}`;
   let newRecipe = []
   cookBook = recipesInfo.map(recipe => {
@@ -109,19 +133,21 @@ function loadPage(data) {
   clearSearchBar();
 }
 
-function chooseRandomUser(usersInfo) {
-  return Math.floor(Math.random() * usersInfo.length);
-}
-
 function goHome() {
-  showHide([landingPage], [selectedText, selectedRecipePage, favoritesPage, searchResultsPage], 'hidden');
+  showHide([landingPage, searchInputField, searchButton, tagSearchButton], [selectedText, selectedRecipePage, favoritesPage, searchResultsPage, searchFavorites, searchFavoritesButton, tagSearchFavoritesButton], 'hidden');
 }
-
+function searchFavoriteField() {
+  showHide([searchFavorites, tagSearchFavoritesButton,][tagSearchButton, searchInputField, tagBox, searchInputButton, tagBoxFavorites, searchFavoritesButton], 'hidden')
+}
 function searchField() {
   showHide([tagSearchButton, searchInputField], [tagBox, searchInputButton], 'hidden')
 }
 function tagSearch() {
-  showHide([tagBox, searchInputButton],[tagSearchButton, searchInputField], 'hidden')
+  showHide([tagBox, searchInputButton], [tagSearchButton, searchInputField], 'hidden')
+}
+
+function chooseRandomUser(usersInfo) {
+  return Math.floor(Math.random() * usersInfo.length);
 }
 
 function multipleButtons() {
@@ -139,6 +165,21 @@ function multipleButtons() {
   })
 }
 
+function multipleFavoriteButtons() {
+  let tagsFavorite = [];
+  repository.recipeData.forEach(recipe => {
+    recipe.tags.forEach(tag => {
+      if (!tagsFavorite.includes(tag)) {
+        tagsFavorite.push(tag);
+      }
+    })
+    tagsFavorite.sort()
+  })
+  tagsFavorite.forEach(tag => {
+    radioContainer.innerHTML += `<option value="${tag}">${tag}</option>`
+  })
+}
+
 function makeRecipeCard() {
   repository.recipeData.forEach(recipe => {
     recipeCard.innerHTML +=
@@ -151,20 +192,24 @@ function makeRecipeCard() {
 
 function clearSearchBar() {
   searchInput.value = '';
+  searchInputFavorites.value = '';
   nameSearch.checked = false;
+  nameFavoriteSearch.checked = false;
   ingredientSearch.checked = false;
-
+  ingredientFavoriteSearch.checked = false;
 }
 
-function searchByTag(event) {
-  recipeTagsArray = []
+function searchByFavoritesTag(event) {
+  recipeTagsArray = [];
   let eventTargets = event.target.value
-  repository.recipeData.filter(recipe => {
-    if (recipe.tags.includes(eventTargets)) {
-      recipeTagsArray.push(recipe)
-      console.log(recipeTagsArray)
-    }
-  })
+  recipeTagsArray = currentUser.filterFavoriteByTag(eventTargets)
+}
+
+
+function searchByTag(event) {
+  recipeTagsArray = [];
+  let eventTargets = event.target.value
+  recipeTagsArray = repository.filterByTag(eventTargets)
 }
 
 function  showSearchResultsPage() {
@@ -193,9 +238,15 @@ function sortSearch() {
   } else if (nameSearch.checked) {
     showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage], 'hidden')
     searchByName()
+  } else if (nameFavoriteSearch.checked) {
+    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage], 'hidden')
+    searchByFavoriteName()
   } else if (ingredientSearch.checked) {
     showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage], 'hidden')
     searchByIngredient()
+  } else if (ingredientFavoriteSearch.checked) {
+    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage], 'hidden')
+    searchFavoriteByIngredient()
   } else {
     populateByTag()
     showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage], 'hidden')
@@ -214,8 +265,21 @@ function searchByName() {
   searched.length === 0 ? populatedResults.innerHTML = '<h3>Aint nothing you want here! Go AWAY</h3>' : null
 }
 
-function searchByIngredient() {
+function searchByFavoriteName() {
+  let searched = currentUser.filterFavoriteByRecipeName(searchInputFavorites.value)
+  populatedResults.innerHTML = ''
+  searched.forEach(recipe => {
+    populatedResults.innerHTML +=
+      ` <article class="all-recipes" id="${recipe.id}">
+    <img class="food-preview" src=${recipe.image}>
+    <h2>${recipe.name}</h2>
+    </article>`
+  })
+  searched.length === 0 ? populatedResults.innerHTML = '<h3>Aint nothing you want here! Go AWAY</h3>' : null
+}
 
+function searchByIngredient() {
+  
   let rawDataSearched = repository.filterByIngredient(searchInput.value)
   let searched = [...new Set(rawDataSearched)]
   populatedResults.innerHTML = ''
@@ -223,6 +287,21 @@ function searchByIngredient() {
   searched.forEach(recipe => {
     populatedResults.innerHTML +=
     `<article class="all-recipes" id="${recipe.id}">
+    <img class="food-preview" src=${recipe.image}>
+    <h2>${recipe.name}</h2>
+    </article>`
+  })
+  searched.length === 0 ? populatedResults.innerHTML = '<h3>Aint nothing you want here! Go AWAY</h3>' : null
+}
+function searchFavoriteByIngredient() {
+
+  let rawDataSearched = currentUser.filterFavoriteByIngredient(searchInputFavorites.value)
+  let searched = [...new Set(rawDataSearched)]
+  populatedResults.innerHTML = ''
+
+  searched.forEach(recipe => {
+    populatedResults.innerHTML +=
+      `<article class="all-recipes" id="${recipe.id}">
     <img class="food-preview" src=${recipe.image}>
     <h2>${recipe.name}</h2>
     </article>`
@@ -243,6 +322,7 @@ function populateByTag() {
 
 function showSelectedRecipePage(event) {
   showHide([selectedRecipePage, selectedText], [searchResultsPage, favoritesPage, landingPage], 'hidden');
+  console.log('Am I here?')
   populateSelectedRecipe(event);
   populatedResults.innerHTML = ``;
 }
@@ -279,8 +359,9 @@ function populateSelectedRecipe(event) {
   })
 }
 
-// doesnt do anything yet
 function showFavPage() {
+  console.log('fav', currentUser.favorite)
+  multipleFavoriteButtons()
   populatedResults.innerHTML = ''
   currentUser.favorite.forEach(recipe => {
     populatedResults.innerHTML +=
@@ -289,7 +370,7 @@ function showFavPage() {
         <h2>${recipe.name}</h2>
         </article>`
   })
-  showHide([favoritesPage], [searchResultsPage, selectedText, selectedRecipePage, landingPage], 'hidden');
+  showHide([favoritesPage, searchFavorites, searchFavoritesButton,tagSearchFavoritesButton], [searchResultsPage, selectedText, selectedRecipePage, landingPage, searchInputField, searchButton, tagSearchButton, searchInputButton, tagBox], 'hidden');
 }
 
 function addToFavs() {
