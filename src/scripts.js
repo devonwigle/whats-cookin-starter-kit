@@ -12,8 +12,6 @@ import usersData from './data/users.js'
 const searchBar = document.querySelector('input');
 const radioContainer = document.querySelector('#container');
 const recipeCard = document.querySelector('.previews');
-const addToFavoriteBtn = document.querySelector('.add-to-favorite-btn');
-const recipesToCookBtn = document.querySelector('.recipes-to-cook-btn');
 const searchedRecipeCard = document.querySelector('.food-preview')
 const selectedRecipeTitle = document.querySelector('.recipe-title');
 const selectedRecipeIngredientAmount = document.querySelector('.ingredients-amounts');
@@ -25,10 +23,10 @@ const searchInput = document.querySelector('#searchInput');
 const populatedResults = document.querySelector('.populated-results');
 const errorMessage = document.querySelector('.error-message');
 const userBox = document.querySelector('.user-box');
-const tagSearchButton = document.querySelector('.tag-search-button');
 const tagBox = document.querySelector('.tag-box');
 const searchInputField = document.querySelector('.search');
-const searchInputButton = document.querySelector('.show-search-input-button');
+const selectedRecipe = document.querySelector('.selected-recipe');
+const logoBox = document.querySelector('.logo-box');
 
 // global variables
 let cookBook
@@ -40,7 +38,6 @@ let usersInfo
 let currentUser
 let recipeTagsArray = [];
 
-
 // pages
 const landingPage = document.querySelector('.landing-page');
 const selectedRecipePage = document.querySelector('.selected-recipe-page');
@@ -48,6 +45,11 @@ const searchResultsPage = document.querySelector('.search-results-page');
 const favoritesPage = document.querySelector('.favorites-page');
 
 // buttons
+const tagSearchButton = document.querySelector('.tag-search-button');
+const searchInputButton = document.querySelector('.show-search-input-button');
+const addToFavoriteButton = document.querySelector('.add-to-favorite-btn');
+const removeFromFavoritesButton = document.querySelector('.remove-from-favorite-btn')
+const recipesToCookButton = document.querySelector('.recipes-to-cook-btn');
 const storedFavoritesButton = document.querySelector('.favorite-box');
 const searchButton = document.querySelector('.search-button');
 const nameSearch = document.querySelector('#nameSearch');
@@ -65,6 +67,8 @@ searchButton.addEventListener('click', function() {
   clearSearchBar();
 });
 
+logoBox.addEventListener('click', goHome);
+
 recipeCard.addEventListener('click', function(event) {
   showSelectedRecipePage(event)
 });
@@ -72,6 +76,10 @@ recipeCard.addEventListener('click', function(event) {
 populatedResults.addEventListener('click', function(event) {
   showSelectedRecipePage(event)
 });
+
+recipesToCookButton.addEventListener('click', addRecipesToCook)
+addToFavoriteButton.addEventListener('click', addToFavs);
+removeFromFavoritesButton.addEventListener('click', removeFromFavs)
 
 storedFavoritesButton.addEventListener('click', showFavPage);
 
@@ -81,11 +89,15 @@ searchInputButton.addEventListener('click', searchField)
 
 
 // functions
+function goHome() {
+  showHide([landingPage], [selectedText, selectedRecipePage, favoritesPage, searchResultsPage], 'hidden');
+}
+
 function searchField() {
-  showHide([tagSearchButton, searchInputField], [tagBox, searchInputButton])
+  showHide([tagSearchButton, searchInputField], [tagBox, searchInputButton], 'hidden')
 }
 function tagSearch() {
-  showHide([tagBox, searchInputButton],[tagSearchButton, searchInputField])
+  showHide([tagBox, searchInputButton],[tagSearchButton, searchInputField], 'hidden')
 }
 function whateveriwant() {
   recipesInfo = recipesData;
@@ -131,8 +143,6 @@ function makeRecipeCard() {
       `<article class="all-recipes" id="${recipe.id}">
       <img class="food-preview" src=${recipe.image}>
       <h2>${recipe.name}</h2>
-      <button class="add-to-favorite-btn">Add to Favorites</button>
-      <button class="recipes-to-cook-btn">Recipes to Cook</button>
       </article>`
   })
 }
@@ -145,6 +155,7 @@ function clearSearchBar() {
 }
 
 function searchByTag(event) {
+  recipeTagsArray = []
   let eventTargets = event.target.value
   repository.recipeData.filter(recipe => {
     if (recipe.tags.includes(eventTargets)) {
@@ -155,32 +166,37 @@ function searchByTag(event) {
 }
 
 function  showSearchResultsPage() {
-  showHide([searchResultsPage], [selectedText, selectedRecipePage, favoritesPage, landingPage]);
-  hide([errorMessage])
+  showHide([searchResultsPage], [selectedText, selectedRecipePage, favoritesPage, landingPage], 'hidden');
+  hide([errorMessage], 'invisible')
 
   sortSearch();
 }
 
 function sortSearch() {
   if (!searchInput.value && !nameSearch.checked && !ingredientSearch.checked && recipeTagsArray.length === 0) {
-    showHide([landingPage, errorMessage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
+    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage], 'hidden')
+    show([errorMessage], 'invisible')
   } else if (searchInput.value && !nameSearch.checked && !ingredientSearch.checked) {
-    showHide([landingPage, errorMessage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
+    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage], 'hidden')
+    show([errorMessage], 'invisible')
   } else if (searchInput.value && !nameSearch.checked && !ingredientSearch.checked) {
-    showHide([landingPage, errorMessage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
+    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage], 'hidden')
+    show([errorMessage], 'invisible')
   } else if (!searchInput.value && ingredientSearch.checked) {
-    showHide([landingPage, errorMessage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
+    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage], 'hidden')
+    show([errorMessage], 'invisible')
   } else if (!searchInput.value && nameSearch.checked) {
-    showHide([landingPage, errorMessage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage])
+    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage], 'hidden')
+    show([errorMessage], 'invisible')
   } else if (nameSearch.checked) {
-    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage])
+    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage], 'hidden')
     searchByName()
   } else if (ingredientSearch.checked) {
-    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage])
+    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage], 'hidden')
     searchByIngredient()
   } else {
     populateByTag()
-    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage])
+    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage], 'hidden')
   }
 }
 function searchByName() {
@@ -188,11 +204,9 @@ function searchByName() {
   populatedResults.innerHTML = ''
   searched.forEach(recipe => {
     populatedResults.innerHTML +=
-    ` <article class="all-recipes" id = "${recipe.id}">
+    ` <article class="all-recipes" id="${recipe.id}">
     <img class="food-preview" src=${recipe.image}>
     <h2>${recipe.name}</h2>
-    <button class="add-to-favorite-btn">Add to Favorites</button>
-    <button class="recipes-to-cook-btn">Recipes to Cook</button>
     </article>`
   })
   searched.length === 0 ? populatedResults.innerHTML = '<h3>Aint nothing you want here! Go AWAY</h3>' : null
@@ -206,11 +220,9 @@ function searchByIngredient() {
 
   searched.forEach(recipe => {
     populatedResults.innerHTML +=
-    ` <article id = "${recipe.id}">
+    `<article class="all-recipes" id="${recipe.id}">
     <img class="food-preview" src=${recipe.image}>
     <h2>${recipe.name}</h2>
-    <button class="add-to-favorite-btn">Add to Favorites</button>
-    <button class="recipes-to-cook-btn">Recipes to Cook</button>
     </article>`
   })
   searched.length === 0 ? populatedResults.innerHTML = '<h3>Aint nothing you want here! Go AWAY</h3>' : null
@@ -220,17 +232,15 @@ function populateByTag() {
   populatedResults.innerHTML = ''
   recipeTagsArray.forEach(recipe => {
     populatedResults.innerHTML +=
-      `<article id="${recipe.id}">
+      `<article class="all-recipes" id="${recipe.id}">
         <img class="food-preview" src=${recipe.image}>
         <h2>${recipe.name}</h2>
-        <button class="add-to-favorite-btn">Add to Favorites</button>
-        <button class="recipes-to-cook-btn">Recipes to Cook</button>
         </article>`
   })
 }
 
 function showSelectedRecipePage(event) {
-  showHide([selectedRecipePage, selectedText], [searchResultsPage, favoritesPage, landingPage]);
+  showHide([selectedRecipePage, selectedText], [searchResultsPage, favoritesPage, landingPage], 'hidden');
   populateSelectedRecipe(event);
   populatedResults.innerHTML = ``;
 }
@@ -241,8 +251,8 @@ function populateSelectedRecipe(event) {
     return recipe.id === parseInt(id)
   });
   let costOfIngredients = foundRecipe.getCostOfIngredients();
-  selectedRecipePage.innerHTML = ``
-  selectedRecipePage.innerHTML +=
+  selectedRecipe.innerHTML = ``
+  selectedRecipe.innerHTML +=
   `<h1 class="recipe-title">${foundRecipe.name}</h1>
   <img class="recipe-image" src=${foundRecipe.image}>
   <div class="selected-cost">Estimated Cost:$${costOfIngredients}</div>
@@ -253,6 +263,8 @@ function populateSelectedRecipe(event) {
     <article class="selected-text recipe-directions"><h3>Directions</h3>
     </article>
   </div>`
+  selectedRecipeDirections.innerHTML = ``;
+  selectedRecipeIngredientAmount.innerHTML = ``;
   foundRecipe.ingredientInfo.forEach(datum => {
     selectedRecipeIngredientAmount.innerHTML += `<div>
         <li>${datum.quantity} ${datum.unit} ${datum.name} </li>
@@ -267,24 +279,44 @@ function populateSelectedRecipe(event) {
 
 // doesnt do anything yet
 function showFavPage() {
-  showHide([favoritesPage], [searchResultsPage, selectedText, selectedRecipePage, landingPage]);
+  populatedResults.innerHTML = ''
+  currentUser.favorite.forEach(recipe => {
+    populatedResults.innerHTML +=
+      `<article class="all-recipes" id="${recipe.id}">
+        <img class="food-preview" src=${recipe.image}>
+        <h2>${recipe.name}</h2>
+        </article>`
+  })
+  showHide([favoritesPage], [searchResultsPage, selectedText, selectedRecipePage, landingPage], 'hidden');
 }
 
+function addToFavs() {
+  currentUser.addToFavorite(foundRecipe);
+}
+
+function addRecipesToCook() {
+  currentUser.addToRecipesToCook(foundRecipe);
+  console.log('Add to cook', currentUser.recipesToCook)
+}
+
+function removeFromFavs() {
+  currentUser.removeFromFavorite(foundRecipe)
+}
 
 // helper functions
-function showHide(toShow, toHide) {
-  show(toShow);
-  hide(toHide);
+function showHide(toShow, toHide, css) {
+  show(toShow, css);
+  hide(toHide, css);
 }
 
-function show(shows) {
+function show(shows, css) {
   shows.forEach(function(show) {
-    show.classList.remove('hidden')
+    show.classList.remove(css)
   })
 }
 
-function hide(hides) {
+function hide(hides, css) {
   hides.forEach(function(hide) {
-    hide.classList.add('hidden');
+    hide.classList.add(css);
   })
 }
