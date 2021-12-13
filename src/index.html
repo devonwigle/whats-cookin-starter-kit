@@ -10,9 +10,9 @@
       <button class="logo-box">What's Cookin'</button>
       <div class="search">
         <input id="searchInput" type="text" name="Seach Bar" placeholder="Search">
-        <p class='error-message hidden'>Error: Check your search bar and buttons</p>
-        <input id="nameSearch" type="radio" name="search-selection" value="recipeName" checked="checked" >recipe name
-        <input id="ingredientSearch" type="radio" name="search-selection" value="ingredientName" checked="checked">ingredients name
+        <p class="error-message invisible">Error: Check your search bar and buttons</p>
+        <input class="search-by-name" id="nameSearch" type="radio" name="search-selection" value="recipeName">recipe name
+        <input class="search-by-name" id="ingredientSearch" type="radio" name="search-selection" value="ingredientName">ingredients name
       </div>
       <button class="show-search-input-button hidden">Search by name</button>
       <button class="tag-search-button">Search By Tag</button>
@@ -26,7 +26,6 @@
       <section class="search"> </section>
       <div class="nav-boxes">
         <button class="favorite-box">Favorites</button>
-        <button class="add-recipe-box">Recipes to cook</button>
         <article class="user-box"></article>
       </div>
     </nav>
