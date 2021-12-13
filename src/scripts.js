@@ -25,7 +25,8 @@ const errorMessage = document.querySelector('.error-message');
 const userBox = document.querySelector('.user-box');
 const tagBox = document.querySelector('.tag-box');
 const searchInputField = document.querySelector('.search');
-const selectedRecipe = document.querySelector('.selected-recipe')
+const selectedRecipe = document.querySelector('.selected-recipe');
+const logoBox = document.querySelector('.logo-box');
 
 // global variables
 let cookBook
@@ -66,6 +67,8 @@ searchButton.addEventListener('click', function() {
   clearSearchBar();
 });
 
+logoBox.addEventListener('click', goHome);
+
 recipeCard.addEventListener('click', function(event) {
   showSelectedRecipePage(event)
 });
@@ -86,6 +89,9 @@ searchInputButton.addEventListener('click', searchField)
 
 
 // functions
+function goHome() {
+  showHide([landingPage], [selectedText, selectedRecipePage, favoritesPage, searchResultsPage]);
+}
 
 function searchField() {
   showHide([tagSearchButton, searchInputField], [tagBox, searchInputButton])
@@ -252,6 +258,8 @@ function populateSelectedRecipe(event) {
     <article class="selected-text recipe-directions"><h3>Directions</h3>
     </article>
   </div>`
+  selectedRecipeDirections.innerHTML = ``;
+  selectedRecipeIngredientAmount.innerHTML = ``;
   foundRecipe.ingredientInfo.forEach(datum => {
     selectedRecipeIngredientAmount.innerHTML += `<div>
         <li>${datum.quantity} ${datum.unit} ${datum.name} </li>
