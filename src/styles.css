@@ -10,14 +10,32 @@ nav {
   background-color: rgb(100, 4, 218);
 }
 
-.nav-boxes{
+.nav-boxes {
   display: flex;
-  justify-content: space-around
+  justify-content: space-around;
+  cursor: pointer;
+}
+
+.search-by-name,
+button {
+  cursor: pointer;
 }
 
 .logo-box {
+  border: none;
   width: 10%;
   background-color: brown;
+  cursor: pointer;
+  color: #e9e8e8;
+}
+
+.error-message {
+  margin: 0;
+}
+
+.error-message,
+.user-box {
+  color: #e9e8e8;
 }
 
 h2 {
@@ -94,5 +112,5 @@ h2 {
 }
 
 .invisible {
-  display: hidden;
+  visibility: hidden;
 }
