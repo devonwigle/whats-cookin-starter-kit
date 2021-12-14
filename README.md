@@ -1,16 +1,24 @@
-# What's Cookin'? Starter Kit 
+# What's Cookin'?
 
 ## Abstract
-To create a cooking website where you can pick from several recipies,
-favorite and unfavorite recipies, and seach for recipies by either their tag or their  ingredients. 
+-------
+To create a cooking website where you can pick from several recipes,
+favorite and unfavorite recipes, and search for recipes by either their tag or their  ingredients.
 
-More details of this project can be found in the <a href="https://frontend.turing.edu/projects/What%27sCookin-PartOne.html" target="\__blank">project spec</a>.
+More details of this project can be found in the <a href="https://frontend.turing.edu/projects/whats-cookin-part-one.html" target="\__blank">project spec</a>.
 
 Happy cooking!
 
 ![good burger](https://media0.giphy.com/media/LRrHCZYvcKukTi3ayH/giphy.gif?cid=ecf05e47n5cue0m61kdc0ditgr1gcfc83gt3ln2xjhoeh549&rid=giphy.gif&ct=g)
+## Setup & Run Instructions:
+-------
+- Clone down this repo
+- Access the root folder in your Terminal
+- Run `npm start`
+- Open your browswer and go to `http://localhost:8080/`
 
 ## Project Overview
+-------
 ![project gif](https://media0.giphy.com/media/qUX6BJLgVthYSpDgQL/giphy.gif?cid=790b761136e45c4625adede4b51afec1b9b24f16787eef4c&rid=giphy.gif&ct=g)
 
 ## Landing Page
@@ -19,14 +27,14 @@ Happy cooking!
 ## Clicking on a recipe
 <img width="965" alt="clicking on a recipe" src="https://user-images.githubusercontent.com/29051996/145898782-0b1d26bd-e236-4e33-9583-02240d1b7a54.png">
 
-## Favoriting a recipe 
+## Favoriting a recipe
 <img width="1917" alt="favoriting a recipe" src="https://user-images.githubusercontent.com/29051996/145904693-80221105-6850-4d51-ae68-63b625723da0.png">
 
 ## Contributers
 -------
 
 ![contributers](https://media3.giphy.com/media/VHHxxFAeLaYzS/giphy.gif?cid=ecf05e47our7jn7plkf028amwm2gd5tpxe0ck87kcr9kgtca&rid=giphy.gif&ct=g)
-- <a href="https://github.com/devonwigle" target="\_blank">Devon Wigle</a> 
+- <a href="https://github.com/devonwigle" target="\_blank">Devon Wigle</a>
 - <a href="https://github.com/tommi-t-nguyen" target="\_blank">Thomas Nguyen</a>
 - <a href="https://github.com/RosaTheDev" target="\_blank">Richard Rosa-Serrano</a>
 
@@ -37,5 +45,5 @@ Happy cooking!
 - CSS
 - JavaScript
 - Node
-- Fetch API 
-- Webpack 
+- Fetch API
+- Webpack
