@@ -29,10 +29,12 @@ button {
   color: #e9e8e8;
 }
 
+.error-message-favorites,
 .error-message {
   margin: 0;
 }
 
+.error-message-favorites,
 .error-message,
 .user-box {
   color: #e9e8e8;
