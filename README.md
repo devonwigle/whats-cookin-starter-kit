@@ -14,6 +14,7 @@ Happy cooking!
 -------
 - Clone down this repo
 - Access the root folder in your Terminal
+- Run `npm install`
 - Run `npm start`
 - Open your browswer and go to `http://localhost:8080/`
 
