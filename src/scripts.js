@@ -187,7 +187,7 @@ function makeRecipeCard() {
   repository.recipeData.forEach(recipe => {
     recipeCard.innerHTML +=
       `<article class="all-recipes" id="${recipe.id}">
-      <img class="food-preview" src=${recipe.image}>
+      <img class="food-preview" src=${recipe.image} alt=${recipe.name}>
       <h2>${recipe.name}</h2>
       </article>`
   })

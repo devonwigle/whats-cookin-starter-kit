@@ -1,13 +1,13 @@
 body {
   margin: 0;
-  background-color: rgb(211, 173, 247);
+  background-color: #BE90D4;
 }
 
 nav {
   display: flex;
   justify-content: space-around;
   height: 3%;
-  background-color: rgb(100, 4, 218);
+  background-color: #dcc6e0;
 }
 
 .nav-boxes {
@@ -16,17 +16,24 @@ nav {
   cursor: pointer;
 }
 
+
 .search-by-name,
 button {
   cursor: pointer;
 }
 
+
+
+label > input[type="radio"]:checked + * {
+  color: rgb(120, 2, 255);
+}
+
 .logo-box {
   border: none;
   width: 10%;
-  background-color: brown;
+  background-color: #F1A9A0;
   cursor: pointer;
-  color: #e9e8e8;
+  color: black
 }
 
 .error-message-favorites,
@@ -37,7 +44,8 @@ button {
 .error-message-favorites,
 .error-message,
 .user-box {
-  color: #e9e8e8;
+  color: black;
+  margin-left: 40px;
 }
 
 h2 {
