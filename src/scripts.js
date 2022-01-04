@@ -111,14 +111,16 @@ showSearchFavoritesInputButton.addEventListener('click', searchFavoriteField)
 // functions
 function onStart() {
   return Promise.all([fetchData('users'),fetchData('ingredients'),fetchData('recipes')])
-  .then(data => loadPage(data))
+    .then(data => loadPage(data))
 }
 
 function loadPage(data) {
-  usersInfo = data[0];
-  ingredientsInfo = data[1];
-  recipesInfo = data[2];
-   currentUser = new User( usersInfo[chooseRandomUser(usersInfo)],ingredientsInfo);
+
+  usersInfo = data[0].usersData;
+  ingredientsInfo = data[1].ingredientsData;
+  recipesInfo = data[2].recipeData;
+  currentUser = new User( usersInfo[chooseRandomUser(usersInfo)],ingredientsInfo);
+
   userBox.innerText =  `Welcome ${currentUser.name}`;
   let newRecipe = []
   cookBook = recipesInfo.map(recipe => {
