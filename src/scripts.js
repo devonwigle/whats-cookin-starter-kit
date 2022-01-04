@@ -2,7 +2,7 @@
 import './styles.css';
 import { fetchData } from './apiCalls';
 import RecipeRepository from './classes/RecipeRepository.js'
-import Recipe from './classes/Recipe';/* ´ */
+import Recipe from './classes/Recipe';
 import User from './classes/User';
 
 
