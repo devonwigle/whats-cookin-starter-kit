@@ -115,10 +115,12 @@ function onStart() {
 }
 
 function loadPage(data) {
+
   usersInfo = data[0].usersData;
   ingredientsInfo = data[1].ingredientsData;
   recipesInfo = data[2].recipeData;
   currentUser = new User( usersInfo[chooseRandomUser(usersInfo)],ingredientsInfo);
+
   userBox.innerText =  `Welcome ${currentUser.name}`;
   let newRecipe = []
   cookBook = recipesInfo.map(recipe => {
@@ -168,7 +170,7 @@ function multipleButtons() {
 }
 
 function multipleFavoriteButtons() {
-  
+
   let tagsFavorite = [];
   repository.recipeData.forEach(recipe => {
     recipe.tags.forEach(tag => {
@@ -283,7 +285,7 @@ function searchByFavoriteName() {
 }
 
 function searchByIngredient() {
-  
+
   let rawDataSearched = repository.filterByIngredient(searchInput.value)
   let searched = [...new Set(rawDataSearched)]
   populatedResults.innerHTML = ''
