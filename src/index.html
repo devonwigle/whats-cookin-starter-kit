@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8">
     <title>What's Cookin'</title>
@@ -11,8 +11,12 @@
       <div class="search">
         <input id="searchInput" type="text" name="Seach Bar" placeholder="Search">
         <p class="error-message invisible">Error: Check your search bar and buttons</p>
-        <input class="search-by-name" id="nameSearch" type="radio" name="search-selection" value="recipeName">recipe name
-        <input class="search-by-name" id="ingredientSearch" type="radio" name="search-selection" value="ingredientName">ingredients name
+        <label>
+          <input class="search-by-name" id="nameSearch" type="radio" name="search-selection" value="recipeName" checkked>
+          <span>recipe name</span>
+          <input class="search-by-name" id="ingredientSearch" type="radio" name="search-selection" value="ingredientName">
+          <span>ingredients name</span>
+        </label>
       </div>
       <button class="show-search-input-button hidden">Search by name</button>
       <button class="tag-search-button">Search By Tag</button>
