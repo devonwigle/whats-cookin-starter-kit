@@ -116,9 +116,9 @@ function onStart() {
 
 function loadPage(data) {
 
-  usersInfo = data[0].usersData;
-  ingredientsInfo = data[1].ingredientsData;
-  recipesInfo = data[2].recipeData;
+  usersInfo = data[0];
+  ingredientsInfo = data[1];
+  recipesInfo = data[2];
   currentUser = new User( usersInfo[chooseRandomUser(usersInfo)],ingredientsInfo);
 
   userBox.innerText =  `Welcome ${currentUser.name}`;
