@@ -9,14 +9,21 @@ describe('RecipeRepository', () => {
   let recipeRepository;
   beforeEach(() => {
     recipeRepository = new RecipeRepository(recipeData, ingredientsData);
-  })
+  });
+
   it('Should be a function', () => {
     expect(RecipeRepository).to.be.a('function');
   });
+
   it('should hold recipe data', () => {
 
     expect(recipeRepository.recipeData).to.equal(recipeData);
-  })
+  });
+
+  it('should hold the ingredients data', () => {
+    expect(recipeRepository.ingredientsData).to.equal(ingredientsData)
+  });
+
   it('should have a method to filter by recipe name', () => {
     let userInput = 'cookie'
     expect(recipeRepository.filterByRecipeName(userInput)).to.deep.equal([recipeData[0]]);
@@ -25,10 +32,11 @@ describe('RecipeRepository', () => {
   it('should have a method to filter by ingredients', () => {
     let userInput = 'wheat flour';
     expect(recipeRepository.filterByIngredient(userInput)).to.deep.equal([recipeData[0]]);
-  })
+  });
 
   it('should have a method to filter by tag', () => {
     let userInput = 'snack';
     expect(recipeRepository.filterByTag(userInput)).to.deep.equal([recipeData[0]]);
-  })
+  });
+  
 })

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { expect } from 'chai';
 import recipeData from './test-data/recipes-data';
 import ingredientsData from './test-data/ingredients-data';
@@ -7,17 +8,33 @@ describe('Recipe', () => {
   let recipe;
   beforeEach(() => {
     recipe = new Recipe(recipeData[0],ingredientsData);
-  })
+  });
+
   it('Should be a function', () => {
     expect(Recipe).to.be.a('function');
   });
 
-  it('should hold recipe information', () => {
+  it('should hold recipe id', () => {
     expect(recipe.id).to.equal(recipeData[0].id);
+  });
+  
+  it('should have a recipe image', () => {
     expect(recipe.image).to.equal("https://spoonacular.com/recipeImages/595736-556x370.jpg");
+  });
+  
+  it('should hold recipe ingredients', () => {
     expect(recipe.ingredients).to.equal(recipeData[0].ingredients);
+  });
+  
+  it('should hold recipe instructions', () => {
     expect(recipe.instructions).to.equal(recipeData[0].instructions);
+  });
+  
+  it('should hold the recipe name', ()  => {
     expect(recipe.name).to.equal(recipeData[0].name);
+  });
+  
+  it('should hold the recipe tag', () => {
     expect(recipe.tag).to.equal(recipeData[0].tag);
   });
 
@@ -25,21 +42,21 @@ describe('Recipe', () => {
     recipe.getIngredientDetail();
     expect(recipe.getIngredientDetail()).to.deep.equal([
       {
-      "cost": 142,
-      "id": 20081,
-      "name": "wheat flour",
-      "quantity": 1.5,
-      "unit": "c"
+        "cost": 142,
+        "id": 20081,
+        "name": "wheat flour",
+        "quantity": 1.5,
+        "unit": "c"
       },
       {
-      "cost": 582,
-      "id": 18372,
-      "name": "bicarbonate of soda",
-      "quantity": 0.5,
-      "unit": "tsp"
+        "cost": 582,
+        "id": 18372,
+        "name": "bicarbonate of soda",
+        "quantity": 0.5,
+        "unit": "tsp"
       }
-    ])}
-  );
+    ])
+  });
 
   it('should return ingredients name', () => {
     expect(recipe.getIngredientName()).to.deep.equal(['wheat flour', 'bicarbonate of soda'])
@@ -51,7 +68,5 @@ describe('Recipe', () => {
 
   it ('should return the recipe instruction', () => {
     expect(recipe.getInstructions()).to.deep.equal([ '<li>1. Add egg and vanilla and mix until combined.<br>' ])
-  })
-
-
+  });
 })
