@@ -51,6 +51,7 @@ const tagBoxFavorites = document.querySelector('.tag-box-favorites');
 const radioContainerFavorites = document.querySelector('#containerFavorites');
 const searchFavoritesButton = document.querySelector('.search-favorites-button');
 const searchFavorites = document.querySelector('.search-favorites');
+const searchForm = document.querySelector('#searchBar')
 
 // buttons
 const tagSearchButton = document.querySelector('.tag-search-button');
@@ -59,15 +60,30 @@ const addToFavoriteButton = document.querySelector('.add-to-favorite-btn');
 const removeFromFavoritesButton = document.querySelector('.remove-from-favorite-btn')
 const recipesToCookButton = document.querySelector('.recipes-to-cook-btn');
 const storedFavoritesButton = document.querySelector('.favorite-box');
-const searchButton = document.querySelector('.search-button');
+const searchButton = document.querySelector('.search-bar-button');
 const nameSearch = document.querySelector('#nameSearch');
 const ingredientSearch = document.querySelector('#ingredientSearch')
 const nameFavoriteSearch = document.querySelector('#nameFavoriteSearch')
 const ingredientFavoriteSearch = document.querySelector('#ingredientFavoriteSearch')
 
+
 //event listeners
 window.addEventListener('load', onStart);
-
+searchForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const input = formData.get('q')
+  console.log(repository)
+  if(formData.get('type') == 'name'){
+    const x = repository.filterByRecipeName(input);
+    console.log(x)
+  }
+  if(formData.get('type') == 'ingredients'){
+    const y = repository.filterByIngredient(input);
+    console.log(y)
+  }
+  e.target.reset()
+})
 
 
 

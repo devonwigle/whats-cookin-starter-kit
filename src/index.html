@@ -12,23 +12,25 @@
       </div>
     </nav>
     <section class="landing-page ">
+      <div class="search">
         <form id="searchBar">
           <input type="search" id="query" name="q"
           placeholder="Search..." required>
-          <button type="submit"id="submit">Search</button><br>
+          <button type="submit" class="search-bar-button" id="submit">Search</button><br>
           <input type="radio" id="ingredients" name="type" value="ingredients" required>
           <label for="ingredients">Ingredients</label>
           <input type="radio" id="name" name="type" value="name" required >
           <label for="ingredients">Name</label>
         </form>
-        <h2>OR</h2>
+        <h2> OR </h2>
         <form id="searchByTag">
           <label for="tag">Search by Tag:</label>
           <select id="container" name="tag" required>
           <option value="">Select Tag</option>
           </select>
-          <button type="submit"id="submit">Search</button>
+          <button type="button" class="search-by-tag-button" id="submit">Search</button>
         </form>
+      </div>
 
         <div class="previews">
         </div>
