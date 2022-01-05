@@ -21,7 +21,15 @@
           <input type="radio" id="name" name="type" value="name" required >
           <label for="ingredients">Name</label>
         </form>
-      
+        <h2>OR</h2>
+        <form id="searchByTag">
+          <label for="tag">Search by Tag:</label>
+          <select id="container" name="tag" required>
+          <option value="">Select Tag</option>
+          </select>
+          <button type="submit"id="submit">Search</button>
+        </form>
+
         <div class="previews">
         </div>
       </section>

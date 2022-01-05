@@ -89,11 +89,25 @@ function loadPage(data) {
     return newRecipe
   })
   repository = new RecipeRepository(cookBook, ingredientsInfo);
-  console.log(repository)
+  multipleButtons();
   makeRecipeCard();
   // clearSearchBar();
 }
 
+function multipleButtons() {
+  let tags = [];
+  repository.recipeData.forEach(recipe => {
+    recipe.tags.forEach(tag => {
+      if (!tags.includes(tag)) {
+        tags.push(tag);
+      }
+    })
+    tags.sort()
+  })
+  tags.forEach(tag => {
+    radioContainer.innerHTML += `<option value="${tag}">${tag}</option>`
+  })
+}
 
 
 function chooseRandomUser(usersInfo) {
