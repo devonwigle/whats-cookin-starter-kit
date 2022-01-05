@@ -72,7 +72,7 @@ window.addEventListener('load', onStart);
 searchForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
-  const input = formData.get('q')
+  const input = formData.get('q').trim();
   console.log(repository)
   if(formData.get('type') == 'name'){
     const x = repository.filterByRecipeName(input);
