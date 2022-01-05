@@ -25,6 +25,7 @@ const tagBox = document.querySelector('.tag-box');
 const searchInputField = document.querySelector('.search');
 const selectedRecipe = document.querySelector('.selected-recipe');
 const logoBox = document.querySelector('.logo-box');
+const successMessage = document.querySelector('.fav-message');
 
 // global variables
 let cookBook
@@ -96,7 +97,9 @@ populatedResults.addEventListener('click', function(event) {
 });
 
 recipesToCookButton.addEventListener('click', addRecipesToCook)
+
 addToFavoriteButton.addEventListener('click', addToFavs);
+
 removeFromFavoritesButton.addEventListener('click', removeFromFavs)
 
 storedFavoritesButton.addEventListener('click', showFavPage);
@@ -378,6 +381,16 @@ function showFavPage() {
 
 function addToFavs() {
   currentUser.addToFavorite(foundRecipe);
+  successMessageTimeout();
+}
+
+function successMessageTimeout() {
+  successMessage.classList.add("success-message-show");
+  successMessage.classList.remove("success-message-none");
+  setTimeout(() => {
+    successMessage.classList.remove("success-message-show");
+    successMessage.classList.add("success-message-none");
+  }, 2000);
 }
 
 function addRecipesToCook() {
