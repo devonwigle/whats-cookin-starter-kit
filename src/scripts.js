@@ -68,44 +68,7 @@ const ingredientFavoriteSearch = document.querySelector('#ingredientFavoriteSear
 //event listeners
 window.addEventListener('load', onStart);
 
-radioContainer.addEventListener('change', function(event) {
-  searchByTag(event)
-});
-radioContainerFavorites.addEventListener('change', function (event) {
-  searchByFavoritesTag(event)
-});
 
-searchButton.addEventListener('click', function() {
-  showSearchResultsPage();
-  clearSearchBar();
-});
-
-searchFavoritesButton.addEventListener('click', function () {
-  showSearchResultsPage();
-  clearSearchBar();
-});
-
-logoBox.addEventListener('click', goHome);
-
-recipeCard.addEventListener('click', function(event) {
-  showSelectedRecipePage(event)
-});
-
-populatedResults.addEventListener('click', function(event) {
-  showSelectedRecipePage(event)
-});
-
-recipesToCookButton.addEventListener('click', addRecipesToCook)
-addToFavoriteButton.addEventListener('click', addToFavs);
-removeFromFavoritesButton.addEventListener('click', removeFromFavs)
-
-storedFavoritesButton.addEventListener('click', showFavPage);
-
-tagSearchButton.addEventListener('click', tagSearch)
-tagSearchFavoritesButton.addEventListener('click', favoriteTagSearch);
-
-searchInputButton.addEventListener('click', searchField)
-showSearchFavoritesInputButton.addEventListener('click', searchFavoriteField)
 
 
 // functions
@@ -126,62 +89,18 @@ function loadPage(data) {
     return newRecipe
   })
   repository = new RecipeRepository(cookBook, ingredientsInfo);
-  multipleButtons();
-  multipleFavoriteButtons();
+  console.log(repository)
   makeRecipeCard();
-  clearSearchBar();
+  // clearSearchBar();
 }
 
-function goHome() {
-  showHide([landingPage, searchInputField, searchButton, tagSearchButton], [tagBoxFavorites, selectedText, selectedRecipePage, favoritesPage, searchResultsPage, searchFavorites, searchFavoritesButton, tagSearchFavoritesButton, showSearchFavoritesInputButton], 'hidden');
-}
-function searchFavoriteField() {
-  showHide([searchFavorites, tagSearchFavoritesButton, tagBoxFavorites],[tagSearchButton, searchInputField, tagBox, searchInputButton, searchFavoritesButton, showSearchFavoritesInputButton], 'hidden')
-}
-function favoriteTagSearch() {
-  showHide([tagBoxFavorites, searchFavoritesButton, showSearchFavoritesInputButton], [searchFavorites, tagSearchButton, searchInputField, tagBox, searchInputButton, tagSearchFavoritesButton], 'hidden')
-}
-function searchField() {
-  showHide([tagSearchButton, searchInputField], [tagBox, searchInputButton], 'hidden')
-}
-function tagSearch() {
-  showHide([tagBox, searchInputButton], [tagSearchButton, searchInputField], 'hidden')
-}
+
 
 function chooseRandomUser(usersInfo) {
   return Math.floor(Math.random() * usersInfo.length);
 }
 
-function multipleButtons() {
-  let tags = [];
-  repository.recipeData.forEach(recipe => {
-    recipe.tags.forEach(tag => {
-      if (!tags.includes(tag)) {
-        tags.push(tag);
-      }
-    })
-    tags.sort()
-  })
-  tags.forEach(tag => {
-    radioContainer.innerHTML += `<option value="${tag}">${tag}</option>`
-  })
-}
 
-function multipleFavoriteButtons() {
-
-  let tagsFavorite = [];
-  repository.recipeData.forEach(recipe => {
-    recipe.tags.forEach(tag => {
-      if (!tagsFavorite.includes(tag)) {
-        tagsFavorite.push(tag);
-      }
-    })
-    tagsFavorite.sort()
-  })
-  tagsFavorite.forEach(tag => {
-    radioContainerFavorites.innerHTML += `<option value="${tag}">${tag}</option>`
-  })
-}
 
 function makeRecipeCard() {
   repository.recipeData.forEach(recipe => {
@@ -202,60 +121,9 @@ function clearSearchBar() {
   ingredientFavoriteSearch.checked = false;
 }
 
-function searchByFavoritesTag(event) {
-  recipeTagsArray = [];
-  let eventTargets = event.target.value
-  recipeTagsArray = currentUser.filterFavoriteByTag(eventTargets)
-  recipeTagsArray.length === 0 ? populatedResults.innerHTML = '<h3>Aint nothing you want here! Go AWAY</h3>' : null
-}
 
 
-function searchByTag(event) {
-  recipeTagsArray = [];
-  let eventTargets = event.target.value
-  recipeTagsArray = repository.filterByTag(eventTargets)
-}
 
-function  showSearchResultsPage() {
-  showHide([searchResultsPage], [selectedText, selectedRecipePage, favoritesPage, landingPage], 'hidden');
-  hide([errorMessage, errorMessageFavorites], 'invisible')
-
-  sortSearch();
-}
-
-function sortSearch() {
-  if (!searchInput.value && !nameSearch.checked && !ingredientSearch.checked && recipeTagsArray.length === 0) {
-    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage], 'hidden')
-    show([errorMessage, errorMessageFavorites], 'invisible')
-  } else if (searchInput.value && !nameSearch.checked && !ingredientSearch.checked) {
-    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage], 'hidden')
-    show([errorMessage, errorMessageFavorites], 'invisible')
-  } else if (searchInput.value && !nameSearch.checked && !ingredientSearch.checked) {
-    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage], 'hidden')
-    show([errorMessage, errorMessageFavorites], 'invisible')
-  } else if (!searchInput.value && ingredientSearch.checked) {
-    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage], 'hidden')
-    show([errorMessage, errorMessageFavorites], 'invisible')
-  } else if (!searchInput.value && nameSearch.checked) {
-    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage], 'hidden')
-    show([errorMessage, errorMessageFavorites], 'invisible')
-  } else if (nameSearch.checked) {
-    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage], 'hidden')
-    searchByName()
-  } else if (nameFavoriteSearch.checked) {
-    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage], 'hidden')
-    searchByFavoriteName()
-  } else if (ingredientSearch.checked) {
-    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage], 'hidden')
-    searchByIngredient()
-  } else if (ingredientFavoriteSearch.checked) {
-    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage], 'hidden')
-    searchFavoriteByIngredient()
-  } else {
-    populateByTag()
-    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage], 'hidden')
-  }
-}
 function searchByName() {
   let searched = repository.filterByRecipeName(searchInput.value)
   populatedResults.innerHTML = ''
