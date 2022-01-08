@@ -51,7 +51,8 @@ const tagBoxFavorites = document.querySelector('.tag-box-favorites');
 const radioContainerFavorites = document.querySelector('#containerFavorites');
 const searchFavoritesButton = document.querySelector('.search-favorites-button');
 const searchFavorites = document.querySelector('.search-favorites');
-const searchForm = document.querySelector('#searchBar')
+const searchForm = document.querySelector('#searchBar');
+const searchTag = document.querySelector('#searchByTag')
 
 // buttons
 const tagSearchButton = document.querySelector('.tag-search-button');
@@ -69,21 +70,36 @@ const ingredientFavoriteSearch = document.querySelector('#ingredientFavoriteSear
 
 //event listeners
 window.addEventListener('load', onStart);
+
 searchForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
   const input = formData.get('q').trim();
-  console.log(repository)
   if(formData.get('type') == 'name'){
     const x = repository.filterByRecipeName(input);
     console.log(x)
+    makeRecipeCard(x);
   }
   if(formData.get('type') == 'ingredients'){
     const y = repository.filterByIngredient(input);
-    console.log(y)
+    makeRecipeCard(y);
   }
-  e.target.reset()
+});
+
+searchTag.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const input = formData.get('tag');
+  const z = repository.filterByTag(input)
+  console.log(z);
+  makeRecipeCard(z);
 })
+
+recipeCard.addEventListener('click', function(event) {
+  showSelectedRecipePage(event)
+});
+
+logoBox.addEventListener('click', goHome);
 
 
 
@@ -106,8 +122,8 @@ function loadPage(data) {
   })
   repository = new RecipeRepository(cookBook, ingredientsInfo);
   multipleButtons();
-  makeRecipeCard();
-  // clearSearchBar();
+  makeRecipeCard(repository.recipeData);
+
 }
 
 function multipleButtons() {
@@ -125,15 +141,18 @@ function multipleButtons() {
   })
 }
 
-
 function chooseRandomUser(usersInfo) {
   return Math.floor(Math.random() * usersInfo.length);
 }
 
+function goHome() {
+  showHide([landingPage, searchInputField, searchButton, tagSearchButton], [tagBoxFavorites, selectedText, selectedRecipePage, favoritesPage, searchResultsPage, searchFavorites, searchFavoritesButton, tagSearchFavoritesButton, showSearchFavoritesInputButton], 'hidden');
+}
 
-
-function makeRecipeCard() {
-  repository.recipeData.forEach(recipe => {
+function makeRecipeCard(recipesInfo) {
+  const recipes = recipesInfo
+  recipeCard.innerHTML = ''
+  recipes.forEach(recipe => {
     recipeCard.innerHTML +=
       `<article class="all-recipes" id="${recipe.id}">
       <img class="food-preview" src=${recipe.image} alt=${recipe.name}>
@@ -142,14 +161,7 @@ function makeRecipeCard() {
   })
 }
 
-function clearSearchBar() {
-  searchInput.value = '';
-  searchInputFavorites.value = '';
-  nameSearch.checked = false;
-  nameFavoriteSearch.checked = false;
-  ingredientSearch.checked = false;
-  ingredientFavoriteSearch.checked = false;
-}
+
 
 
 
