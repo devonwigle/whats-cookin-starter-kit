@@ -25,7 +25,10 @@ const tagBox = document.querySelector('.tag-box');
 const searchInputField = document.querySelector('.search');
 const selectedRecipe = document.querySelector('.selected-recipe');
 const logoBox = document.querySelector('.logo-box');
-
+const successMessage = document.querySelector('.fav-message');
+const sadMessage = document.querySelector('.sad-message');
+const addToFavBtn = document.querySelector('.add-to-favorite-btn');
+const removeToFavBtn = document.querySelector('.remove-from-favorite-btn')
 // global variables
 let cookBook
 let ingredientsInfo
@@ -96,7 +99,9 @@ populatedResults.addEventListener('click', function(event) {
 });
 
 recipesToCookButton.addEventListener('click', addRecipesToCook)
+
 addToFavoriteButton.addEventListener('click', addToFavs);
+
 removeFromFavoritesButton.addEventListener('click', removeFromFavs)
 
 storedFavoritesButton.addEventListener('click', showFavPage);
@@ -110,7 +115,7 @@ showSearchFavoritesInputButton.addEventListener('click', searchFavoriteField)
 
 // functions
 function onStart() {
-  return Promise.all([fetchData('users'),fetchData('ingredients'),fetchData('recipes')])
+  return Promise.all([fetchData('users'), fetchData('ingredients'), fetchData('recipes')])
     .then(data => loadPage(data))
 }
 
@@ -119,7 +124,7 @@ function loadPage(data) {
   usersInfo = data[0];
   ingredientsInfo = data[1];
   recipesInfo = data[2];
-  currentUser = new User( usersInfo[chooseRandomUser(usersInfo)],ingredientsInfo);
+  currentUser = new User( usersInfo[chooseRandomUser(usersInfo)], ingredientsInfo);
 
   userBox.innerText =  `Welcome ${currentUser.name}`;
   let newRecipe = []
@@ -138,7 +143,7 @@ function goHome() {
   showHide([landingPage, searchInputField, searchButton, tagSearchButton], [tagBoxFavorites, selectedText, selectedRecipePage, favoritesPage, searchResultsPage, searchFavorites, searchFavoritesButton, tagSearchFavoritesButton, showSearchFavoritesInputButton], 'hidden');
 }
 function searchFavoriteField() {
-  showHide([searchFavorites, tagSearchFavoritesButton, tagBoxFavorites],[tagSearchButton, searchInputField, tagBox, searchInputButton, searchFavoritesButton, showSearchFavoritesInputButton], 'hidden')
+  showHide([searchFavorites, tagSearchFavoritesButton, tagBoxFavorites], [tagSearchButton, searchInputField, tagBox, searchInputButton, searchFavoritesButton, showSearchFavoritesInputButton], 'hidden')
 }
 function favoriteTagSearch() {
   showHide([tagBoxFavorites, searchFavoritesButton, showSearchFavoritesInputButton], [searchFavorites, tagSearchButton, searchInputField, tagBox, searchInputButton, tagSearchFavoritesButton], 'hidden')
@@ -378,6 +383,18 @@ function showFavPage() {
 
 function addToFavs() {
   currentUser.addToFavorite(foundRecipe);
+  addToFavBtn.classList.add('hidden');
+  removeToFavBtn.classList.remove('hidden');
+  successMessageTimeout();
+}
+
+function successMessageTimeout() {
+  successMessage.classList.add("success-message-show");
+  successMessage.classList.remove("success-message-none");
+  setTimeout(() => {
+    successMessage.classList.remove("success-message-show");
+    successMessage.classList.add("success-message-none");
+  }, 2000);
 }
 
 function addRecipesToCook() {
@@ -386,6 +403,17 @@ function addRecipesToCook() {
 
 function removeFromFavs() {
   currentUser.removeFromFavorite(foundRecipe)
+  removeToFavBtn.classList.add('hidden');
+  addToFavBtn.classList.remove('hidden');
+  sadMessageTimeout();
+}
+function sadMessageTimeout() {
+  sadMessage.classList.add("sad-message-show");
+  sadMessage.classList.remove("sad-message-none");
+  setTimeout(() => {
+    sadMessage.classList.remove("sad-message-show");
+    sadMessage.classList.add("sad-message-none");
+  }, 2000);
 }
 
 // helper functions
