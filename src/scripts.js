@@ -84,6 +84,7 @@ searchForm.addEventListener('submit', (e) => {
     const y = repository.filterByIngredient(input);
     makeRecipeCard(y);
   }
+  e.target.reset()
 });
 
 searchTag.addEventListener('submit', (e) => {
@@ -146,7 +147,8 @@ function chooseRandomUser(usersInfo) {
 }
 
 function goHome() {
-  showHide([landingPage, searchInputField, searchButton, tagSearchButton], [tagBoxFavorites, selectedText, selectedRecipePage, favoritesPage, searchResultsPage, searchFavorites, searchFavoritesButton, tagSearchFavoritesButton, showSearchFavoritesInputButton], 'hidden');
+  showHide([landingPage], [selectedText, selectedRecipePage], 'hidden');
+  makeRecipeCard(repository.recipeData);
 }
 
 function makeRecipeCard(recipesInfo) {
@@ -235,7 +237,7 @@ function populateByTag() {
 }
 
 function showSelectedRecipePage(event) {
-  showHide([selectedRecipePage, selectedText], [searchResultsPage, favoritesPage, landingPage], 'hidden');
+  showHide([selectedRecipePage, selectedText], [favoritesPage, landingPage], 'hidden');
   populateSelectedRecipe(event);
   populatedResults.innerHTML = ``;
 }
