@@ -128,8 +128,8 @@ h2 {
 .success-message-show, .sad-message-show {
   z-index: 10;
   position: fixed;
-  top: 38%;
-  right: 20%;
+  top: 49%;
+  right: 10%;
   font-weight: bold;
   display: show;
 }
