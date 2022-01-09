@@ -1,0 +1,15 @@
+@mixin previews() {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-content: stretch;
+  align-items: center;
+  margin-top: 60px;
+};
+
+@mixin results() {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
