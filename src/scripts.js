@@ -219,18 +219,14 @@ function showFavorite(){
 
 function addToFavs() {
   currentUser.addToFavorite(foundRecipe);
-  console.log(currentUser)
 }
 
 function addRecipesToCook() {
   currentUser.addToRecipesToCook(foundRecipe);
-  console.log(currentUser)
-
 }
 
 function removeFromFavs() {
   currentUser.removeFromFavorite(foundRecipe);
-  console.log(currentUser)
 }
 
 // helper functions
