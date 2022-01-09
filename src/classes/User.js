@@ -77,10 +77,15 @@ class User {
       let itIsInThePantry = this.pantry.find(pantryIngredient => {
         return recipeIngredient.id === pantryIngredient.ingredient
       })
+
       
+      console.log('use this', recipeIngredient)
       let hasAllIngredients = true;
-     
-      this.determineAmountMissing = itIsInThePantry.amount - recipeIngredient.quantity.amount
+      if (itIsInThePantry === undefined) {
+       console.log(`OH NO You have any of the ingredients you are missing ${recipeIngredient}`)
+     }
+      // console.log('its in here earl', itIsInThePantry)
+      // this.determineAmountMissing = itIsInThePantry.amount - recipeIngredient.quantity.amount
 
       if (this.determineAmountMissing < 1)  {
         this.determineAmountMissing = Math.abs(itIsInThePantry.amount - recipeIngredient.quantity.amount)
