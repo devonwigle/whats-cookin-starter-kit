@@ -7,7 +7,7 @@ import User from './classes/User';
 
 
 // querySelectors
-const searchBar = document.querySelector('input');
+
 const radioContainer = document.querySelector('#container');
 const recipeCard = document.querySelector('.previews');
 const searchedRecipeCard = document.querySelector('.food-preview')
@@ -17,12 +17,11 @@ const selectedRecipeDirections = document.querySelector('.recipe-directions');
 const selectedRecipeImage = document.querySelector('.recipe-image');
 const selectedCosts = document.querySelector('.selected-cost');
 const selectedText = document.querySelector('.recipe-text');
-const searchInput = document.querySelector('#searchInput');
+
 const populatedResults = document.querySelector('.populated-results');
-const errorMessage = document.querySelector('.error-message');
+
 const userBox = document.querySelector('.user-box');
-const tagBox = document.querySelector('.tag-box');
-const searchInputField = document.querySelector('.search');
+
 const selectedRecipe = document.querySelector('.selected-recipe');
 const logoBox = document.querySelector('.logo-box');
 const successMessage = document.querySelector('.fav-message');
@@ -38,79 +37,82 @@ let foundRecipe
 let usersInfo
 let currentUser
 let recipeTagsArray = [];
+let favorite = false;
 
 // pages
 const landingPage = document.querySelector('.landing-page');
 const selectedRecipePage = document.querySelector('.selected-recipe-page');
-const searchResultsPage = document.querySelector('.search-results-page');
 const favoritesPage = document.querySelector('.favorites-page');
 
-const searchInputFavorites = document.querySelector('#searchInputFavorites');
-const errorMessageFavorites = document.querySelector('.error-message-favorites');
-const searchByNameFavorites = document.querySelector('.search-by-name-favorites');
-const showSearchFavoritesInputButton = document.querySelector('.show-search-favorites-input-button');
-const tagSearchFavoritesButton = document.querySelector('.tag-search-favorites-button');
-const tagBoxFavorites = document.querySelector('.tag-box-favorites');
-const radioContainerFavorites = document.querySelector('#containerFavorites');
-const searchFavoritesButton = document.querySelector('.search-favorites-button');
-const searchFavorites = document.querySelector('.search-favorites');
+
+const searchForm = document.querySelector('#searchBar');
+const searchTag = document.querySelector('#searchByTag')
 
 // buttons
-const tagSearchButton = document.querySelector('.tag-search-button');
-const searchInputButton = document.querySelector('.show-search-input-button');
 const addToFavoriteButton = document.querySelector('.add-to-favorite-btn');
 const removeFromFavoritesButton = document.querySelector('.remove-from-favorite-btn')
 const recipesToCookButton = document.querySelector('.recipes-to-cook-btn');
 const storedFavoritesButton = document.querySelector('.favorite-box');
-const searchButton = document.querySelector('.search-button');
-const nameSearch = document.querySelector('#nameSearch');
-const ingredientSearch = document.querySelector('#ingredientSearch')
-const nameFavoriteSearch = document.querySelector('#nameFavoriteSearch')
-const ingredientFavoriteSearch = document.querySelector('#ingredientFavoriteSearch')
+
 
 //event listeners
 window.addEventListener('load', onStart);
 
-radioContainer.addEventListener('change', function(event) {
-  searchByTag(event)
-});
-radioContainerFavorites.addEventListener('change', function (event) {
-  searchByFavoritesTag(event)
+searchForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const input = formData.get('q').trim();
+  if(favorite === true){
+    if(formData.get('type') == 'name'){
+      const searchFavName = currentUser.filterFavoriteByRecipeName(input);
+      makeRecipeCard(searchFavName);
+    }
+    if(formData.get('type') == 'ingredients'){
+      const searchFavIngredient = currentUser.filterFavoriteByIngredient(input);
+      makeRecipeCard(searchFavIngredient);
+    }
+  }
+  if(favorite === false){
+  if(formData.get('type') == 'name'){
+    const searchByName = repository.filterByRecipeName(input);
+    makeRecipeCard(searchByName);
+  }
+  if(formData.get('type') == 'ingredients'){
+    const searchByIngredient = repository.filterByIngredient(input);
+    makeRecipeCard(searchByIngredient);
+  }
+}
+  e.target.reset()
 });
 
-searchButton.addEventListener('click', function() {
-  showSearchResultsPage();
-  clearSearchBar();
-});
-
-searchFavoritesButton.addEventListener('click', function () {
-  showSearchResultsPage();
-  clearSearchBar();
-});
-
-logoBox.addEventListener('click', goHome);
+searchTag.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const input = formData.get('tag');
+  if(favorite === true){
+    const searchFavTag = currentUser.filterFavoriteByTag(input);
+    makeRecipeCard(searchFavTag);
+  }
+  else {
+  const searchByTag = repository.filterByTag(input)
+  makeRecipeCard(searchByTag);
+}
+})
 
 recipeCard.addEventListener('click', function(event) {
   showSelectedRecipePage(event)
 });
 
-populatedResults.addEventListener('click', function(event) {
-  showSelectedRecipePage(event)
-});
+logoBox.addEventListener('click', goHome);
 
-recipesToCookButton.addEventListener('click', addRecipesToCook)
+
+recipesToCookButton.addEventListener('click', addRecipesToCook);
 
 addToFavoriteButton.addEventListener('click', addToFavs);
 
-removeFromFavoritesButton.addEventListener('click', removeFromFavs)
+removeFromFavoritesButton.addEventListener('click', removeFromFavs);
 
-storedFavoritesButton.addEventListener('click', showFavPage);
-
-tagSearchButton.addEventListener('click', tagSearch)
-tagSearchFavoritesButton.addEventListener('click', favoriteTagSearch);
-
-searchInputButton.addEventListener('click', searchField)
-showSearchFavoritesInputButton.addEventListener('click', searchFavoriteField)
+storedFavoritesButton.addEventListener('click',showFavorite);
 
 
 // functions
@@ -134,29 +136,8 @@ function loadPage(data) {
   })
   repository = new RecipeRepository(cookBook, ingredientsInfo);
   multipleButtons();
-  multipleFavoriteButtons();
-  makeRecipeCard();
-  clearSearchBar();
-}
+  makeRecipeCard(repository.recipeData);
 
-function goHome() {
-  showHide([landingPage, searchInputField, searchButton, tagSearchButton], [tagBoxFavorites, selectedText, selectedRecipePage, favoritesPage, searchResultsPage, searchFavorites, searchFavoritesButton, tagSearchFavoritesButton, showSearchFavoritesInputButton], 'hidden');
-}
-function searchFavoriteField() {
-  showHide([searchFavorites, tagSearchFavoritesButton, tagBoxFavorites], [tagSearchButton, searchInputField, tagBox, searchInputButton, searchFavoritesButton, showSearchFavoritesInputButton], 'hidden')
-}
-function favoriteTagSearch() {
-  showHide([tagBoxFavorites, searchFavoritesButton, showSearchFavoritesInputButton], [searchFavorites, tagSearchButton, searchInputField, tagBox, searchInputButton, tagSearchFavoritesButton], 'hidden')
-}
-function searchField() {
-  showHide([tagSearchButton, searchInputField], [tagBox, searchInputButton], 'hidden')
-}
-function tagSearch() {
-  showHide([tagBox, searchInputButton], [tagSearchButton, searchInputField], 'hidden')
-}
-
-function chooseRandomUser(usersInfo) {
-  return Math.floor(Math.random() * usersInfo.length);
 }
 
 function multipleButtons() {
@@ -174,24 +155,20 @@ function multipleButtons() {
   })
 }
 
-function multipleFavoriteButtons() {
-
-  let tagsFavorite = [];
-  repository.recipeData.forEach(recipe => {
-    recipe.tags.forEach(tag => {
-      if (!tagsFavorite.includes(tag)) {
-        tagsFavorite.push(tag);
-      }
-    })
-    tagsFavorite.sort()
-  })
-  tagsFavorite.forEach(tag => {
-    radioContainerFavorites.innerHTML += `<option value="${tag}">${tag}</option>`
-  })
+function chooseRandomUser(usersInfo) {
+  return Math.floor(Math.random() * usersInfo.length);
 }
 
-function makeRecipeCard() {
-  repository.recipeData.forEach(recipe => {
+function goHome() {
+  favorite = false;
+  showHide([landingPage], [selectedText, selectedRecipePage], 'hidden');
+  makeRecipeCard(repository.recipeData);
+}
+
+function makeRecipeCard(recipesInfo) {
+  const recipes = recipesInfo
+  recipeCard.innerHTML = ''
+  recipes.forEach(recipe => {
     recipeCard.innerHTML +=
       `<article class="all-recipes" id="${recipe.id}">
       <img class="food-preview" src=${recipe.image} alt=${recipe.name}>
@@ -200,139 +177,8 @@ function makeRecipeCard() {
   })
 }
 
-function clearSearchBar() {
-  searchInput.value = '';
-  searchInputFavorites.value = '';
-  nameSearch.checked = false;
-  nameFavoriteSearch.checked = false;
-  ingredientSearch.checked = false;
-  ingredientFavoriteSearch.checked = false;
-}
-
-function searchByFavoritesTag(event) {
-  recipeTagsArray = [];
-  let eventTargets = event.target.value
-  recipeTagsArray = currentUser.filterFavoriteByTag(eventTargets)
-  recipeTagsArray.length === 0 ? populatedResults.innerHTML = '<h3>Aint nothing you want here! Go AWAY</h3>' : null
-}
-
-
-function searchByTag(event) {
-  recipeTagsArray = [];
-  let eventTargets = event.target.value
-  recipeTagsArray = repository.filterByTag(eventTargets)
-}
-
-function  showSearchResultsPage() {
-  showHide([searchResultsPage], [selectedText, selectedRecipePage, favoritesPage, landingPage], 'hidden');
-  hide([errorMessage, errorMessageFavorites], 'invisible')
-
-  sortSearch();
-}
-
-function sortSearch() {
-  if (!searchInput.value && !nameSearch.checked && !ingredientSearch.checked && recipeTagsArray.length === 0) {
-    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage], 'hidden')
-    show([errorMessage, errorMessageFavorites], 'invisible')
-  } else if (searchInput.value && !nameSearch.checked && !ingredientSearch.checked) {
-    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage], 'hidden')
-    show([errorMessage, errorMessageFavorites], 'invisible')
-  } else if (searchInput.value && !nameSearch.checked && !ingredientSearch.checked) {
-    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage], 'hidden')
-    show([errorMessage, errorMessageFavorites], 'invisible')
-  } else if (!searchInput.value && ingredientSearch.checked) {
-    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage], 'hidden')
-    show([errorMessage, errorMessageFavorites], 'invisible')
-  } else if (!searchInput.value && nameSearch.checked) {
-    showHide([landingPage], [selectedRecipePage, selectedText, favoritesPage, searchResultsPage], 'hidden')
-    show([errorMessage, errorMessageFavorites], 'invisible')
-  } else if (nameSearch.checked) {
-    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage], 'hidden')
-    searchByName()
-  } else if (nameFavoriteSearch.checked) {
-    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage], 'hidden')
-    searchByFavoriteName()
-  } else if (ingredientSearch.checked) {
-    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage], 'hidden')
-    searchByIngredient()
-  } else if (ingredientFavoriteSearch.checked) {
-    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage], 'hidden')
-    searchFavoriteByIngredient()
-  } else {
-    populateByTag()
-    showHide([searchResultsPage], [landingPage, selectedRecipePage, selectedText, favoritesPage], 'hidden')
-  }
-}
-function searchByName() {
-  let searched = repository.filterByRecipeName(searchInput.value)
-  populatedResults.innerHTML = ''
-  searched.forEach(recipe => {
-    populatedResults.innerHTML +=
-    ` <article class="all-recipes" id="${recipe.id}">
-    <img class="food-preview" src=${recipe.image}>
-    <h2>${recipe.name}</h2>
-    </article>`
-  })
-  searched.length === 0 ? populatedResults.innerHTML = '<h3>Aint nothing you want here! Go AWAY</h3>' : null
-}
-
-function searchByFavoriteName() {
-  let searched = currentUser.filterFavoriteByRecipeName(searchInputFavorites.value)
-  populatedResults.innerHTML = ''
-  searched.forEach(recipe => {
-    populatedResults.innerHTML +=
-      ` <article class="all-recipes" id="${recipe.id}">
-    <img class="food-preview" src=${recipe.image}>
-    <h2>${recipe.name}</h2>
-    </article>`
-  })
-  searched.length === 0 ? populatedResults.innerHTML = '<h3>Aint nothing you want here! Go AWAY</h3>' : null
-}
-
-function searchByIngredient() {
-
-  let rawDataSearched = repository.filterByIngredient(searchInput.value)
-  let searched = [...new Set(rawDataSearched)]
-  populatedResults.innerHTML = ''
-
-  searched.forEach(recipe => {
-    populatedResults.innerHTML +=
-    `<article class="all-recipes" id="${recipe.id}">
-    <img class="food-preview" src=${recipe.image}>
-    <h2>${recipe.name}</h2>
-    </article>`
-  })
-  searched.length === 0 ? populatedResults.innerHTML = '<h3>Aint nothing you want here! Go AWAY</h3>' : null
-}
-function searchFavoriteByIngredient() {
-
-  let rawDataSearched = currentUser.filterFavoriteByIngredient(searchInputFavorites.value)
-  let searched = [...new Set(rawDataSearched)]
-  populatedResults.innerHTML = ''
-
-  searched.forEach(recipe => {
-    populatedResults.innerHTML +=
-      `<article class="all-recipes" id="${recipe.id}">
-    <img class="food-preview" src=${recipe.image}>
-    <h2>${recipe.name}</h2>
-    </article>`
-  })
-  searched.length === 0 ? populatedResults.innerHTML = '<h3>Aint nothing you want here! Go AWAY</h3>' : null
-}
-
-function populateByTag() {
-  populatedResults.innerHTML = ''
-  recipeTagsArray.forEach(recipe => {
-    populatedResults.innerHTML +=
-      `<article class="all-recipes" id="${recipe.id}">
-        <img class="food-preview" src=${recipe.image}>
-        <h2>${recipe.name}</h2>
-        </article>`
-  })
-}
-
 function showSelectedRecipePage(event) {
-  showHide([selectedRecipePage, selectedText], [searchResultsPage, favoritesPage, landingPage], 'hidden');
+  showHide([selectedRecipePage, selectedText], [landingPage], 'hidden');
   populateSelectedRecipe(event);
   populatedResults.innerHTML = ``;
 }
@@ -369,17 +215,13 @@ function populateSelectedRecipe(event) {
   })
 }
 
-function showFavPage() {
-  populatedResults.innerHTML = ''
-  currentUser.favorite.forEach(recipe => {
-    populatedResults.innerHTML +=
-      `<article class="all-recipes" id="${recipe.id}">
-        <img class="food-preview" src=${recipe.image}>
-        <h2>${recipe.name}</h2>
-        </article>`
-  })
-  showHide([favoritesPage, searchFavorites, searchFavoritesButton, tagSearchFavoritesButton], [searchResultsPage, selectedText, selectedRecipePage, landingPage, searchInputField, searchButton, tagSearchButton, searchInputButton, tagBox, tagBoxFavorites, showSearchFavoritesInputButton], 'hidden');
+function showFavorite(){
+  favorite = true;
+  makeRecipeCard(currentUser.favorite);
+  showHide([landingPage], [selectedText, selectedRecipePage], 'hidden');
+
 }
+
 
 function addToFavs() {
   currentUser.addToFavorite(foundRecipe);
@@ -402,7 +244,7 @@ function addRecipesToCook() {
 }
 
 function removeFromFavs() {
-  currentUser.removeFromFavorite(foundRecipe)
+  currentUser.removeFromFavorite(foundRecipe);
   removeToFavBtn.classList.add('hidden');
   addToFavBtn.classList.remove('hidden');
   sadMessageTimeout();

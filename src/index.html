@@ -8,55 +8,37 @@
   <body>
     <nav class="navigation">
       <button class="logo-box">What's Cookin'</button>
-      <div class="search">
-        <input id="searchInput" type="text" name="Seach Bar" placeholder="Search">
-        <p class="error-message invisible">Error: Check your search bar and buttons</p>
-        <label>
-          <input class="search-by-name" id="nameSearch" type="radio" name="search-selection" value="recipeName" checkked>
-          <span>recipe name</span>
-          <input class="search-by-name" id="ingredientSearch" type="radio" name="search-selection" value="ingredientName">
-          <span>ingredients name</span>
-        </label>
-      </div>
-      <button class="show-search-input-button hidden">Search by name</button>
-      <button class="tag-search-button">Search By Tag</button>
-      <div class="tag-box hidden">
-        <h2>tags</h2>
-        <select id="container" name="tag">
-          <option value="none">Select Tag</option>
-        </select>
-      </div>
-      <button class="search-button">Search NOW!</button>
-      <section class="search"> </section>
-      <div class="search-favorites hidden">
-        <input id="searchInputFavorites" type="text" name="Seach Bar" placeholder="Search">
-        <p class="error-message-favorites invisible">Error: Check your search bar and buttons</p>
-        <input class="search-by-name-favorites " id="nameFavoriteSearch" type="radio" name="search-selection" value="recipeName">recipe name
-        <input class="search-by-name-favorites" id="ingredientFavoriteSearch" type="radio" name="search-selection"
-          value="ingredientName">ingredients name
-      </div>
-      <button class="show-search-favorites-input-button hidden">Search by name</button>
-      <button class="tag-search-favorites-button hidden">Search By Tag</button>
-      <div class="tag-box-favorites hidden">
-        <h2>tags</h2>
-        <select id="containerFavorites"  name="tag">
-          <option value="none">Select Tag</option>
-        </select>
-      </div>
-      <button class="search-favorites-button hidden">Search NOW!</button>
-      <section class="search-favorites hidden"> </section>
-
       <div class="nav-boxes">
-        <button class="favorite-box">Favorites</button>
-        <article class="user-box"></article>
-      </div>
+       <button class="favorite-box">Favorites</button>
+       <article class="user-box"></article>
+     </div>
     </nav>
-    <div>
-      <section class="landing-page ">
+    <section class="landing-page ">
+      <div class="search">
+
+        <form id="searchBar">
+          <input type="search" id="query" name="q"
+          placeholder="Search..." required>
+          <button type="submit" class="search-bar-button" id="submit">Search</button><br>
+          <input type="radio" id="ingredients" name="type" value="ingredients" required>
+          <label for="ingredients">Ingredients</label>
+          <input type="radio" id="name" name="type" value="name" required >
+          <label for="ingredients">Name</label>
+        </form>
+        <h2> OR </h2>
+        <form id="searchByTag">
+          <label for="tag">Search by Tag:</label>
+          <select id="container" name="tag" required>
+          <option value="">Select Tag</option>
+          </select>
+          <button type="submit" class="search-by-tag-button" id="submit">Search</button>
+        </form>
+      </div>
+
         <div class="previews">
         </div>
       </section>
-    </div>
+
     <div>
       <section class="selected-recipe-page hidden">
         <div class="selected-recipe">

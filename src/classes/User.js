@@ -51,8 +51,11 @@ class User {
   filterFavoriteByIngredient(userInput) {
     let filtered = [];
     let filteredIngredient =  this.ingredientsData.filter((ingredient) => {
-      return ingredient.name.toLowerCase().includes(userInput.toLowerCase())
+      if (ingredient.name === userInput.toLowerCase()) {
+        return ingredient
+      }
     });
+
     let checkedRecipe = this.favorite.forEach((recipe) => {
       recipe.ingredients.forEach((ing) => {
         if (ing.id === filteredIngredient[0].id) {
@@ -62,6 +65,5 @@ class User {
     })
     return filtered
   }
-
 }
 export default User;
