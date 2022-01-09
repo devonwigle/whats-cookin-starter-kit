@@ -80,10 +80,10 @@ class User {
       
       let hasAllIngredients = true;
      
-      let determineAmountMissing = itIsInThePantry.amount - recipeIngredient.quantity.amount
+      this.determineAmountMissing = itIsInThePantry.amount - recipeIngredient.quantity.amount
 
-      if (determineAmountMissing < 1)  {
-        determineAmountMissing = Math.abs(itIsInThePantry.amount - recipeIngredient.quantity.amount)
+      if (this.determineAmountMissing < 1)  {
+        this.determineAmountMissing = Math.abs(itIsInThePantry.amount - recipeIngredient.quantity.amount)
         //inner text or html 
         console.log('dont got it')
       } else {

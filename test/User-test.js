@@ -70,10 +70,10 @@ describe('User', () => {
     expect(currentUser.filterFavoriteByTag(userInput)).to.deep.equal([recipeData[0]]);
   });
 
-  it('should have a pantry', () => {
+  it('should be able to calcuulate how much is missing', () => {
     currentUser.addToRecipesToCook(recipeData[0]);
     currentUser.checkPantry(recipeData[0])
-    expect(currentUser.checkPantry).to.equal(userData.pantry)
+    expect(currentUser.determineAmountMissing).to.equal(9.5)
     })
 
 })
