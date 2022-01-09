@@ -22,8 +22,6 @@ button {
   cursor: pointer;
 }
 
-
-
 label > input[type="radio"]:checked + * {
   color: rgb(120, 2, 255);
 }
@@ -128,4 +126,16 @@ h2 {
 
 .invisible {
   visibility: hidden;
+}
+
+.success-message-none, .sad-message-none{
+  display: none;
+}
+.success-message-show, .sad-message-show {
+  z-index: 10;
+  position: fixed;
+  top: 38%;
+  right: 20%;
+  font-weight: bold;
+  display: show;
 }
