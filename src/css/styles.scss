@@ -1,13 +1,16 @@
+@import './_variables.scss';
+@import './_mixins.scss';
+
 body {
   margin: 0;
-  background-color: #BE90D4;
+  background-color: $lavendar;
 }
 
 nav {
   display: flex;
   justify-content: space-around;
   height: 3%;
-  background-color: #dcc6e0;
+  background-color: $light-lavendar;
 }
 
 .nav-boxes {
@@ -23,15 +26,15 @@ button {
 }
 
 label > input[type="radio"]:checked + * {
-  color: rgb(120, 2, 255);
+  color: $violet
 }
 
 .logo-box {
   border: none;
   width: 10%;
-  background-color: #F1A9A0;
+  background-color: $peach;
   cursor: pointer;
-  color: black
+  color: $black
 }
 
 .error-message-favorites,
@@ -42,7 +45,7 @@ label > input[type="radio"]:checked + * {
 .error-message-favorites,
 .error-message,
 .user-box {
-  color: black;
+  color: $black;
   margin-left: 40px;
 }
 
@@ -58,13 +61,7 @@ h2 {
 }
 
 .previews {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  flex-direction: row;
-  align-content: stretch;
-  align-items: center;
-  margin-top: 60px;
+  @include previews();
 }
 
 .food-preview {
@@ -74,7 +71,7 @@ h2 {
 
 .all-recipes {
   display: flex;
-  background: #e9e8e8;
+  background: $off-white;
   height: 300px;
   width: 300px;
   align-items: center;
@@ -110,9 +107,7 @@ h2 {
 }
 
 .populated-results {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  @include results()
 }
 
 .filtered-image {
