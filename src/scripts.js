@@ -59,6 +59,17 @@ searchForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
   const input = formData.get('q').trim();
+  if(favorite === true){
+    if(formData.get('type') == 'name'){
+      const searchFavName = currentUser.filterFavoriteByRecipeName(input);
+      makeRecipeCard(searchFavName);
+    }
+    if(formData.get('type') == 'ingredients'){
+      const searchFavIngredient = currentUser.filterFavoriteByIngredient(input);
+      makeRecipeCard(searchFavIngredient);
+    }
+  }
+  if(favorite === false){
   if(formData.get('type') == 'name'){
     const searchByName = repository.filterByRecipeName(input);
     makeRecipeCard(searchByName);
@@ -67,6 +78,7 @@ searchForm.addEventListener('submit', (e) => {
     const searchByIngredient = repository.filterByIngredient(input);
     makeRecipeCard(searchByIngredient);
   }
+}
   e.target.reset()
 });
 
@@ -74,6 +86,7 @@ searchTag.addEventListener('submit', (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
   const input = formData.get('tag');
+  
   const searchByTag = repository.filterByTag(input)
   makeRecipeCard(searchByTag);
 })
