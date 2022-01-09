@@ -193,6 +193,8 @@ function populateSelectedRecipe(event) {
 
 function showFavorite(){
   favorite = true;
+  makeRecipeCard(currentUser.favorite);
+  showHide([landingPage], [selectedText, selectedRecipePage], 'hidden');
 
 }
 
