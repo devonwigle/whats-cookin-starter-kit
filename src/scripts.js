@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import './styles.css';
+import './css/styles.scss';
 import { fetchData } from './apiCalls';
 import RecipeRepository from './classes/RecipeRepository.js'
 import Recipe from './classes/Recipe';
@@ -185,7 +185,7 @@ function showSelectedRecipePage(event) {
 
 function populateSelectedRecipe(event) {
   let id = event.target.closest('article').id;
-  foundRecipe = repository.recipeData.find(recipe =>{
+  foundRecipe = repository.recipeData.find(recipe => {
     return recipe.id === parseInt(id)
   });
   let costOfIngredients = foundRecipe.getCostOfIngredients();
@@ -225,8 +225,6 @@ function showFavorite(){
 
 function addToFavs() {
   currentUser.addToFavorite(foundRecipe);
-  addToFavBtn.classList.add('hidden');
-  removeToFavBtn.classList.remove('hidden');
   successMessageTimeout();
 }
 
@@ -241,12 +239,11 @@ function successMessageTimeout() {
 
 function addRecipesToCook() {
   currentUser.addToRecipesToCook(foundRecipe);
+
 }
 
 function removeFromFavs() {
   currentUser.removeFromFavorite(foundRecipe);
-  removeToFavBtn.classList.add('hidden');
-  addToFavBtn.classList.remove('hidden');
   sadMessageTimeout();
 }
 function sadMessageTimeout() {
