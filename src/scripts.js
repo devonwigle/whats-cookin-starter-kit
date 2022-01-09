@@ -86,9 +86,14 @@ searchTag.addEventListener('submit', (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
   const input = formData.get('tag');
-  
+  if(favorite === true){
+    const searchFavTag = currentUser.filterFavoriteByTag(input);
+    makeRecipeCard(searchFavTag);
+  }
+  else {
   const searchByTag = repository.filterByTag(input)
   makeRecipeCard(searchByTag);
+}
 })
 
 recipeCard.addEventListener('click', function(event) {
