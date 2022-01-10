@@ -10,7 +10,7 @@ import {domUpdates, recipeCard, makeRecipeCard} from './domUpdates.js';
 // querySelectors
 
 const radioContainer = document.querySelector('#container');
-
+const selectIngredient = document.querySelector('#ingredientID')
 const selectedRecipeIngredientAmount = document.querySelector('.ingredients-amounts');
 const selectedRecipeDirections = document.querySelector('.recipe-directions');
 const selectedText = document.querySelector('.recipe-text');
@@ -41,6 +41,7 @@ const selectedRecipePage = document.querySelector('.selected-recipe-page');
 const searchForm = document.querySelector('#searchBar');
 const searchTag = document.querySelector('#searchByTag');
 const post = document.querySelector('#post');
+
 
 // buttons
 const addToFavoriteButton = document.querySelector('.add-to-favorite-btn');
@@ -152,8 +153,16 @@ function loadPage(data) {
   repository = new RecipeRepository(cookBook, ingredientsInfo);
   multipleButtons();
   makeRecipeCard(repository.recipeData);
-
+  console.log(ingredientsInfo)
 }
+
+function postOptions() {
+  let options = [];
+  ingredientsInfo.forEach(ingredients => {
+    ingredients.name
+  })
+} 
+
 
 function multipleButtons() {
   let tags = [];

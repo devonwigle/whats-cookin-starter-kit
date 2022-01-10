@@ -13,12 +13,8 @@
        <article class="user-box"></article>
      </div>
     </nav>
-    <section class="landing-page ">
-      <form id="post">
-        <input type="number" id="ingredientID" name="ingredient">
-        <input type="number" id="ingredientModification" name="ingredientAmount">
-        <button type="submit">Click Me</button>
-      </form>
+    <section class="landing-page hidden">
+      
       <div class="search">
         <form id="searchBar">
           <input type="search" id="query" name="q"
@@ -90,8 +86,16 @@
       </section>
     </div>
     <div>
-      <section class="pantry-page hidden">
+      <section class="pantry-page">
         <h1>Recipes To Cook</h1>
+          <form id="post">
+            <label for="ingredients"></label>
+            <select id="ingredientID" name="ingedients">
+              <option value="">Ingredient to Pantry</option>
+            </select>
+            <input type="number" id="ingredientModification" name="ingredientAmount">
+            <button type="submit">Click Me</button>
+          </form>
           <article class="user-pantry">Your Pantry
             <!-- User pantry populates here -->
           </article>
