@@ -4,6 +4,7 @@ import { fetchData } from './apiCalls';
 import RecipeRepository from './classes/RecipeRepository.js'
 import Recipe from './classes/Recipe';
 import User from './classes/User';
+import {domUpdates, recipeCard, makeRecipeCard} from './domUpdates.js';
 
 
 // querySelectors
@@ -120,7 +121,7 @@ function loadPage(data) {
   recipesInfo = data[2];
   currentUser = new User( usersInfo[chooseRandomUser(usersInfo)], ingredientsInfo);
 
-  userBox.innerText =  `Welcome ${currentUser.name}`;
+  userBox.innerText = `Welcome ${currentUser.name}`;
   let newRecipe = []
   cookBook = recipesInfo.map(recipe => {
     newRecipe = new Recipe(recipe, ingredientsInfo);
@@ -155,18 +156,6 @@ function goHome() {
   favorite = false;
   showHide([landingPage], [selectedText, selectedRecipePage], 'hidden');
   makeRecipeCard(repository.recipeData);
-}
-
-function makeRecipeCard(recipesInfo) {
-  const recipes = recipesInfo
-  recipeCard.innerHTML = ''
-  recipes.forEach(recipe => {
-    recipeCard.innerHTML +=
-      `<article class="all-recipes" id="${recipe.id}">
-      <img class="food-preview" src=${recipe.image} alt=${recipe.name}>
-      <h2>${recipe.name}</h2>
-      </article>`
-  })
 }
 
 function showSelectedRecipePage(event) {
@@ -264,3 +253,5 @@ function hide(hides, css) {
     hide.classList.add(css);
   })
 }
+
+export {}
