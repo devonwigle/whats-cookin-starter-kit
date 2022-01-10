@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import './css/styles.scss';
-import { fetchData } from './apiCalls';
+import { fetchData, addIngredient } from './apiCalls';
 import RecipeRepository from './classes/RecipeRepository.js'
 import Recipe from './classes/Recipe';
 import User from './classes/User';
@@ -39,7 +39,8 @@ const landingPage = document.querySelector('.landing-page');
 const selectedRecipePage = document.querySelector('.selected-recipe-page');
 
 const searchForm = document.querySelector('#searchBar');
-const searchTag = document.querySelector('#searchByTag')
+const searchTag = document.querySelector('#searchByTag');
+const post = document.querySelector('#post');
 
 // buttons
 const addToFavoriteButton = document.querySelector('.add-to-favorite-btn');
@@ -50,6 +51,9 @@ const storedFavoritesButton = document.querySelector('.favorite-box');
 
 //event listeners
 window.addEventListener('load', onStart);
+
+
+
 
 searchForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -92,6 +96,21 @@ searchTag.addEventListener('submit', (e) => {
 }
 })
 
+post.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const addIngredientData = {
+    userID: currentUser.id,
+    ingredientID: Number(formData.get('ingredient')),
+    ingredientModification: Number(formData.get('ingredientAmount'))
+  }
+  console.log(currentUser.pantry)
+  addIngredient(addIngredientData).then( () => onStart())
+  console.log(currentUser.pantry)
+
+
+})
+
 recipeCard.addEventListener('click', function(event) {
   showSelectedRecipePage(event)
 });
@@ -126,8 +145,8 @@ function loadPage(data) {
   usersInfo = data[0];
   ingredientsInfo = data[1];
   recipesInfo = data[2];
-  currentUser = new User( usersInfo[chooseRandomUser(usersInfo)], ingredientsInfo);
-
+  currentUser = new User( usersInfo[0], ingredientsInfo);
+  console.log(currentUser.pantry);
   userBox.innerText = `Welcome ${currentUser.name}`;
   let newRecipe = []
   cookBook = recipesInfo.map(recipe => {

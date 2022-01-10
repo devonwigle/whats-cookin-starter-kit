@@ -14,8 +14,12 @@
      </div>
     </nav>
     <section class="landing-page ">
+      <form id="post">
+        <input type="number" id="ingredientID" name="ingredient">
+        <input type="number" id="ingredientModification" name="ingredientAmount">
+        <button type="submit">Click Me</button>
+      </form>
       <div class="search">
-
         <form id="searchBar">
           <input type="search" id="query" name="q"
           placeholder="Search..." required>
@@ -34,15 +38,13 @@
           <button type="submit" class="search-by-tag-button" >Search</button>
         </form>
       </div>
-
         <div class="previews">
         </div>
-      </section>
 
+      </section>
     <div>
       <section class="selected-recipe-page hidden">
         <div class="selected-recipe">
-
         </div>
         <button class="add-to-favorite-btn">Add to Favorites</button>
         <p class="fav-message success-message-none">SUCCESS YOU ADDED TO FAVORITES</p>
