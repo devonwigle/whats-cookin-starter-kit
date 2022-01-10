@@ -10,7 +10,7 @@ import {domUpdates, recipeCard, makeRecipeCard} from './domUpdates.js';
 // querySelectors
 
 const radioContainer = document.querySelector('#container');
-const recipeCard = document.querySelector('.previews');
+
 const selectedRecipeIngredientAmount = document.querySelector('.ingredients-amounts');
 const selectedRecipeDirections = document.querySelector('.recipe-directions');
 const selectedText = document.querySelector('.recipe-text');
@@ -96,6 +96,13 @@ recipeCard.addEventListener('click', function(event) {
   showSelectedRecipePage(event)
 });
 
+recipeCard.addEventListener('keydown', function (event) {
+  if((event.key === 'Enter' || event.key === 13) || (event.key === ' ' || event.key === 32) ){
+    event.preventDefault();
+    showSelectedRecipePage(event)
+  }
+});
+
 logoBox.addEventListener('click', goHome);
 
 
@@ -165,7 +172,7 @@ function showSelectedRecipePage(event) {
 }
 
 function populateSelectedRecipe(event) {
-  let id = event.target.closest('article').id;
+  let id = event.target.closest('button').id;
   foundRecipe = repository.recipeData.find(recipe => {
     return recipe.id === parseInt(id)
   });
