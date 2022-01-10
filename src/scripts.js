@@ -104,11 +104,7 @@ post.addEventListener('submit', (e) => {
     ingredientID: Number(formData.get('ingredient')),
     ingredientModification: Number(formData.get('ingredientAmount'))
   }
-  console.log(currentUser.pantry)
   addIngredient(addIngredientData).then( () => onStart())
-  console.log(currentUser.pantry)
-
-
 })
 
 recipeCard.addEventListener('click', function(event) {
@@ -145,7 +141,7 @@ function loadPage(data) {
   usersInfo = data[0];
   ingredientsInfo = data[1];
   recipesInfo = data[2];
-  currentUser = new User( usersInfo[0], ingredientsInfo);
+  currentUser = new User( usersInfo[chooseRandomUser(usersInfo)], ingredientsInfo);
   console.log(currentUser.pantry);
   userBox.innerText = `Welcome ${currentUser.name}`;
   let newRecipe = []
