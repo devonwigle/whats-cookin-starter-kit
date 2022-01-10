@@ -10,12 +10,9 @@ import {domUpdates, recipeCard, makeRecipeCard} from './domUpdates.js';
 // querySelectors
 
 const radioContainer = document.querySelector('#container');
-const searchedRecipeCard = document.querySelector('.food-preview')
-const selectedRecipeTitle = document.querySelector('.recipe-title');
+
 const selectedRecipeIngredientAmount = document.querySelector('.ingredients-amounts');
 const selectedRecipeDirections = document.querySelector('.recipe-directions');
-const selectedRecipeImage = document.querySelector('.recipe-image');
-const selectedCosts = document.querySelector('.selected-cost');
 const selectedText = document.querySelector('.recipe-text');
 
 const populatedResults = document.querySelector('.populated-results');
@@ -26,8 +23,7 @@ const selectedRecipe = document.querySelector('.selected-recipe');
 const logoBox = document.querySelector('.logo-box');
 const successMessage = document.querySelector('.fav-message');
 const sadMessage = document.querySelector('.sad-message');
-const addToFavBtn = document.querySelector('.add-to-favorite-btn');
-const removeToFavBtn = document.querySelector('.remove-from-favorite-btn')
+
 // global variables
 let cookBook
 let ingredientsInfo
@@ -36,14 +32,11 @@ let repository
 let foundRecipe
 let usersInfo
 let currentUser
-let recipeTagsArray = [];
 let favorite = false;
 
 // pages
 const landingPage = document.querySelector('.landing-page');
 const selectedRecipePage = document.querySelector('.selected-recipe-page');
-const favoritesPage = document.querySelector('.favorites-page');
-
 
 const searchForm = document.querySelector('#searchBar');
 const searchTag = document.querySelector('#searchByTag')
@@ -101,6 +94,13 @@ searchTag.addEventListener('submit', (e) => {
 
 recipeCard.addEventListener('click', function(event) {
   showSelectedRecipePage(event)
+});
+
+recipeCard.addEventListener('keydown', function (event) {
+  if((event.key === 'Enter' || event.key === 13) || (event.key === ' ' || event.key === 32) ){
+    event.preventDefault();
+    showSelectedRecipePage(event)
+  }
 });
 
 logoBox.addEventListener('click', goHome);
@@ -172,7 +172,7 @@ function showSelectedRecipePage(event) {
 }
 
 function populateSelectedRecipe(event) {
-  let id = event.target.closest('article').id;
+  let id = event.target.closest('button').id;
   foundRecipe = repository.recipeData.find(recipe => {
     return recipe.id === parseInt(id)
   });

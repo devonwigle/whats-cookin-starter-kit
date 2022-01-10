@@ -5,10 +5,10 @@ function makeRecipeCard(recipesInfo) {
   recipeCard.innerHTML = ''
   recipes.forEach(recipe => {
     recipeCard.innerHTML +=
-      `<article class="all-recipes" id="${recipe.id}">
+      `<button class="all-recipes" id="${recipe.id}">
       <img class="food-preview" src=${recipe.image} alt=${recipe.name}>
       <h2>${recipe.name}</h2>
-      </article>`
+      </button>`
   })
 }
 
