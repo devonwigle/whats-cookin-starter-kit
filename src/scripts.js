@@ -10,12 +10,8 @@ import User from './classes/User';
 
 const radioContainer = document.querySelector('#container');
 const recipeCard = document.querySelector('.previews');
-const searchedRecipeCard = document.querySelector('.food-preview')
-const selectedRecipeTitle = document.querySelector('.recipe-title');
 const selectedRecipeIngredientAmount = document.querySelector('.ingredients-amounts');
 const selectedRecipeDirections = document.querySelector('.recipe-directions');
-const selectedRecipeImage = document.querySelector('.recipe-image');
-const selectedCosts = document.querySelector('.selected-cost');
 const selectedText = document.querySelector('.recipe-text');
 
 const populatedResults = document.querySelector('.populated-results');
@@ -26,8 +22,7 @@ const selectedRecipe = document.querySelector('.selected-recipe');
 const logoBox = document.querySelector('.logo-box');
 const successMessage = document.querySelector('.fav-message');
 const sadMessage = document.querySelector('.sad-message');
-const addToFavBtn = document.querySelector('.add-to-favorite-btn');
-const removeToFavBtn = document.querySelector('.remove-from-favorite-btn')
+
 // global variables
 let cookBook
 let ingredientsInfo
@@ -36,14 +31,11 @@ let repository
 let foundRecipe
 let usersInfo
 let currentUser
-let recipeTagsArray = [];
 let favorite = false;
 
 // pages
 const landingPage = document.querySelector('.landing-page');
 const selectedRecipePage = document.querySelector('.selected-recipe-page');
-const favoritesPage = document.querySelector('.favorites-page');
-
 
 const searchForm = document.querySelector('#searchBar');
 const searchTag = document.querySelector('#searchByTag')
