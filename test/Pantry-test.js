@@ -21,12 +21,18 @@ describe('Pantry', () => {
   })
 
 
-  it.only('should check the users pantry has correct ingredients', () => {
-    expect(userPantry.checkedIngredients(recipeData[0])).to.equal(true)
+  it('should check the users pantry has correct ingredients', () => {
+    userPantry.checkedIngredients(recipeData[0])
+    expect(userPantry.hasAllIngredients).to.equal(true)
   })
 
-  it.only('should check the users pantry has enough ingredients', () => {
-    expect(userPantry.checkedIngredients(recipeData[1])).to.equal(false)
+  it('should check the users pantry has enough ingredients', () => {
+    userPantry.checkedIngredients(recipeData[1])
+    expect(userPantry.hasAllIngredients).to.equal(false)
   })
 
+  it('should determine how much is is needed to cook the recipe', () => {
+    userPantry.checkedIngredients(recipeData[1])
+    expect(userPantry.missingIngredients[0].amountMissing).to.equal(1)
+  })
 });

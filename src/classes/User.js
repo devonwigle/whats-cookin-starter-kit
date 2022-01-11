@@ -70,54 +70,5 @@ class User {
     return filtered
   }
 
-  checkPantry(recipeData) {
-    console.log('user pantry', this.pantry)
-    
-    let findMatchingIngredient = recipeData.ingredients.map(recipeIngredient => {
-      let itIsInThePantry = this.pantry.find(pantryIngredient => {
-        return recipeIngredient.id === pantryIngredient.ingredient
-      })
-
-      
-      console.log('use this', recipeIngredient)
-      let hasAllIngredients = true;
-      if (itIsInThePantry === undefined) {
-       console.log(`OH NO You have any of the ingredients you are missing ${recipeIngredient}`)
-     }
-      // console.log('its in here earl', itIsInThePantry)
-      // this.determineAmountMissing = itIsInThePantry.amount - recipeIngredient.quantity.amount
-
-      if (this.determineAmountMissing < 1)  {
-        this.determineAmountMissing = Math.abs(itIsInThePantry.amount - recipeIngredient.quantity.amount)
-        //inner text or html 
-        console.log('dont got it')
-      } else {
-        console.log('recipe', recipeIngredient)
-        console.log('user Pantry', itIsInThePantry)
-        console.log('You have all the ingredients you need');
-      }
-
-      // eslint-disable-next-line max-len
-      if (itIsInThePantry && (itIsInThePantry.amount  < recipeIngredient.quantity.amount) || !itIsInThePantry) {
-        hasAllIngredients = false;
-        // console.log('inside if stattement but false')
-        return hasAllIngredients
-      } else {
-        // console.log('inside if statement but true')
-        return hasAllIngredients
-      }
-    })
-
-    let hasfalse = findMatchingIngredient.includes(false)
-
-    if (hasfalse === true) {
-      console.log('OH NO! YOU dont have enough ingredients to cook this recipe');
-    } else {
-      // inner text
-      console.log('Happy cooking!');
-    }
-  
-  }
-
 }
 export default User;
