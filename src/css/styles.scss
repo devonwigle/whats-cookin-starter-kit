@@ -35,7 +35,9 @@ label > input[type="radio"]:checked + * {
   width: 10%;
   background-color: $peach;
   cursor: pointer;
-  color: $black
+  color: $black;
+  font-family: $logo-font;
+  font-size: x-large;
 }
 
 .error-message-favorites,
@@ -68,6 +70,23 @@ h2 {
 .food-preview {
   height: 150px;
   width: auto;
+}
+
+.pantry-page-look {
+  display: flex;
+  justify-content: space-around;
+}
+
+.post {
+  display: flex;
+  justify-content: center;
+}
+
+.title-form {
+  align-items: center;
+  display: flex;
+  margin-bottom: 4%;
+  flex-direction: column;
 }
 
 .all-recipes {

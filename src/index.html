@@ -88,7 +88,8 @@
     </div>
     <div>
       <section class="pantry-page hidden">
-        <h1>Recipes To Cook</h1>
+        <div class="title-form">
+          <h1>User Pantry & Recipes to Cook</h1>
           <form id="post">
             <label for="ingredients"></label>
             <select id="ingredientID" name="ingredient" required>
@@ -97,12 +98,21 @@
             <input type="number" id="ingredientModification" name="ingredientAmount" placeholder="Enter Amount" required>
             <button type="submit">Click Me</button>
           </form>
-          <article class="user-pantry">Your Pantry
-            <!-- User pantry populates here -->
-          </article>
-          <article class="recipes-to-cook">Recipes To Cook
-            <!-- recipe cards with ingredients listed -->
-          </article>
+        </div>
+          <div class="pantry-page-look">
+            <div>
+              <h2>Your Pantry</h2>
+              <div class="user-pantry">Your Pantry
+              <!-- User pantry populates here -->
+              </div>
+            </div>
+            <div>
+              <h2>Recipes to Cook</h2>
+              <div class="recipes-to-cook">Recipes To Cook
+              <!-- recipe cards with ingredients listed -->
+              </div>
+            </div>
+          </div>
 
       </section>
     </div>
