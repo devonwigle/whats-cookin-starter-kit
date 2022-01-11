@@ -43,12 +43,14 @@ class User {
     })
     return filterTag
   }
+
   filterFavoriteByRecipeName(userInput) {
     let filterRecipe = this.favorite.filter((recipe) => {
       return recipe.name.toLowerCase().includes(userInput.toLowerCase())
     })
     return filterRecipe
   }
+
   filterFavoriteByIngredient(userInput) {
     let filtered = [];
     let filteredIngredient =  this.ingredientsData.filter((ingredient) => {
@@ -66,6 +68,7 @@ class User {
     })
     return filtered
   }
+
   getPantryIngredientDetail() {
     let allIngredientInfo = []
     this.pantry.forEach(ingredient => {
@@ -82,4 +85,5 @@ class User {
     return allIngredientInfo;
   }
 }
+
 export default User;

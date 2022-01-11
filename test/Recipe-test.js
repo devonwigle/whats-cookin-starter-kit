@@ -7,7 +7,7 @@ import Recipe from '../src/classes/Recipe';
 describe('Recipe', () => {
   let recipe;
   beforeEach(() => {
-    recipe = new Recipe(recipeData[0],ingredientsData);
+    recipe = new Recipe(recipeData[0], ingredientsData);
   });
 
   it('Should be a function', () => {
