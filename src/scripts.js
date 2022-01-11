@@ -4,8 +4,17 @@ import { fetchData, addIngredient } from './apiCalls';
 import RecipeRepository from './classes/RecipeRepository.js'
 import Recipe from './classes/Recipe';
 import User from './classes/User';
-import {domUpdates, recipeCard, makeRecipeCard} from './domUpdates.js';
+import {domUpdates, recipeCard, makeRecipeCard, whatsToCook} from './domUpdates.js';
 
+// global variables
+let cookBook
+let ingredientsInfo
+let recipesInfo
+let repository
+let foundRecipe
+let usersInfo
+let currentUser
+let favorite = false;
 
 // querySelectors
 
@@ -21,18 +30,7 @@ const userBox = document.querySelector('.user-box');
 
 const selectedRecipe = document.querySelector('.selected-recipe');
 const logoBox = document.querySelector('.logo-box');
-const successMessage = document.querySelector('.fav-message');
-const sadMessage = document.querySelector('.sad-message');
 
-// global variables
-let cookBook
-let ingredientsInfo
-let recipesInfo
-let repository
-let foundRecipe
-let usersInfo
-let currentUser
-let favorite = false;
 
 // pages
 const landingPage = document.querySelector('.landing-page');
@@ -41,6 +39,7 @@ const selectedRecipePage = document.querySelector('.selected-recipe-page');
 const searchForm = document.querySelector('#searchBar');
 const searchTag = document.querySelector('#searchByTag');
 const post = document.querySelector('#post');
+const pantryPage = document.querySelector('.pantry-page')
 
 
 // buttons
@@ -48,7 +47,7 @@ const addToFavoriteButton = document.querySelector('.add-to-favorite-btn');
 const removeFromFavoritesButton = document.querySelector('.remove-from-favorite-btn')
 const recipesToCookButton = document.querySelector('.recipes-to-cook-btn');
 const storedFavoritesButton = document.querySelector('.favorite-box');
-
+const pantryButton = document.querySelector('.pantry-button');
 
 //event listeners
 window.addEventListener('load', onStart);
@@ -63,7 +62,7 @@ searchForm.addEventListener('submit', (e) => {
   if(favorite === true){
     if(formData.get('type') == 'name'){
       const searchFavName = currentUser.filterFavoriteByRecipeName(input);
-      makeRecipeCard(searchFavName);
+      makeRecipeCard(searchFavName, recipeCard);
     }
     if(formData.get('type') == 'ingredients'){
       const searchFavIngredient = currentUser.filterFavoriteByIngredient(input);
@@ -73,11 +72,11 @@ searchForm.addEventListener('submit', (e) => {
   if(favorite === false){
   if(formData.get('type') == 'name'){
     const searchByName = repository.filterByRecipeName(input);
-    makeRecipeCard(searchByName);
+    makeRecipeCard(searchByName, recipeCard);
   }
   if(formData.get('type') == 'ingredients'){
     const searchByIngredient = repository.filterByIngredient(input);
-    makeRecipeCard(searchByIngredient);
+    makeRecipeCard(searchByIngredient, recipeCard);
   }
 }
   e.target.reset()
@@ -89,11 +88,11 @@ searchTag.addEventListener('submit', (e) => {
   const input = formData.get('tag');
   if(favorite === true){
     const searchFavTag = currentUser.filterFavoriteByTag(input);
-    makeRecipeCard(searchFavTag);
+    makeRecipeCard(searchFavTag, recipeCard);
   }
   else {
   const searchByTag = repository.filterByTag(input)
-  makeRecipeCard(searchByTag);
+  makeRecipeCard(searchByTag, recipeCard);
 }
 })
 
@@ -123,6 +122,7 @@ recipeCard.addEventListener('keydown', function (event) {
 
 logoBox.addEventListener('click', goHome);
 
+pantryButton.addEventListener('click', viewPantry)
 
 recipesToCookButton.addEventListener('click', addRecipesToCook);
 
@@ -144,7 +144,8 @@ function loadPage(data) {
   usersInfo = data[0];
   ingredientsInfo = data[1];
   recipesInfo = data[2];
-  currentUser = new User( usersInfo[chooseRandomUser(usersInfo)], ingredientsInfo);
+  currentUser = new User( usersInfo[0], ingredientsInfo);
+  console.log(currentUser.pantryInfo)
   userBox.innerText = `Welcome ${currentUser.name}`;
   let newRecipe = []
   cookBook = recipesInfo.map(recipe => {
@@ -153,13 +154,26 @@ function loadPage(data) {
   })
   repository = new RecipeRepository(cookBook, ingredientsInfo);
   multipleButtons();
-  makeRecipeCard(repository.recipeData);
+  makeRecipeCard(repository.recipeData, recipeCard);
   postOptions();
+  renderPantry();
+  console.log(whatsToCook)
+  
+}
+function viewPantry() {
+  showHide([pantryPage], [landingPage, selectedText, selectedRecipePage], 'hidden');
+  makeRecipeCard(currentUser.recipesToCook, whatsToCook);
 
 }
 
 function renderPantry(){
-  console.log(ingredientsInfo)
+  userPantry.innerHTML = ''
+  currentUser.pantryInfo.forEach(ingredient => {
+    userPantry.innerHTML += 
+      `
+      <li>${ingredient.quantity} ${ingredient.name} </li>
+      `
+  })
 }
 
 function postOptions() {
@@ -191,12 +205,12 @@ function chooseRandomUser(usersInfo) {
 
 function goHome() {
   favorite = false;
-  showHide([landingPage], [selectedText, selectedRecipePage], 'hidden');
-  makeRecipeCard(repository.recipeData);
+  showHide([landingPage], [selectedText, selectedRecipePage, pantryPage], 'hidden');
+  makeRecipeCard(repository.recipeData, recipeCard);
 }
 
 function showSelectedRecipePage(event) {
-  showHide([selectedRecipePage, selectedText], [landingPage], 'hidden');
+  showHide([selectedRecipePage, selectedText], [landingPage, pantryPage], 'hidden');
   populateSelectedRecipe(event);
   populatedResults.innerHTML = ``;
 }
@@ -235,42 +249,24 @@ function populateSelectedRecipe(event) {
 
 function showFavorite(){
   favorite = true;
-  makeRecipeCard(currentUser.favorite);
-  showHide([landingPage], [selectedText, selectedRecipePage], 'hidden');
+  makeRecipeCard(currentUser.favorite, recipeCard);
+  showHide([landingPage], [selectedText, selectedRecipePage, pantryPage], 'hidden');
 
 }
 
 
 function addToFavs() {
   currentUser.addToFavorite(foundRecipe);
-  successMessageTimeout();
-}
-
-function successMessageTimeout() {
-  successMessage.classList.add("success-message-show");
-  successMessage.classList.remove("success-message-none");
-  setTimeout(() => {
-    successMessage.classList.remove("success-message-show");
-    successMessage.classList.add("success-message-none");
-  }, 2000);
 }
 
 function addRecipesToCook() {
   currentUser.addToRecipesToCook(foundRecipe);
-
+  console.log('toCook', currentUser.recipesToCook)
 }
+
 
 function removeFromFavs() {
   currentUser.removeFromFavorite(foundRecipe);
-  sadMessageTimeout();
-}
-function sadMessageTimeout() {
-  sadMessage.classList.add("sad-message-show");
-  sadMessage.classList.remove("sad-message-none");
-  setTimeout(() => {
-    sadMessage.classList.remove("sad-message-show");
-    sadMessage.classList.add("sad-message-none");
-  }, 2000);
 }
 
 // helper functions

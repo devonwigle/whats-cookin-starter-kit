@@ -5,7 +5,8 @@ class User {
     this.pantry = userData.pantry;
     this.favorite = [];
     this.recipesToCook = [];
-    this.ingredientsData = ingredientsData
+    this.ingredientsData = ingredientsData;
+    this.pantryInfo = this.getPantryIngredientDetail();
   };
 
   addToFavorite(recipeData) {
@@ -64,6 +65,21 @@ class User {
       })
     })
     return filtered
+  }
+  getPantryIngredientDetail() {
+    let allIngredientInfo = []
+    this.pantry.forEach(ingredient => {
+      this.ingredientsData.forEach(item => {
+        if (ingredient.ingredient === item.id) {
+          allIngredientInfo.push({
+            id: ingredient.ingredient,
+            name: item.name,
+            quantity: ingredient.amount,
+          })
+        }
+      });
+    });
+    return allIngredientInfo;
   }
 }
 export default User;
