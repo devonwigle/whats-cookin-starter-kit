@@ -20,19 +20,23 @@ Happy cooking!
 
 ## Project Overview
 -------
-![project gif](https://media0.giphy.com/media/qUX6BJLgVthYSpDgQL/giphy.gif?cid=790b761136e45c4625adede4b51afec1b9b24f16787eef4c&rid=giphy.gif&ct=g)
-
 ## Landing Page
-<img width="1899" alt="whats cooking home page" src="https://user-images.githubusercontent.com/29051996/145898372-fc7589c1-1f42-42b2-9c0a-f70c7cfb39c7.png">
+<img width="1440" alt="landing page" src="https://user-images.githubusercontent.com/88619501/148880484-b6cf642c-35b5-4f11-98d6-7770762cbb8a.png">
 
-## Clicking on a recipe
-<img width="965" alt="clicking on a recipe" src="https://user-images.githubusercontent.com/29051996/145898782-0b1d26bd-e236-4e33-9583-02240d1b7a54.png">
+## Selecting a Recipe
+<img width="1439" alt="selected Recipe Page" src="https://user-images.githubusercontent.com/88619501/148880490-e7c1d700-a565-4549-8c9f-465773bd5492.png">
 
-## Favoriting a recipe
-<img width="1917" alt="favoriting a recipe" src="https://user-images.githubusercontent.com/29051996/145904693-80221105-6850-4d51-ae68-63b625723da0.png">
+## Favoriting a Recipe
+<img width="1438" alt="favorite recipes" src="https://user-images.githubusercontent.com/88619501/148880495-8c028a8e-2d29-4d1a-b535-110eb5cbfa37.png">
 
-## Cooking a Recipe
-<img width="2558" alt="Screen Shot 2022-01-10 at 10 19 15 PM" src="https://user-images.githubusercontent.com/29051996/148875631-00b7d839-7ff9-43b6-9561-21139ba4e129.png">
+## Pantry and Recipes to Cook
+<img width="1439" alt="Recipes To Cook Pantry" src="https://user-images.githubusercontent.com/88619501/148880503-b53a8ac3-559c-45f9-9c4f-1d131404d85c.png">
+
+## Future Features
+-------
+  * Add error handling to fetch APIs
+  * Allow user to check recipen against pantry
+  * A login page
 
 ## Contributers
 -------
@@ -46,7 +50,7 @@ Happy cooking!
 -------
 ![tech stack](https://media1.giphy.com/media/JWuBH9rCO2uZuHBFpm/giphy.gif?cid=ecf05e47vu9wdw7htzc71f0m0791owb6lppnk720cnlqgy0w&rid=giphy.gif&ct=g)
 - HTML
-- CSS
+- SCSS/CSS
 - JavaScript
 - Node
 - Fetch API
