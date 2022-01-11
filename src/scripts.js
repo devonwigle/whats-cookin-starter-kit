@@ -4,7 +4,7 @@ import { fetchData, addIngredient } from './apiCalls';
 import RecipeRepository from './classes/RecipeRepository.js'
 import Recipe from './classes/Recipe';
 import User from './classes/User';
-import {domUpdates, recipeCard, makeRecipeCard} from './domUpdates.js';
+import {domUpdates, recipeCard, makeRecipeCard, whatsToCook} from './domUpdates.js';
 
 // global variables
 let cookBook
@@ -30,8 +30,6 @@ const userBox = document.querySelector('.user-box');
 
 const selectedRecipe = document.querySelector('.selected-recipe');
 const logoBox = document.querySelector('.logo-box');
-const successMessage = document.querySelector('.fav-message');
-const sadMessage = document.querySelector('.sad-message');
 
 
 // pages
@@ -64,7 +62,7 @@ searchForm.addEventListener('submit', (e) => {
   if(favorite === true){
     if(formData.get('type') == 'name'){
       const searchFavName = currentUser.filterFavoriteByRecipeName(input);
-      makeRecipeCard(searchFavName);
+      makeRecipeCard(searchFavName, recipeCard);
     }
     if(formData.get('type') == 'ingredients'){
       const searchFavIngredient = currentUser.filterFavoriteByIngredient(input);
@@ -74,11 +72,11 @@ searchForm.addEventListener('submit', (e) => {
   if(favorite === false){
   if(formData.get('type') == 'name'){
     const searchByName = repository.filterByRecipeName(input);
-    makeRecipeCard(searchByName);
+    makeRecipeCard(searchByName, recipeCard);
   }
   if(formData.get('type') == 'ingredients'){
     const searchByIngredient = repository.filterByIngredient(input);
-    makeRecipeCard(searchByIngredient);
+    makeRecipeCard(searchByIngredient, recipeCard);
   }
 }
   e.target.reset()
@@ -90,11 +88,11 @@ searchTag.addEventListener('submit', (e) => {
   const input = formData.get('tag');
   if(favorite === true){
     const searchFavTag = currentUser.filterFavoriteByTag(input);
-    makeRecipeCard(searchFavTag);
+    makeRecipeCard(searchFavTag, recipeCard);
   }
   else {
   const searchByTag = repository.filterByTag(input)
-  makeRecipeCard(searchByTag);
+  makeRecipeCard(searchByTag, recipeCard);
 }
 })
 
@@ -156,12 +154,16 @@ function loadPage(data) {
   })
   repository = new RecipeRepository(cookBook, ingredientsInfo);
   multipleButtons();
-  makeRecipeCard(repository.recipeData);
+  makeRecipeCard(repository.recipeData, recipeCard);
   postOptions();
   renderPantry();
+  console.log(whatsToCook)
+  
 }
 function viewPantry() {
   showHide([pantryPage], [landingPage, selectedText, selectedRecipePage], 'hidden');
+  makeRecipeCard(currentUser.recipesToCook, whatsToCook);
+
 }
 
 function renderPantry(){
@@ -204,7 +206,7 @@ function chooseRandomUser(usersInfo) {
 function goHome() {
   favorite = false;
   showHide([landingPage], [selectedText, selectedRecipePage, pantryPage], 'hidden');
-  makeRecipeCard(repository.recipeData);
+  makeRecipeCard(repository.recipeData, recipeCard);
 }
 
 function showSelectedRecipePage(event) {
@@ -247,7 +249,7 @@ function populateSelectedRecipe(event) {
 
 function showFavorite(){
   favorite = true;
-  makeRecipeCard(currentUser.favorite);
+  makeRecipeCard(currentUser.favorite, recipeCard);
   showHide([landingPage], [selectedText, selectedRecipePage, pantryPage], 'hidden');
 
 }
@@ -255,34 +257,16 @@ function showFavorite(){
 
 function addToFavs() {
   currentUser.addToFavorite(foundRecipe);
-  successMessageTimeout();
-}
-
-function successMessageTimeout() {
-  successMessage.classList.add("success-message-show");
-  successMessage.classList.remove("success-message-none");
-  setTimeout(() => {
-    successMessage.classList.remove("success-message-show");
-    successMessage.classList.add("success-message-none");
-  }, 2000);
 }
 
 function addRecipesToCook() {
   currentUser.addToRecipesToCook(foundRecipe);
-
+  console.log('toCook', currentUser.recipesToCook)
 }
+
 
 function removeFromFavs() {
   currentUser.removeFromFavorite(foundRecipe);
-  sadMessageTimeout();
-}
-function sadMessageTimeout() {
-  sadMessage.classList.add("sad-message-show");
-  sadMessage.classList.remove("sad-message-none");
-  setTimeout(() => {
-    sadMessage.classList.remove("sad-message-show");
-    sadMessage.classList.add("sad-message-none");
-  }, 2000);
 }
 
 // helper functions
