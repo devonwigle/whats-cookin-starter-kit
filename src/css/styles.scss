@@ -27,7 +27,7 @@ button {
 }
 
 label > input[type="radio"]:checked + * {
-  color: $violet
+  color: $violet;
 }
 
 .logo-box {
@@ -127,7 +127,7 @@ h2 {
 }
 
 .populated-results {
-  @include results()
+  @include results();
 }
 
 .filtered-image {
