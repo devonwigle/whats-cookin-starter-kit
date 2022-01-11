@@ -31,6 +31,9 @@ Happy cooking!
 ## Favoriting a recipe
 <img width="1917" alt="favoriting a recipe" src="https://user-images.githubusercontent.com/29051996/145904693-80221105-6850-4d51-ae68-63b625723da0.png">
 
+## Cooking a Recipe
+<img width="2558" alt="Screen Shot 2022-01-10 at 10 19 15 PM" src="https://user-images.githubusercontent.com/29051996/148875631-00b7d839-7ff9-43b6-9561-21139ba4e129.png">
+
 ## Contributers
 -------
 
