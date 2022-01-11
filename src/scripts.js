@@ -14,7 +14,7 @@ const selectIngredient = document.querySelector('#ingredientID')
 const selectedRecipeIngredientAmount = document.querySelector('.ingredients-amounts');
 const selectedRecipeDirections = document.querySelector('.recipe-directions');
 const selectedText = document.querySelector('.recipe-text');
-
+const userPantry = document.querySelector('.user-pantry');
 const populatedResults = document.querySelector('.populated-results');
 
 const userBox = document.querySelector('.user-box');
@@ -105,7 +105,9 @@ post.addEventListener('submit', (e) => {
     ingredientID: Number(formData.get('ingredient')),
     ingredientModification: Number(formData.get('ingredientAmount'))
   }
-  addIngredient(addIngredientData).then( () => onStart())
+   addIngredient(addIngredientData).then( () => onStart())
+   console.log(currentUser.pantry)
+
 })
 
 recipeCard.addEventListener('click', function(event) {
@@ -143,7 +145,6 @@ function loadPage(data) {
   ingredientsInfo = data[1];
   recipesInfo = data[2];
   currentUser = new User( usersInfo[chooseRandomUser(usersInfo)], ingredientsInfo);
-  console.log(currentUser.pantry);
   userBox.innerText = `Welcome ${currentUser.name}`;
   let newRecipe = []
   cookBook = recipesInfo.map(recipe => {
@@ -153,15 +154,20 @@ function loadPage(data) {
   repository = new RecipeRepository(cookBook, ingredientsInfo);
   multipleButtons();
   makeRecipeCard(repository.recipeData);
+  postOptions();
+
+}
+
+function renderPantry(){
   console.log(ingredientsInfo)
 }
 
 function postOptions() {
-  let options = [];
-  ingredientsInfo.forEach(ingredients => {
-    ingredients.name
+  let sortIngredient = ingredientsInfo.sort((a,b) => (a.name > b.name)? 1 : -1);
+  sortIngredient.forEach(ingredient => {
+    selectIngredient.innerHTML += `<option value="${ingredient.id}">${ingredient.name}</option>`
   })
-} 
+}
 
 
 function multipleButtons() {

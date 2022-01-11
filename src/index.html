@@ -14,7 +14,7 @@
      </div>
     </nav>
     <section class="landing-page hidden">
-      
+
       <div class="search">
         <form id="searchBar">
           <input type="search" id="query" name="q"
@@ -90,10 +90,10 @@
         <h1>Recipes To Cook</h1>
           <form id="post">
             <label for="ingredients"></label>
-            <select id="ingredientID" name="ingedients">
+            <select id="ingredientID" name="ingredient" required>
               <option value="">Ingredient to Pantry</option>
             </select>
-            <input type="number" id="ingredientModification" name="ingredientAmount">
+            <input type="number" id="ingredientModification" name="ingredientAmount" placeholder="Enter Amount" required>
             <button type="submit">Click Me</button>
           </form>
           <article class="user-pantry">Your Pantry
@@ -102,7 +102,7 @@
           <article class="recipes-to-cook">Recipes To Cook
             <!-- recipe cards with ingredients listed -->
           </article>
-        
+
       </section>
     </div>
   </body>
