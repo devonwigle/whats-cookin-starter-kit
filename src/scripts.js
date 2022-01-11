@@ -6,6 +6,15 @@ import Recipe from './classes/Recipe';
 import User from './classes/User';
 import {domUpdates, recipeCard, makeRecipeCard} from './domUpdates.js';
 
+// global variables
+let cookBook
+let ingredientsInfo
+let recipesInfo
+let repository
+let foundRecipe
+let usersInfo
+let currentUser
+let favorite = false;
 
 // querySelectors
 
@@ -24,15 +33,6 @@ const logoBox = document.querySelector('.logo-box');
 const successMessage = document.querySelector('.fav-message');
 const sadMessage = document.querySelector('.sad-message');
 
-// global variables
-let cookBook
-let ingredientsInfo
-let recipesInfo
-let repository
-let foundRecipe
-let usersInfo
-let currentUser
-let favorite = false;
 
 // pages
 const landingPage = document.querySelector('.landing-page');
@@ -41,6 +41,7 @@ const selectedRecipePage = document.querySelector('.selected-recipe-page');
 const searchForm = document.querySelector('#searchBar');
 const searchTag = document.querySelector('#searchByTag');
 const post = document.querySelector('#post');
+const pantryPage = document.querySelector('.pantry-page')
 
 
 // buttons
@@ -48,7 +49,7 @@ const addToFavoriteButton = document.querySelector('.add-to-favorite-btn');
 const removeFromFavoritesButton = document.querySelector('.remove-from-favorite-btn')
 const recipesToCookButton = document.querySelector('.recipes-to-cook-btn');
 const storedFavoritesButton = document.querySelector('.favorite-box');
-
+const pantryButton = document.querySelector('.pantry-button');
 
 //event listeners
 window.addEventListener('load', onStart);
@@ -123,6 +124,7 @@ recipeCard.addEventListener('keydown', function (event) {
 
 logoBox.addEventListener('click', goHome);
 
+pantryButton.addEventListener('click', viewPantry)
 
 recipesToCookButton.addEventListener('click', addRecipesToCook);
 
@@ -144,7 +146,8 @@ function loadPage(data) {
   usersInfo = data[0];
   ingredientsInfo = data[1];
   recipesInfo = data[2];
-  currentUser = new User( usersInfo[chooseRandomUser(usersInfo)], ingredientsInfo);
+  currentUser = new User( usersInfo[0], ingredientsInfo);
+  console.log(currentUser.pantryInfo)
   userBox.innerText = `Welcome ${currentUser.name}`;
   let newRecipe = []
   cookBook = recipesInfo.map(recipe => {
@@ -155,11 +158,20 @@ function loadPage(data) {
   multipleButtons();
   makeRecipeCard(repository.recipeData);
   postOptions();
-
+  renderPantry();
+}
+function viewPantry() {
+  showHide([pantryPage], [landingPage, selectedText, selectedRecipePage], 'hidden');
 }
 
 function renderPantry(){
-  console.log(ingredientsInfo)
+  userPantry.innerHTML = ''
+  currentUser.pantryInfo.forEach(ingredient => {
+    userPantry.innerHTML += 
+      `
+      <li>${ingredient.quantity} ${ingredient.name} </li>
+      `
+  })
 }
 
 function postOptions() {
@@ -191,12 +203,12 @@ function chooseRandomUser(usersInfo) {
 
 function goHome() {
   favorite = false;
-  showHide([landingPage], [selectedText, selectedRecipePage], 'hidden');
+  showHide([landingPage], [selectedText, selectedRecipePage, pantryPage], 'hidden');
   makeRecipeCard(repository.recipeData);
 }
 
 function showSelectedRecipePage(event) {
-  showHide([selectedRecipePage, selectedText], [landingPage], 'hidden');
+  showHide([selectedRecipePage, selectedText], [landingPage, pantryPage], 'hidden');
   populateSelectedRecipe(event);
   populatedResults.innerHTML = ``;
 }
@@ -236,7 +248,7 @@ function populateSelectedRecipe(event) {
 function showFavorite(){
   favorite = true;
   makeRecipeCard(currentUser.favorite);
-  showHide([landingPage], [selectedText, selectedRecipePage], 'hidden');
+  showHide([landingPage], [selectedText, selectedRecipePage, pantryPage], 'hidden');
 
 }
 
